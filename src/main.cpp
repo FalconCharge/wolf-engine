@@ -79,6 +79,7 @@ int main(){
     Main app("TextRendering");
     app.run();
     return 0;    
+    
 }
 
 

@@ -8,18 +8,17 @@
 #include "TextTable.h"
 #include "TextBox.h"
 
-
+/*
+// This should be developed into a method which can be ran in the main
+*/
 class Driver : public wolf::App {
 public:
+    
 
     Driver(const std::string& name) : wolf::App(name){
         Sample1();
     }
-/*
-    Main(const std::string& name) : wolf::App(name){
-        Sample1();
-    }
-*/
+
     void Sample1()
     {
         SetUpTextTable();

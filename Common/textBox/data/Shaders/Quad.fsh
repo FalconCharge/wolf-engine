@@ -7,7 +7,7 @@ out vec4 PixelColor;     // Output Pixel color
 
 void main()
 {
-    /*
+    
     vec4 pixel = texture(tex, v_uv1);
 
     
@@ -16,11 +16,9 @@ void main()
     }else {
         // Replace non-black areas with white
         pixel.rgb = vec3(1.0, 1.0, 1.0);
-    }*/
+    }
 
-    PixelColor  = texture(tex, v_uv1);
 
-    //PixelColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    //PixelColor = vec4(pixel.rgb * color.rgb, pixel.a * color.a);
+    PixelColor = vec4(pixel.rgb * color.rgb, pixel.a * color.a);
 }
 
