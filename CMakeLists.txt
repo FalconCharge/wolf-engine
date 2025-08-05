@@ -1,19 +1,13 @@
 cmake_minimum_required(VERSION 3.15)
 project(WolfEngine VERSION 0.1.0)
 
+# OpenGL & vcpkg dependencies
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
-
-# Disable Assimp extras
-set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_NO_EXPORT ON CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
-
-# Add subdirectories
-add_subdirectory(thirdparty/glfw)
-add_subdirectory(thirdparty/glm)
-add_subdirectory(thirdparty/assimp)
-add_subdirectory(thirdparty/glew/build/cmake)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
 # Collect source files
 file(GLOB_RECURSE SAMPLEFW_SOURCE_FILES ${CMAKE_SOURCE_DIR}/samplefw/*.cpp)
@@ -32,17 +26,10 @@ add_library(Wolf STATIC
     ${HEADER_FILES}
 )
 
-target_include_directories(Wolf PUBLIC
-    ${CMAKE_SOURCE_DIR}/thirdparty/glfw/include 
-    ${CMAKE_SOURCE_DIR}/thirdparty/glm 
-    ${CMAKE_SOURCE_DIR}/thirdparty/glew/include 
-    ${CMAKE_SOURCE_DIR}/thirdparty/assimp/include 
-    ${OPENGL_INCLUDE_DIRS}
-)
-
 target_link_libraries(Wolf PUBLIC
-    assimp
     glfw
-    glew
-    ${OPENGL_LIBRARIES}
+    GLEW::GLEW
+    OpenGL::GL
+    assimp::assimp
+    glm::glm
 )
