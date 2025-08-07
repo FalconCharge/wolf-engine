@@ -1,0 +1,11 @@
+{
+  "name": "wolf-engine",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "glfw3",
+    "glew",
+    "glm",
+    "assimp"
+  ],
+  "builtin-baseline": "ee5c9041e8126600e79e0c80f7e6c70101c1353a"
+}

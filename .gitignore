@@ -1,2 +1,12 @@
 /build/
 !/external/
+
+# vcpkg folders
+vcpkg_installed/
+buildtrees/
+packages/
+downloads/
+
+# Build output folders
+build/
+out/
