@@ -8,6 +8,7 @@
 #include "sampleOrtho.h"
 #include "samplePerspective.h"
 #include "sampleWorldTransform.h"
+#include "GL/glew.h"
 
 class Week2: public wolf::App
 {

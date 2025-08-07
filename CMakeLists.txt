@@ -18,7 +18,14 @@ file(GLOB_RECURSE WOLF_SOURCE_FILES ${CMAKE_SOURCE_DIR}/wolf/*.cpp)
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 # Create the executable with all sources
+"""
 add_executable(WolfEngine
+    ${SAMPLEFW_SOURCE_FILES}
+    ${WOLF_SOURCE_FILES}
+    ${SOURCE_FILES}
+)
+"""
+add_library(WolfEngine STATIC
     ${SAMPLEFW_SOURCE_FILES}
     ${WOLF_SOURCE_FILES}
     ${SOURCE_FILES}
