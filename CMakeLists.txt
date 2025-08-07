@@ -25,7 +25,7 @@ add_executable(WolfEngine
 )
 
 # Link dependencies
-target_link_libraries(WolfEngine PRIVATE
+target_link_libraries(WolfEngine PUBLIC
     glfw
     GLEW::GLEW
     OpenGL::GL
