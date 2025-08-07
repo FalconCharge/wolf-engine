@@ -1,11 +1,8 @@
 /build/
-!/external/
+!/external/vcpkg
 
 # vcpkg folders
 vcpkg_installed/
-buildtrees/
-packages/
-downloads/
 
 # Build output folders
 build/
