@@ -33,8 +33,8 @@ target_link_libraries(WolfEngine PUBLIC
     glm::glm
 )
 
-# Had to add this to avoid GLM issues with C++17
-target_compile_definitions(WolfEngine PRIVATE GLM_ENABLE_EXPERIMENTAL)
+# CHATGPT helped fix it bypass needing a definition
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
 add_executable(WolfTest src/examplemain.cpp)
 
