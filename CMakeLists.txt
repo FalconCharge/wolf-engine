@@ -24,6 +24,11 @@ add_library(WolfEngine STATIC
     ${SOURCE_FILES}
 )
 
+# Add this line to set your include directory root:
+target_include_directories(WolfEngine PUBLIC
+    ${CMAKE_SOURCE_DIR}/wolf
+)
+
 # Link dependencies
 target_link_libraries(WolfEngine PUBLIC
     glfw
