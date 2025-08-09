@@ -3,6 +3,8 @@
 #include "core/Transform.h"
 #include "core/Component.h"
 
+#include <vector>
+
 namespace wolf
 {
 	class GameObject

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "core/GameObjectManager.h"
+#include <vector>
+
 namespace wolf
 {
     class Scene
