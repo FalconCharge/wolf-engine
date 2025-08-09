@@ -5,7 +5,15 @@
     "glfw3",
     "glew",
     "glm",
-    "assimp"
+    "assimp",
+    {
+      "name": "imgui",
+      "features": [
+        "docking-experimental",
+        "glfw-binding",
+        "opengl3-binding"
+      ]
+    }
   ],
   "builtin-baseline": "4fea4b5ff05c28111e6c5eda0996b7feb7241317"
 }
