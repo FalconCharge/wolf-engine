@@ -1,12 +1,15 @@
 #pragma once
 
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+
 namespace wolf
 {
 	class Transform
 	{
 	public:
-		Transform();
-		~Transform();
+		Transform(){}
+		~Transform(){}
 
 		void SetPosition(const glm::vec3& position);
 		void SetRotation(const glm::quat& rotation);

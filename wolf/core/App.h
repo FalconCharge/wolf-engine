@@ -11,9 +11,9 @@ namespace wolf
         App(const std::string &name);
         virtual ~App();
 
-        virtual void run();
-        virtual void update(float dt) = 0;
-        virtual void render() = 0;
+        virtual void Run();
+        virtual void Update(float dt) = 0;
+        virtual void Render() = 0;
 
         bool isKeyDown(int key) const;
         bool isKeyJustDown(int key) const;

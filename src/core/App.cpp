@@ -121,7 +121,7 @@ void App::_init()
 
 void App::_internalUpdate(float dt)
 {
-    update(dt);
+    Update(dt);
 
     for(int i = 0; i < NUM_KEYS; ++i)
     {
@@ -129,7 +129,7 @@ void App::_internalUpdate(float dt)
     }
 }
 
-void App::run()
+void App::Run()
 {
     double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(m_pWindow) && !isKeyDown(GLFW_KEY_ESCAPE))
@@ -145,7 +145,7 @@ void App::run()
             RenderTarget::GetScreen().Bind();
 
             _internalUpdate(elapsedTime);
-            render();
+            Render();
         }
 
         m_mouseScroll = glm::vec2(0.0f,0.0f);

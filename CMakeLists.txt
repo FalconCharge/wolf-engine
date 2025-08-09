@@ -9,3 +9,7 @@ add_subdirectory(src)       # src/CMakeLists.txt builds the WolfEngine library
 
 # Add editor executable
 add_subdirectory(WolfEditor)  # WolfEditor/CMakeLists.txt builds the editor
+
+# IDK whats really happening here
+target_compile_definitions(WolfEngine PRIVATE GLM_ENABLE_EXPERIMENTAL)
+target_compile_definitions(WolfEditor PRIVATE GLM_ENABLE_EXPERIMENTAL)

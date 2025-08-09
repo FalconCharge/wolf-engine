@@ -16,7 +16,12 @@ namespace wolf
 		GameObject* CreateGameObject();
 		void DestroyGameObject(GameObject* gameObject);
 
+		// return a ref to the list of game objects
+		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
+
 	private:
-		std::vector<GameObject*> m_gameObjects;
+
+		std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+
 	};
 }

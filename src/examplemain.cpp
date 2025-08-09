@@ -26,7 +26,7 @@ public:
     {
     }
 
-    void update(float dt) override
+    void Update(float dt) override
     {
         if(isKeyDown(' '))
         {
@@ -41,7 +41,7 @@ public:
         m_sampleRunner.update(dt);
     }
 
-    void render() override
+    void Render() override
     {
         m_sampleRunner.render(m_width, m_height);
     }
@@ -53,5 +53,5 @@ private:
 
 int main(int, char**) {
     Week2 week2;
-    week2.run();
+    week2.Run();
 }

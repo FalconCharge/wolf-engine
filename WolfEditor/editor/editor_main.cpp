@@ -1,93 +1,80 @@
-#include <imgui.h>
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include "core/App.h"
+#include "Imgui.h"
+#include "core/GameObjectManager.h"
+#include <memory>
 
 static void glfw_error_callback(int error, const char* description)
 {
-    std::cerr << "GLFW Error " << error << ": " << description << std::endl;
+    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
+
+class WolfEditor : public wolf::App{
+    public: 
+        WolfEditor() : wolf::App("Wolf Editor"), m_gameObjectManager()
+        {
+            // SetUp ImGui
+            m_Imgui = std::make_unique<Imgui>(this->getWindow());
+            m_Imgui->Init();
+
+            // Add editor windows
+            m_Imgui->AddWindow(std::make_unique<HierarchyWindow>(
+                m_gameObjectManager.GetGameObjects(), -1));
+
+            m_Imgui->AddWindow(std::make_unique<InspectorWindow>(
+                m_gameObjectManager.GetGameObjects(), -1));
+
+
+            m_gameObjectManager.CreateGameObject()->SetName("GameObject 1");
+            m_gameObjectManager.CreateGameObject()->SetName("GameObject 2");
+            m_gameObjectManager.CreateGameObject()->SetName("GameObject 3");
+          
+        }
+
+        void Update(float dt) override
+        {
+            // imgui always goes first
+            m_Imgui->NewFrame();
+        }
+
+        void Render() override
+        {
+            // Editor-specific rendering logic goes here
+
+            glfwPollEvents();
+
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+            // Render ImGui windows
+            for (const auto& window : m_Imgui->GetWindows())
+            {
+                window->Draw();
+            }
+
+            //imgui always goes last
+            m_Imgui->Render();
+
+
+
+        }
+
+    private:
+        // Add editor-specific members here
+        std::unique_ptr<Imgui> m_Imgui;
+        wolf::GameObjectManager m_gameObjectManager;
+        
+
+};
 
 int main(int, char**)
 {
-    // Setup GLFW
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
-        return 1;
-
-    // GL version 3.3 core profile
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "WolfEditor", NULL, NULL);
-    if (window == NULL)
-        return 1;
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
-
-    // Initialize GLEW
-    if (glewInit() != GLEW_OK)
-    {
-        std::cerr << "Failed to initialize GLEW\n";
-        return 1;
-    }
-
-    // Setup ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-
-    // Setup ImGui style
-    ImGui::StyleColorsDark();
-
-    // Setup Platform/Renderer bindings
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
-
-    // Main loop
-    while (!glfwWindowShouldClose(window))
-    {
-        // Poll events
-        glfwPollEvents();
-
-        // Start ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        // Example window
-        ImGui::Begin("Hello, WolfEditor!");
-        ImGui::Text("This is a minimal ImGui editor window.");
-        if (ImGui::Button("Click me"))
-            std::cout << "Button clicked!\n";
-        ImGui::End();
-
-        // Rendering
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        glfwSwapBuffers(window);
-    }
-
-    // Cleanup
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
+    WolfEditor editor;
+    editor.Run();
     return 0;
 }

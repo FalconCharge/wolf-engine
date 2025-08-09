@@ -1,8 +1,9 @@
-# Specify your editor source files here
-set(EDITOR_SOURCES
-    editor/editor_main.cpp
-    # add other editor source files here as needed
+
+file(GLOB EDITOR_SOURCES
+    "editor/*.cpp"
+    "editor/windows/*.cpp"
 )
+
 
 add_executable(WolfEditor ${EDITOR_SOURCES})
 
