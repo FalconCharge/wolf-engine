@@ -15,6 +15,7 @@ namespace wolf
 	GameObject* GameObjectManager::CreateGameObject()
 	{
 		std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>();
+		gameObject->GetTransform().SetOwner(gameObject.get());	// Sets the transforms owner (the GO)
 		GameObject* rawPtr = gameObject.get();
 		m_gameObjects.push_back(std::move(gameObject));
 		return rawPtr;
@@ -35,11 +36,28 @@ namespace wolf
 		}
 	}
 
+	GameObject* GameObjectManager::FindGameObjectByName(const std::string& name)
+	{
+		for (const auto& gameObject : m_gameObjects)
+		{
+			if (gameObject->GetName() == name)
+			{
+				return gameObject.get();
+			}
+		}
+		return nullptr;
+	}
+
 	void GameObjectManager::Update(float deltaTime)
 	{
 		for (std::vector<std::unique_ptr<GameObject>>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
 		{
 			(*it)->Update(deltaTime);
+			// Ensure the transform's world matrix is updated if it has no parent
+			if (!(*it)->GetTransform().GetParent()) {
+				(*it)->GetTransform().GetWorldMatrix();
+			}
+
 		}
 	}
 

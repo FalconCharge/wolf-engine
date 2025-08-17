@@ -1,27 +1,61 @@
 #pragma once
-
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <vector>
+#include <memory>
+#include <algorithm> // for std::remove
 
-namespace wolf
-{
-	class Transform
-	{
-	public:
-		Transform(){}
-		~Transform(){}
+namespace wolf {
 
-		void SetPosition(const glm::vec3& position);
-		void SetRotation(const glm::quat& rotation);
-		void SetScale(const glm::vec3& scale);
+class GameObject; // Forward declaration
 
-		glm::vec3 GetPosition() const;
-		glm::quat GetRotation() const;
-		glm::vec3 GetScale() const;
+class Transform {
+public:
+    Transform();
+    ~Transform();
 
-	private:
-		glm::vec3 m_position;
-		glm::quat m_rotation;
-		glm::vec3 m_scale;
-	};
-}
+    // --- Parent/Child system ---
+    void SetParent(Transform* parent);
+    Transform* GetParent() const;
+    const std::vector<Transform*>& GetChildren() const;
+
+	void SetOwner(GameObject* owner) {
+		m_Owner = owner;
+	}
+	GameObject* GetOwner() const {
+		return m_Owner;
+	}
+
+    // --- Matrices ---
+    glm::mat4 GetLocalMatrix() const;
+    glm::mat4 GetWorldMatrix() const;
+
+    // --- Local space getters ---
+    const glm::vec3& GetPosition() const;
+    const glm::quat& GetRotation() const;
+    const glm::vec3& GetScale() const;
+
+    // --- World space getters ---
+    glm::vec3 GetWorldPosition() const;
+    glm::quat GetWorldRotation() const;
+    glm::vec3 GetWorldScale() const;
+
+    // --- Local space setters ---
+    void SetPosition(const glm::vec3& position);
+    void SetRotation(const glm::quat& rotation);
+    void SetScale(const glm::vec3& scale);
+
+    // Debug helper
+    void DebugString() const;
+
+private:
+    glm::vec3 m_Position {0.0f, 0.0f, 0.0f};
+    glm::vec3 m_Scale    {1.0f, 1.0f, 1.0f};
+    glm::quat m_Rotation {0, 0, 0, 1};
+
+    Transform* m_Parent = nullptr;
+    std::vector<Transform*> m_Children;
+    GameObject* m_Owner = nullptr;
+};
+
+} // namespace wolf

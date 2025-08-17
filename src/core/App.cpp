@@ -96,9 +96,14 @@ void App::_init()
         }
     }
 #else
-    int resX = 1280;
-    int resY = 720;
-    GLFWmonitor* pMonitorToUse = nullptr;
+    //int resX = 1280;
+    //int resY = 720;
+    int resX = 1920;
+    int resY = 1080;
+    //GLFWmonitor* pMonitorToUse = nullptr; // Windowed
+
+    GLFWmonitor* pMonitorToUse = glfwGetPrimaryMonitor(); // fullscreen
+    const GLFWvidmode* mode = glfwGetVideoMode(pMonitorToUse);
 #endif
 
     m_pWindow = glfwCreateWindow(resX, resY, m_name.c_str(), pMonitorToUse, NULL);

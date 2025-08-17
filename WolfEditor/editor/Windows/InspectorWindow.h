@@ -9,9 +9,11 @@ class InspectorWindow : public ImguiWindow
 {
 public:
     InspectorWindow(const std::vector<std::unique_ptr<wolf::GameObject>>& gameObjects, int selected);
+    void SetSelectedGameObject(int index) { m_selectedIndex = index; }
 
 protected:
     void DrawContent() override;
+    void WindowSetup() override;
 
 private:
     const std::vector<std::unique_ptr<wolf::GameObject>>& m_gameObjects;

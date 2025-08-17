@@ -18,25 +18,24 @@ class WolfEditor : public wolf::App{
         {
             // SetUp ImGui
             m_Imgui = std::make_unique<Imgui>(this->getWindow());
-            m_Imgui->Init();
+            m_Imgui->Init(&m_gameObjectManager);
 
-            // Add editor windows
-            m_Imgui->AddWindow(std::make_unique<HierarchyWindow>(
-                m_gameObjectManager.GetGameObjects(), -1));
+            m_gameObjectManager.CreateGameObject()->SetName("Test1");
+            m_gameObjectManager.CreateGameObject()->SetName("Test2");
+            m_gameObjectManager.CreateGameObject()->SetName("Test3");
 
-            m_Imgui->AddWindow(std::make_unique<InspectorWindow>(
-                m_gameObjectManager.GetGameObjects(), -1));
+            wolf::GameObject* go1 = m_gameObjectManager.FindGameObjectByName("Test1");
+            wolf::GameObject* go2 = m_gameObjectManager.FindGameObjectByName("Test2");
 
+            go2->SetParent(go1);
+            go1->GetTransform().SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
+            //go1->GetTransform().DebugString();
+            //go2->GetTransform().DebugString();
 
-            m_gameObjectManager.CreateGameObject()->SetName("GameObject 1");
-            m_gameObjectManager.CreateGameObject()->SetName("GameObject 2");
-            m_gameObjectManager.CreateGameObject()->SetName("GameObject 3");
-          
         }
 
         void Update(float dt) override
         {
-            // imgui always goes first
             m_Imgui->NewFrame();
         }
 
@@ -49,19 +48,7 @@ class WolfEditor : public wolf::App{
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-
-            // Render ImGui windows
-            for (const auto& window : m_Imgui->GetWindows())
-            {
-                window->Draw();
-            }
-
-            //imgui always goes last
             m_Imgui->Render();
-
-
-
         }
 
     private:

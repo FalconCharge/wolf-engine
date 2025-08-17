@@ -1,27 +1,30 @@
-#pragma once
+	#pragma once
 
-#include "core/GameObject.h"
+	#include "core/GameObject.h"
 
-namespace wolf
-{
-	class GameObjectManager
+	namespace wolf
 	{
-	public:
-		GameObjectManager();
-		~GameObjectManager();
+		class GameObjectManager
+		{
+		public:
+			GameObjectManager();
+			~GameObjectManager();
 
-		void Update(float deltaTime);
-		void Render();
+			void Update(float deltaTime);
+			void Render();
 
-		GameObject* CreateGameObject();
-		void DestroyGameObject(GameObject* gameObject);
+			GameObject* CreateGameObject();
+			void DestroyGameObject(GameObject* gameObject);
 
-		// return a ref to the list of game objects
-		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
+			// Find a game object by its name
+			GameObject* FindGameObjectByName(const std::string& name);
 
-	private:
+			// return a ref to the list of game objects
+			const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
 
-		std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+		private:
 
-	};
-}
+			std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+
+		};
+	}

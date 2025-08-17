@@ -1,9 +1,11 @@
 # Gather all cpp files recursively in src/
-file(GLOB_RECURSE ENGINE_SOURCES
-    *.cpp
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
+    "${CMAKE_SOURCE_DIR}/src/**/*.cpp"
 )
 
-add_library(WolfEngine STATIC ${ENGINE_SOURCES})
+
+
+add_library(WolfEngine STATIC ${SRC_FILES})
 
 # Include public headers from wolf/
 target_include_directories(WolfEngine PUBLIC

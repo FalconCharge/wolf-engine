@@ -42,4 +42,12 @@ namespace wolf{
                 return obj.get() == component;
             }), m_components.end());
 	}
+
+	void GameObject::SetParent(GameObject* parent)
+	{
+		if (parent)
+		{
+			m_transform.SetParent(&parent->GetTransform());
+		}
+	}
 }

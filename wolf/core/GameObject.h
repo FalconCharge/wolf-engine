@@ -24,8 +24,10 @@ namespace wolf
         // Getters
         const std::string& GetName() const { return m_name; }
         const std::string& GetTag() const { return m_tag; }
-        const Transform& GetTransform() const { return m_transform; }
+        Transform& GetTransform() { return m_transform; }
         const int GetID() const { return m_id; }
+
+        void SetParent(GameObject* parent);
 
         //setters
         void SetName(const std::string& name) { m_name = name; }
