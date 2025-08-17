@@ -4,8 +4,8 @@
 #include <cstring>
 #include <iostream>
 
-GameViewWindow::GameViewWindow()
-    : ImguiWindow("Game View")
+GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView)
+    : ImguiWindow("Game View"), m_gameView(m_gameView)
 {
 }
 void GameViewWindow::WindowSetup(){
@@ -31,6 +31,5 @@ void GameViewWindow::WindowSetup(){
 
 void GameViewWindow::DrawContent()
 {
-            ImGui::Text("Game View");
-
+    ImGui::Image(m_gameView->GetColorBuffer()->GetGLTexture(), ImVec2(500, 500));
 }

@@ -8,9 +8,9 @@
 #include "Windows/GameViewWindow.h"
 #include "Windows/ConsoleWindow.h"
 
+#include "render/RenderTarget.h"
 
-
-void Imgui::Init(wolf::GameObjectManager* gameObjectManager)
+void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget* gameView)
 {
     // Create ImGui context
     IMGUI_CHECKVERSION();
@@ -31,7 +31,7 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager)
 
     // Add editor windows
 
-    AddWindow(new GameViewWindow());
+    AddWindow(new GameViewWindow(gameView));
 
     AddWindow(new ConsoleWindow());
 
@@ -43,10 +43,6 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager)
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
         hierarchyWindow->SetInspectorWindow(FindWindow("Inspector"));
     }
-
-    // Set the texture for the gameview
-    m_gameViewTex = wolf::TextureManager::CreateTexture("WolfEditor/data/textures/FalconNest.png");
-
 }
 
 void Imgui::DrawMainMenuBar(){
@@ -117,9 +113,9 @@ void Imgui::DrawMainMenuBar(){
 
 
     // TEMP LINES
-    ImGui::Begin("Settings");
+    ImGui::Begin("Simple Texture Display");
     ImGui::Text("Temp widow to try and display a texture");
-    ImGui::Image(m_gameViewTex->GetGLTexture(), ImVec2(500, 500));
+    ImGui::Image(m_gameViewFramebuffer->GetColorBuffer()->GetGLTexture(), ImVec2(500, 500));
 
 
     ImGui::End();
@@ -178,6 +174,7 @@ ImguiWindow* Imgui::FindWindow(const std::string& name) const
 
 void Imgui::DrawDockSpace()
 {
+
     // Fullscreen invisible window to hold dockspace
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
@@ -191,7 +188,9 @@ void Imgui::DrawDockSpace()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
-    ImGui::Begin("DockSpaceWindow", nullptr, window_flags);
+    static bool dockspace_open = true;
+
+    ImGui::Begin("DockSpaceWindow", &dockspace_open, window_flags);
     ImGui::PopStyleVar(2);
 
     // Create dockspace

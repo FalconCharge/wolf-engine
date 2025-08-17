@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "render/TextureManager.h"
+#include "render/RenderTarget.h"
 
 
 
@@ -22,7 +23,7 @@ class Imgui{
     public:
         explicit Imgui(GLFWwindow* window): m_window(window){}
 
-        void Init(wolf::GameObjectManager* gameObjectManager);
+        void Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget* gameview);
         void Shutdown();
         void NewFrame();
         void Render();
@@ -39,7 +40,7 @@ class Imgui{
         ImGuiIO* m_io;
 
         std::vector<ImguiWindow*> m_imguiWindows;
-
+        wolf::RenderTarget* m_gameViewFramebuffer;
 
         // Methods
         void DrawMainMenuBar();

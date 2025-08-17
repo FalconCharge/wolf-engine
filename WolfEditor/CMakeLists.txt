@@ -4,13 +4,19 @@ file(GLOB EDITOR_SOURCES
     "editor/windows/*.cpp"
 )
 
+# Gather sample sources
+file(GLOB SAMPLE_SOURCES
+    "../samplefw/*.cpp"
+)
 
-add_executable(WolfEditor ${EDITOR_SOURCES})
+
+add_executable(WolfEditor ${EDITOR_SOURCES} ${SAMPLE_SOURCES})
 
 # Include engine headers and external dependencies
 target_include_directories(WolfEditor PRIVATE
     ${CMAKE_SOURCE_DIR}/wolf
     ${CMAKE_SOURCE_DIR}/external
+    ${CMAKE_SOURCE_DIR}/samplefw
 )
 
 # Find and link imgui and other libs from vcpkg
