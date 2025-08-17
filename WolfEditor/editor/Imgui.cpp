@@ -8,6 +8,8 @@
 #include "Windows/GameViewWindow.h"
 #include "Windows/ConsoleWindow.h"
 
+
+
 void Imgui::Init(wolf::GameObjectManager* gameObjectManager)
 {
     // Create ImGui context
@@ -41,6 +43,9 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager)
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
         hierarchyWindow->SetInspectorWindow(FindWindow("Inspector"));
     }
+
+    // Set the texture for the gameview
+    m_gameViewTex = wolf::TextureManager::CreateTexture("WolfEditor/data/textures/FalconNest.png");
 
 }
 
@@ -109,9 +114,16 @@ void Imgui::DrawMainMenuBar(){
         ImGui::EndMainMenuBar();
     }
     ImGui::PopStyleVar(2);
+
+
+    // TEMP LINES
+    ImGui::Begin("Settings");
+    ImGui::Text("Temp widow to try and display a texture");
+    ImGui::Image(m_gameViewTex->GetGLTexture(), ImVec2(500, 500));
+
+
+    ImGui::End();
 }
-
-
 
 void Imgui::Shutdown()
 {

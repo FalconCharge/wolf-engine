@@ -154,8 +154,18 @@ void Texture::LoadImage(const std::string& path)
 
     int w,h,n;
     unsigned char* pData = stbi_load(path.c_str(), &w, &h, &n, 0);
+
+	if (!pData)
+    {
+        printf("Failed to load image: %s\nReason: %s\n",
+               path.c_str(),
+               stbi_failure_reason());
+        return;
+    }
 	int format = -1;
 	int internalFormat = -1;
+
+
 	switch(n) 
 	{
 		case 1:

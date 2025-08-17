@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
 #include "ImguiWindow.h"
@@ -11,6 +12,8 @@
 
 #include <vector>
 #include <memory>
+
+#include "render/TextureManager.h"
 
 
 
@@ -28,11 +31,15 @@ class Imgui{
 
         std::vector<ImguiWindow*>& GetWindows() { return m_imguiWindows; }
 
+        wolf::Texture* m_gameViewTex;
+
+
     private:
         GLFWwindow* m_window;
         ImGuiIO* m_io;
 
         std::vector<ImguiWindow*> m_imguiWindows;
+
 
         // Methods
         void DrawMainMenuBar();
