@@ -45,31 +45,8 @@ void App::_init()
 {
 #if _WIN32
 
-    // DWORD len = GetCurrentDirectory(0, NULL);
-    // char* dir = new char[len];
-    // GetCurrentDirectory(len, dir);
-    // printf("dir");
-
-    // if(strstr(dir,"\\Debug"))
-    // {
-    //     int offset = strstr(dir, "\\Debug") - dir;
-    //     if(offset == len - 7)
-    //     {
-    //         char* newDir = new char[len + strlen("\\..\\..")];
-    //         sprintf(newDir, "%s%s", dir, "\\..\\..");
-    //         SetCurrentDirectory(newDir);
-    //         char verify[MAX_PATH];
-    //         GetCurrentDirectory(MAX_PATH, verify);
-    //         printf("New working directory: %s\n", verify);
-    //         delete[] newDir;
-    //     }
-    // }
-    // delete[] dir;
-
     char dir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, dir);
-
-    //printf("Current working directory: %s\n", dir);
 
     // If we are inside build/WolfEditor/Debug or build/WolfEditor/Release, go up 3
     if (strstr(dir, "\\build\\WolfEditor\\Debug") || strstr(dir, "\\build\\WolfEditor\\Release")) {

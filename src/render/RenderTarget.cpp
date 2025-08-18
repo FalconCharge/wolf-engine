@@ -53,8 +53,12 @@ RenderTarget::RenderTarget(unsigned int width, unsigned int height, wolf::Textur
 RenderTarget::RenderTarget(unsigned int width, unsigned int height, bool isScreen, wolf::Texture::Format fmt, bool withDepth)
 	: m_fbo(0), m_colorBuffer(nullptr), m_depthBuffer(nullptr), m_viewportWidth(width), m_viewportHeight(height), m_isScreen(isScreen), m_fmt(fmt)
 {
-	m_texWidth = nextPow2(width);
-	m_texHeight = nextPow2(height);
+	
+	// Not sure why They want to make the texture larger? // Changed becuase it didn't fit in the game view properly
+	// m_texWidth = nextPow2(width);
+	// m_texHeight = nextPow2(height);
+	m_texWidth = width;
+	m_texHeight = height;
 
 	if( !isScreen )
 	{

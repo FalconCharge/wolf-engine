@@ -21,6 +21,7 @@ class WolfEditor : public wolf::App{
         {
             // SetUp ImGui
             m_Imgui = std::make_unique<Imgui>(this->getWindow());
+            // The 1920 and 1080 is the quality of the image
             m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
             m_Imgui->Init(&m_gameObjectManager, m_GameView);
