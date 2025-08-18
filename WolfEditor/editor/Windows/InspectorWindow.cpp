@@ -23,8 +23,8 @@ void InspectorWindow::WindowSetup()
     ImVec2 inspectorPos = ImVec2(viewportPos.x + viewportSize.x - inspectorWidth - margin, viewportPos.y + 33);
     ImVec2 inspectorSize = ImVec2(inspectorWidth, viewportSize.y - 300 - margin); // height minus top and bottom margins
 
-    ImGui::SetNextWindowPos(inspectorPos, ImGuiCond_Once);
-    ImGui::SetNextWindowSize(inspectorSize, ImGuiCond_Once);
+    //ImGui::SetNextWindowPos(inspectorPos, ImGuiCond_Once);
+    //ImGui::SetNextWindowSize(inspectorSize, ImGuiCond_Once);
 }
 
 void InspectorWindow::DrawContent()

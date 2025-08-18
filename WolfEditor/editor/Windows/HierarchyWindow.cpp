@@ -22,8 +22,8 @@ void HierarchyWindow::WindowSetup(){
     ImVec2 hierarchyPos = ImVec2(viewportPos.x + 1, viewportPos.y + 33);
     ImVec2 hierarchySize = ImVec2(300, viewportSize.y - 300);
 
-    ImGui::SetNextWindowPos(hierarchyPos, ImGuiCond_Once);
-    ImGui::SetNextWindowSize(hierarchySize, ImGuiCond_Once);
+    //ImGui::SetNextWindowPos(hierarchyPos, ImGuiCond_Once);
+    //ImGui::SetNextWindowSize(hierarchySize, ImGuiCond_Once);
 }
 void HierarchyWindow::DrawContent()
 {

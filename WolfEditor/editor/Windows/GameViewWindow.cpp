@@ -24,12 +24,28 @@ void GameViewWindow::WindowSetup(){
         viewportSize.y - topBarHeight - bottomMargin       // height
     );
 
-    ImGui::SetNextWindowPos(gameViewPos, ImGuiCond_Once);
-    ImGui::SetNextWindowSize(gameViewSize, ImGuiCond_Once);
+    //ImGui::SetNextWindowPos(gameViewPos, ImGuiCond_Once);
+    //ImGui::SetNextWindowSize(gameViewSize, ImGuiCond_Once);
 }
 
 
 void GameViewWindow::DrawContent()
 {
-    ImGui::Image(m_gameView->GetColorBuffer()->GetGLTexture(), ImVec2(500, 500));
+
+    // Get the available content size of the current ImGui window
+    ImVec2 availSize = ImGui::GetContentRegionAvail();
+
+    // Optional: maintain aspect ratio
+    float aspect = (float)m_gameView->GetViewportWidth() / (float)m_gameView->GetViewportHeight();
+    float width = availSize.x;
+    float height = width / aspect;
+
+    // If height is too tall, shrink it to fit
+    if (height > availSize.y) {
+        height = availSize.y;
+        width = height * aspect;
+    }
+
+    ImGui::Image((ImTextureID)m_gameView->GetColorBuffer()->GetGLTexture(), ImVec2(width, height), ImVec2(0, 1), ImVec2(1, 0));
+
 }

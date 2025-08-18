@@ -30,8 +30,8 @@ void ConsoleWindow::WindowSetup()
     ImVec2 consolePos = ImVec2(xPos, yPos);
     ImVec2 consoleSize = ImVec2(width, height);
 
-    ImGui::SetNextWindowPos(consolePos, ImGuiCond_Once);
-    ImGui::SetNextWindowSize(consoleSize, ImGuiCond_Once);
+    //ImGui::SetNextWindowPos(consolePos, ImGuiCond_Once);
+    //ImGui::SetNextWindowSize(consoleSize, ImGuiCond_Once);
 }
 
 

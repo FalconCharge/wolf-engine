@@ -110,15 +110,6 @@ void Imgui::DrawMainMenuBar(){
         ImGui::EndMainMenuBar();
     }
     ImGui::PopStyleVar(2);
-
-
-    // TEMP LINES
-    ImGui::Begin("Simple Texture Display");
-    ImGui::Text("Temp widow to try and display a texture");
-    ImGui::Image(m_gameViewFramebuffer->GetColorBuffer()->GetGLTexture(), ImVec2(500, 500));
-
-
-    ImGui::End();
 }
 
 void Imgui::Shutdown()

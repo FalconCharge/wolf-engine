@@ -21,41 +21,52 @@ class WolfEditor : public wolf::App{
         {
             // SetUp ImGui
             m_Imgui = std::make_unique<Imgui>(this->getWindow());
-            m_GameView = new wolf::RenderTarget(1280, 720, wolf::Texture::FMT_8888);
+            m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
-            m_Imgui->Init(&m_gameObjectManager, m_GameView); // TODO Pass the FBO
+            m_Imgui->Init(&m_gameObjectManager, m_GameView);
 
-
-            // Setup the game files
-            // m_week2 = Week2();
+            // Setup samples
+            m_sampleRunner.addSample(new SampleClipSpace(this));
+            m_sampleRunner.addSample(new SampleClipSpaceColors(this));
+            m_sampleRunner.addSample(new SampleOrtho(this));
+            m_sampleRunner.addSample(new SamplePerspective(this));
+            m_sampleRunner.addSample(new SampleWorldTransform(this));
         }
 
         void Update(float dt) override
         {
             m_Imgui->NewFrame();
-            //m_week2.Update(dt);
+
+            if(isKeyDown(' '))
+            {
+                m_lastDown = true;
+            }
+            else if(m_lastDown)
+            {
+                m_sampleRunner.nextSample();
+                m_lastDown = false;
+            }
+
+            m_sampleRunner.update(dt);
         }
 
         void Render() override
         {
             // Editor-specific rendering logic goes here
-
             glfwPollEvents();
 
             m_GameView->Bind();
-            
-            // Render
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            // Game Scene rendering
+            m_sampleRunner.render(m_width, m_height);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             m_Imgui->Render();
-            
-            //m_week2.Render();
-
         }
+
+
 
     private:
         // Add editor-specific members here
@@ -66,6 +77,10 @@ class WolfEditor : public wolf::App{
 
         // The game Src code
         //Week2 m_week2;
+
+        // For running the game
+        SampleRunner m_sampleRunner;
+        bool m_lastDown = false;
 
 };
 
