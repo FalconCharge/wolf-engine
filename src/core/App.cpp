@@ -48,8 +48,8 @@ void App::_init()
     char dir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, dir);
 
-    // If we are inside build/WolfEditor/Debug or build/WolfEditor/Release, go up 3
-    if (strstr(dir, "\\build\\WolfEditor\\Debug") || strstr(dir, "\\build\\WolfEditor\\Release")) {
+    // If we are inside build/bin/Debug or build/bin/Release, go up 3
+    if (strstr(dir, "\\build\\bin\\DEBUG") || strstr(dir, "\\build\\bin\\Release")) {
         SetCurrentDirectory("..\\..\\..");
     }
 

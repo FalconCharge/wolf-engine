@@ -8,16 +8,21 @@ namespace wolf
     class Scene
     {
     public:
-        Scene();
+        Scene(const std::string& name);
         ~Scene();
 
         void Update(float deltaTime);
         void Render();
 
-        void AddGameObject(GameObject* gameObject);
-        void RemoveGameObject(GameObject* gameObject);
+
+        // Getters
+        GameObjectManager& GetGameObjectManager() { return m_GameObjectManager; }
+        const std::string& GetName() const { return m_Name; }
+        
 
     private:
-        std::vector<GameObject*> m_gameObjects;
+
+        std::string m_Name;
+        GameObjectManager m_GameObjectManager;
     };
 }

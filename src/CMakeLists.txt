@@ -3,8 +3,6 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/**/*.cpp"
 )
 
-
-
 add_library(WolfEngine STATIC ${SRC_FILES})
 
 # Include public headers from wolf/
