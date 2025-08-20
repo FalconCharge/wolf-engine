@@ -3,11 +3,6 @@ file(GLOB_RECURSE GAME_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
 
-# Sanity check: make sure we actually found something
-if (NOT GAME_FILES)
-    message(FATAL_ERROR "No source files found for Game in ${CMAKE_CURRENT_SOURCE_DIR}/src")
-endif()
-
 # Create the executable
 add_executable(Game ${GAME_FILES})
 

@@ -1,5 +1,5 @@
 #include "sampleClipSpace.h"
-#include "../samplefw/Grid2D.h"
+#include "Grid2D.h"
 
 static const GLfloat gs_squareVertices[] = {
 	-1.0f,  -1.0f,

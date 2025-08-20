@@ -4,19 +4,21 @@ file(GLOB EDITOR_SOURCES
     "editor/windows/*.cpp"
 )
 
-# Gather sample sources
-file(GLOB SAMPLE_SOURCES
-    "../samplefw/*.cpp"
+# Gather game sources
+file(GLOB GAME_SOURCES
+    "../game/src/*.cpp"
 )
 
+# Remove MyGame.cpp from the list
+list(REMOVE_ITEM GAME_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/../game/src/MyGame.cpp")
 
-add_executable(WolfEditor ${EDITOR_SOURCES} ${SAMPLE_SOURCES})
+add_executable(WolfEditor ${EDITOR_SOURCES} ${GAME_SOURCES})
 
 # Include engine headers and external dependencies
 target_include_directories(WolfEditor PRIVATE
     ${CMAKE_SOURCE_DIR}/wolf
     ${CMAKE_SOURCE_DIR}/external
-    ${CMAKE_SOURCE_DIR}/samplefw
+    ${CMAKE_SOURCE_DIR}/game
 )
 
 # Find and link imgui and other libs from vcpkg

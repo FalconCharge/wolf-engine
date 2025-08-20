@@ -15,8 +15,8 @@ namespace wolf
 		GameObject();
 		~GameObject();
 
-		void Update(float deltaTime);
-		void Render();
+		virtual void Update(float deltaTime);
+		virtual void Render();
 
 		void AddComponent(Component* component);
 		void RemoveComponent(Component* component);
@@ -40,7 +40,7 @@ namespace wolf
         std::string m_name = "null";
         std::string m_tag = "null";
 		Transform m_transform;
-        std::vector<std::unique_ptr<Component>> m_components;
+        //std::vector<Component*> m_components;
 
         int m_id = 0;
 

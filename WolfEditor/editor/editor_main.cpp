@@ -8,7 +8,8 @@
 #include "render/RenderTarget.h"
 #include <memory>
 
-#include "examplemain.h"
+#include "src/GameLogic.h"
+
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -26,29 +27,14 @@ class WolfEditor : public wolf::App{
 
             m_Imgui->Init(&m_gameObjectManager, m_GameView);
 
-            // Setup samples
-            m_sampleRunner.addSample(new SampleClipSpace(this));
-            m_sampleRunner.addSample(new SampleClipSpaceColors(this));
-            m_sampleRunner.addSample(new SampleOrtho(this));
-            m_sampleRunner.addSample(new SamplePerspective(this));
-            m_sampleRunner.addSample(new SampleWorldTransform(this));
+            
         }
 
         void Update(float dt) override
         {
             m_Imgui->NewFrame();
 
-            if(isKeyDown(' '))
-            {
-                m_lastDown = true;
-            }
-            else if(m_lastDown)
-            {
-                m_sampleRunner.nextSample();
-                m_lastDown = false;
-            }
-
-            m_sampleRunner.update(dt);
+            m_game.Update(dt, this);
         }
 
         void Render() override
@@ -59,7 +45,7 @@ class WolfEditor : public wolf::App{
             m_GameView->Bind();
 
             // Game Scene rendering
-            m_sampleRunner.render(m_width, m_height);
+            m_game.Render(m_width, m_height);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -77,11 +63,7 @@ class WolfEditor : public wolf::App{
         wolf::RenderTarget* m_GameView;
 
         // The game Src code
-        //Week2 m_week2;
-
-        // For running the game
-        SampleRunner m_sampleRunner;
-        bool m_lastDown = false;
+        GameLogic m_game;
 
 };
 

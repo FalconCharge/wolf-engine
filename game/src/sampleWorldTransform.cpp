@@ -1,5 +1,5 @@
 #include "sampleWorldTransform.h"
-#include "../samplefw/Grid2D.h"
+#include "Grid2D.h"
 
 static const GLfloat gs_triangleVertices[] = {
 	-1.0f, 0.0f, 0.0f,

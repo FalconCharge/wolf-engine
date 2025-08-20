@@ -1,5 +1,5 @@
 #include "sampleOrtho.h"
-#include "../samplefw/Grid2D.h"
+#include "Grid2D.h"
 
 static const GLfloat gs_squareVertices[] = {
 	100.0f, 100.0f,
