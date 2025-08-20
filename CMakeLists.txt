@@ -1,41 +1,27 @@
-cmake_minimum_required(VERSION 3.15)
-project(WolfEngine VERSION 0.1.0)
+    cmake_minimum_required(VERSION 3.15)
+    project(WolfProjectRoot)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Dependencies from vcpkg
-set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(OpenGL REQUIRED)
-find_package(glfw3 CONFIG REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(glm CONFIG REQUIRED)
-find_package(assimp CONFIG REQUIRED)
+    # Set global output directories for all targets
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Collect ALL source files (including your main.cpp)
-file(GLOB_RECURSE SAMPLEFW_SOURCE_FILES ${CMAKE_SOURCE_DIR}/samplefw/*.cpp)
-file(GLOB_RECURSE WOLF_SOURCE_FILES ${CMAKE_SOURCE_DIR}/wolf/*.cpp)
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+    # Keep config-specific folders (bin/Debug, bin/Release, etc.)
+    foreach(OUTPUTCONFIG IN LISTS CMAKE_CONFIGURATION_TYPES)
+        string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/bin/${OUTPUTCONFIG})
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/lib/${OUTPUTCONFIG})
+        set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/lib/${OUTPUTCONFIG})
+    endforeach()
 
-# Create the static library
-add_library(WolfEngine STATIC
-    ${SAMPLEFW_SOURCE_FILES}
-    ${WOLF_SOURCE_FILES}
-    ${SOURCE_FILES}
-)
+    # Add subprojects
+    add_subdirectory(src)       # Game.exe
+    add_subdirectory(WolfEditor)        # WolfEngine
+    add_subdirectory(game) # WolfEditor.exe
 
-# Link dependencies
-target_link_libraries(WolfEngine PUBLIC
-    glfw
-    GLEW::GLEW
-    OpenGL::GL
-    assimp::assimp
-    glm::glm
-)
-
-# CHATGPT helped fix it bypass needing a definition
-add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
-
-add_executable(WolfTest src/examplemain.cpp)
-
-target_link_libraries(WolfTest PRIVATE WolfEngine)
+    # Compile defs
+    target_compile_definitions(WolfEngine PRIVATE GLM_ENABLE_EXPERIMENTAL)
+    target_compile_definitions(WolfEditor PRIVATE GLM_ENABLE_EXPERIMENTAL)
