@@ -18,9 +18,18 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget*
 
     m_io = &ImGui::GetIO(); // Retrieve pointer for convenience
     m_io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    m_io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 
     // Setup ImGui style
     ImGui::StyleColorsDark();
+
+    // ImGui Recommends this for multi windows
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (m_io->ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
 
     //Increase the font size slightly
     ImGui::GetIO().FontGlobalScale = 1.4f;  //TODO Add a custom font for the size
@@ -32,8 +41,6 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget*
     // Add editor windows
 
     AddWindow(new GameViewWindow(gameView));
-
-    AddWindow(new ConsoleWindow());
 
     AddWindow(new HierarchyWindow(gameObjectManager->GetGameObjects(), -1));
 
@@ -129,7 +136,6 @@ void Imgui::NewFrame()
 
 void Imgui::Render()
 {
-
     DrawDockSpace();
 
     // 2. Now render all your windows, docked into the main dockspace
@@ -139,10 +145,17 @@ void Imgui::Render()
         window->Draw();
     }
 
-    DrawMainMenuBar();
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    if (m_io->ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup_current_context);
+    }
+
 }
 
 void Imgui::AddWindow(ImguiWindow* window)
@@ -162,31 +175,34 @@ ImguiWindow* Imgui::FindWindow(const std::string& name) const
     return nullptr; // Not found
 }
 
-
 void Imgui::DrawDockSpace()
 {
-
     // Fullscreen invisible window to hold dockspace
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
     ImGui::SetNextWindowSize(viewport->Size);
     ImGui::SetNextWindowViewport(viewport->ID);
 
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-    window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-    window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar
+                                  | ImGuiWindowFlags_NoCollapse
+                                  | ImGuiWindowFlags_NoResize
+                                  | ImGuiWindowFlags_NoMove
+                                  | ImGuiWindowFlags_NoBringToFrontOnFocus
+                                  | ImGuiWindowFlags_NoNavFocus
+                                  | ImGuiWindowFlags_MenuBar;
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode
+                                       | ImGuiDockNodeFlags_NoSplit;
 
     static bool dockspace_open = true;
 
     ImGui::Begin("DockSpaceWindow", &dockspace_open, window_flags);
-    ImGui::PopStyleVar(2);
+
+    DrawMainMenuBar();
 
     // Create dockspace
     ImGuiID dockspace_id = ImGui::GetID("MainDockSpace");
-    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 
     ImGui::End();
 }
