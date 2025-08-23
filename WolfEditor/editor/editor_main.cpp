@@ -27,6 +27,7 @@ class WolfEditor : public wolf::App{
 
             m_Imgui->Init(&m_gameObjectManager, m_GameView);
 
+            m_game.SetGameObjectManager(&m_gameObjectManager);
             
         }
 
@@ -44,12 +45,14 @@ class WolfEditor : public wolf::App{
 
             m_GameView->Bind();
 
+            glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // set to dark gray
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear with that color
+
             // Game Scene rendering
             m_game.Render(m_width, m_height);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             m_Imgui->Render();
         }
 

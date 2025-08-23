@@ -12,8 +12,19 @@
 
 			void Update(float deltaTime);
 			void Render();
+			
+			template <typename T, typename... Args>
+			T* CreateGameObject(Args&&... args)
+			{
+				static_assert(std::is_base_of<GameObject, T>::value,
+							"T must inherit from GameObject");
 
-			GameObject* CreateGameObject();
+				auto obj = std::make_unique<T>(std::forward<Args>(args)...);
+				T* rawPtr = obj.get();
+				m_gameObjects.push_back(std::move(obj));
+				return rawPtr;
+			}
+
 			void DestroyGameObject(GameObject* gameObject);
 
 			// Find a game object by its name
