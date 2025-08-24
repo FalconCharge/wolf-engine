@@ -85,12 +85,8 @@ void DebugCube::Render()
     m_Material->SetUniform("projection", proj);
     m_Material->SetUniform("view", view);
 
-    
-
-
     m_Material->Apply();
     m_Decl->Bind();
-
 
 
     glDrawElements(GL_TRIANGLES, (GLsizei)m_Indices.size(), GL_UNSIGNED_SHORT, 0);

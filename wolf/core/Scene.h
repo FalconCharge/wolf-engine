@@ -9,20 +9,24 @@ namespace wolf
     {
     public:
         Scene(const std::string& name);
-        ~Scene();
+        virtual ~Scene() = default;
 
-        void Update(float deltaTime);
-        void Render();
+        virtual void Init() = 0;
+        virtual void Update(float dt) = 0;
+        virtual void Render(int width, int height) = 0;
+        virtual void ShutDown() = 0;
 
+        wolf::GameObjectManager* GetGameObjectManager() {
+            return &m_GameObjectManager;
+        }
 
-        // Getters
-        GameObjectManager& GetGameObjectManager() { return m_GameObjectManager; }
-        const std::string& GetName() const { return m_Name; }
-        
+    protected:
+        // Managers
+        GameObjectManager m_GameObjectManager;
+
 
     private:
 
         std::string m_Name;
-        GameObjectManager m_GameObjectManager;
     };
 }

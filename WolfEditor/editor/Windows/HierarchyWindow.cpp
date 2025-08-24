@@ -3,8 +3,11 @@
 #include <memory>
 #include <cstring>
 #include <iostream>
+#include "core/SceneManager.h"
 
 #include "InspectorWindow.h"
+
+#include "src/debugCube.h"
 
 HierarchyWindow::HierarchyWindow(const std::vector<std::unique_ptr<wolf::GameObject>>& gameObjects, int selected)
     : ImguiWindow("Hierarchy"),
@@ -27,6 +30,36 @@ void HierarchyWindow::WindowSetup(){
 }
 void HierarchyWindow::DrawContent()
 {
+
+    // Right-click anywhere in the Hierarchy window
+if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_MouseButtonRight))
+{
+    if (ImGui::MenuItem("Create Empty GameObject"))
+    {
+        auto* scene = wolf::SceneManager::Instance().GetActiveScene();
+        if (scene)
+        {
+            auto* manager = scene->GetGameObjectManager();
+            if (manager)
+            {
+                auto* go = manager->CreateGameObject<DebugCube>();
+                if (go)
+                    go->SetName("New GameObject");
+            }
+            else
+            {
+                std::cerr << "ERROR: Scene has no GameObjectManager\n";
+            }
+        }
+        else
+        {
+            std::cerr << "ERROR: No active scene!\n";
+        }
+    }
+    ImGui::EndPopup();
+}
+
+
 
     for (size_t i = 0; i < m_gameObjects.size(); ++i)
     {

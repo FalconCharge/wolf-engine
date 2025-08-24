@@ -14,6 +14,9 @@
 #include "sampleWorldTransform.h"
 #include "sampleCube.h"
 
+#include "TestScene.h"
+#include "core/SceneManager.h"  
+
 class GameLogic
 {
 public:
@@ -25,12 +28,16 @@ public:
         // m_sampleRunner.addSample(new SamplePerspective(nullptr));
         // m_sampleRunner.addSample(new SampleWorldTransform(nullptr));
         // m_sampleRunner.addSample(new SampleCube(nullptr));
-
+        wolf::SceneManager::Instance().LoadScene<TestScene>("Test Scene");
 
     }
 
     void Update(float dt, wolf::App* app)
     {
+
+        wolf::SceneManager::Instance().Update(dt);
+
+
         // if(app->isKeyDown(' '))
         // {
         //     m_lastDown = true;
@@ -44,41 +51,44 @@ public:
         // m_sampleRunner.update(dt);
 
 
-        if(app->isKeyDown('C'))
-        {
-            m_lastDown = true;
-        }
-        else if(m_lastDown)
-        {
-            if (gameObjectManager)
-            {
-                wolf::GameObject* cube = gameObjectManager->CreateGameObject<DebugCube>();
-                cube->SetName("DebugCube01"); // if you have a naming system
-            }
-            m_lastDown = false;
-        }
+        // if(app->isKeyDown('C'))
+        // {
+        //     m_lastDown = true;
+        // }
+        // else if(m_lastDown)
+        // {
+        //     if (gameObjectManager)
+        //     {
+        //         wolf::GameObject* cube = gameObjectManager->CreateGameObject<DebugCube>();
+        //         cube->SetName("DebugCube01"); // if you have a naming system
+        //     }
+        //     m_lastDown = false;
+        // }
 
-        // Update game objects
-        if (gameObjectManager)
-        {
-            gameObjectManager->Update(dt);
-        }
+        // // Update game objects
+        // if (gameObjectManager)
+        // {
+        //     gameObjectManager->Update(dt);
+        // }
     }
 
     void Render(int width, int height)
     {
         //m_sampleRunner.render(width, height);
-        gameObjectManager->Render();
+        //gameObjectManager->Render();
+
+        wolf::SceneManager::Instance().Render(width, height);
     }
 
     void SetGameObjectManager(wolf::GameObjectManager* gameManager)
     {
-        gameObjectManager = gameManager;
+        //gameObjectManager = gameManager;
+        return;
     }
 
 private:
     //SampleRunner m_sampleRunner;
-    bool m_lastDown = false;
+    // bool m_lastDown = false;
 
-    wolf::GameObjectManager* gameObjectManager = nullptr;
+    // wolf::GameObjectManager* gameObjectManager = nullptr;
 };

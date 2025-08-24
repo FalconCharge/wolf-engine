@@ -7,17 +7,13 @@ namespace wolf
     {
     }
 
-    Scene::~Scene()
-    {
-        // Cleans the scene
-    }
 
     void Scene::Update(float deltaTime)
     {
         m_GameObjectManager.Update(deltaTime);
     }
 
-    void Scene::Render()
+    void Scene::Render(int width, int height)
     {
         m_GameObjectManager.Render();
     }

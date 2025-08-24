@@ -18,23 +18,20 @@ static void glfw_error_callback(int error, const char* description)
 
 class WolfEditor : public wolf::App{
     public: 
-        WolfEditor() : wolf::App("Wolf Editor"), m_gameObjectManager()
+        WolfEditor() : wolf::App("Wolf Editor")
         {
             // SetUp ImGui
             m_Imgui = std::make_unique<Imgui>(this->getWindow());
             // The 1920 and 1080 is the quality of the image
             m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
-            m_Imgui->Init(&m_gameObjectManager, m_GameView);
-
-            m_game.SetGameObjectManager(&m_gameObjectManager);
-            
+            m_Imgui->Init(wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager(), m_GameView);
+                        
         }
 
         void Update(float dt) override
         {
             m_Imgui->NewFrame();
-
             m_game.Update(dt, this);
         }
 
@@ -61,7 +58,6 @@ class WolfEditor : public wolf::App{
     private:
         // Add editor-specific members here
         std::unique_ptr<Imgui> m_Imgui;
-        wolf::GameObjectManager m_gameObjectManager;
 
         wolf::RenderTarget* m_GameView;
 
