@@ -12,14 +12,18 @@ namespace wolf
 		// No explicit cleanup needed for unique_ptr, they will be automatically cleaned up
 	}
 
-	GameObject* GameObjectManager::CreateGameObject()
-	{
-		std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>();
-		gameObject->GetTransform().SetOwner(gameObject.get());	// Sets the transforms owner (the GO)
-		GameObject* rawPtr = gameObject.get();
-		m_gameObjects.push_back(std::move(gameObject));
-		return rawPtr;
-	}
+	// Generic factory method for any GameObject type
+	// template <typename T, typename... Args>
+	// T* CreateGameObject(Args&&... args)
+	// {
+	// 	static_assert(std::is_base_of<GameObject, T>::value, 
+	// 					"T must inherit from GameObject");
+
+	// 	auto obj = std::make_unique<T>(std::forward<Args>(args)...);
+	// 	T* rawPtr = obj.get();
+	// 	m_gameObjects.push_back(std::move(obj));
+	// 	return rawPtr;
+	// }
 
 	void GameObjectManager::DestroyGameObject(GameObject* gameObject)
 	{

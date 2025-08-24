@@ -21,10 +21,7 @@ namespace wolf{
 
 	void GameObject::Render()
 	{
-		// for (const auto& component : m_components)
-		// {
-		// 	component->Render();
-		// }
+		this->Render();
 	}
 
 

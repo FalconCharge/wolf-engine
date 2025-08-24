@@ -17,6 +17,7 @@ public:
     void Draw()
     {
         WindowSetup();
+        ImGui::SetNextWindowDockID(ImGui::GetID("MainDockSpace"), ImGuiCond_FirstUseEver);
         ImGui::Begin(m_Name, nullptr, m_Flags);
         DrawContent();
         ImGui::End();

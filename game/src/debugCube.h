@@ -8,7 +8,6 @@
 struct DebugCubeVertex
 {
     glm::vec3 Position;
-    glm::vec3 Color;
 };
 
 class DebugCube : public wolf::GameObject
@@ -39,5 +38,7 @@ private:
     wolf::Material* m_Material = nullptr; // Prob won't use currently
     // Shader for adding color to the cube
     wolf::Program* m_Program = nullptr;
+    // For adding indexing and vertexes to bind 
+    wolf::VertexDeclaration* m_Decl = nullptr;
 
 };
