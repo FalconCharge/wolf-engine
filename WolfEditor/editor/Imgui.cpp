@@ -10,6 +10,8 @@
 
 #include "render/RenderTarget.h"
 
+#include "core/SceneManager.h"
+
 void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget* gameView)
 {
     // Create ImGui context
@@ -42,9 +44,9 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget*
 
     AddWindow(new GameViewWindow(gameView));
 
-    AddWindow(new HierarchyWindow(gameObjectManager->GetGameObjects(), -1));
+    AddWindow(new HierarchyWindow(-1));
 
-    AddWindow(new InspectorWindow(gameObjectManager->GetGameObjects(), -1));
+    AddWindow(new InspectorWindow(-1));
 
 
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {

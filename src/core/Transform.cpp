@@ -92,10 +92,11 @@ namespace wolf{
 
     glm::quat Transform::GetWorldRotation() const {
         if (m_Parent) {
-            return m_Parent->GetWorldRotation() * m_Rotation;
+            return m_Parent->GetWorldRotation() + m_Rotation;
         }
         return m_Rotation;
     }
+
 
     glm::vec3 Transform::GetWorldScale() const {
         if (m_Parent) {

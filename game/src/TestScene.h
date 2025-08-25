@@ -13,6 +13,8 @@ public:
         std::cout << "TestScene Initialized!\n";
         // Create a test cube
         m_GameObjectManager.CreateGameObject<DebugCube>()->SetName("TestCube01");
+
+        m_GameObjectManager.CreateGameObject<DebugCube>()->SetParent(m_GameObjectManager.FindGameObjectByName("TestCube01"));
     }
 
     void Update(float dt) override

@@ -12,19 +12,6 @@ namespace wolf
 		// No explicit cleanup needed for unique_ptr, they will be automatically cleaned up
 	}
 
-	// Generic factory method for any GameObject type
-	// template <typename T, typename... Args>
-	// T* CreateGameObject(Args&&... args)
-	// {
-	// 	static_assert(std::is_base_of<GameObject, T>::value, 
-	// 					"T must inherit from GameObject");
-
-	// 	auto obj = std::make_unique<T>(std::forward<Args>(args)...);
-	// 	T* rawPtr = obj.get();
-	// 	m_gameObjects.push_back(std::move(obj));
-	// 	return rawPtr;
-	// }
-
 	void GameObjectManager::DestroyGameObject(GameObject* gameObject)
 	{
 		// Use explicit iterator type instead of auto
@@ -49,6 +36,7 @@ namespace wolf
 				return gameObject.get();
 			}
 		}
+		std::cout << "ERROR: Could not find Game Object" << std::endl;
 		return nullptr;
 	}
 
@@ -76,6 +64,28 @@ namespace wolf
 
 	const std::vector<std::unique_ptr<GameObject>>& GameObjectManager::GetGameObjects() const {
     	return m_gameObjects;
+	}
+
+	void wolf::GameObjectManager::DebugPrint() const
+	{
+		std::cout << "=== GameObjectManager Debug ===\n";
+		std::cout << "Total GameObjects: " << m_gameObjects.size() << "\n";
+
+		for (size_t i = 0; i < m_gameObjects.size(); ++i)
+		{
+			const auto& obj = m_gameObjects[i];
+			if (!obj) continue;
+
+			std::cout << "[" << i << "] " 
+					<< obj->GetName() 
+					<< " @ " << obj.get();
+
+			if (obj->GetTransform().GetParent())
+			 	std::cout << " (Child of " << obj->GetTransform().GetParent()->GetOwner()->GetName() << ")";
+			
+			std::cout << "\n";
+		}
+		std::cout << "===============================\n";
 	}
 
 }

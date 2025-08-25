@@ -7,23 +7,61 @@
 
 DebugCube::DebugCube()
 {
-    // Initialize cube properties
-    // Define 4 corners of a square (XY plane, Z=0)
+    // Define 24 vertices (6 faces × 4 verts)
     m_Vertices = {
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f)},   // Bottom left
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f)},   // Bottom right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f)},   // Top right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f)},   // Top left
+        // Front (Z+)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f)},   // 0 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f)},   // 1 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f)},   // 2 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f)},   // 3 top left
+
+        // Back (Z-)
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f)},   // 4 bottom left
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f)},   // 5 bottom right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f)},   // 6 top right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f)},   // 7 top left
+
+        // Left (X-)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f)},   // 8 bottom left
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f)},   // 9 bottom right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f)},   // 10 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f)},   // 11 top left
+
+        // Right (X+)
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f)},   // 12 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f)},   // 13 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f)},   // 14 top right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f)},   // 15 top left
+
+        // Top (Y+)
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f)},   // 16 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f)},   // 17 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f)},   // 18 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f)},   // 19 top left
+
+        // Bottom (Y-)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f)},   // 20 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f)},   // 21 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f)},   // 22 top right
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f)}    // 23 top left
     };
 
-    // Two triangles (0-1-2, 2-3-0)
+    // Indices (two triangles per face)
     m_Indices = {
-        // Bottom Right side triangle
-        0, 1, 2,
-
-        // Top left side triangle
-        0, 2, 3
+        // Front
+        0, 1, 2,  0, 2, 3,
+        // Back
+        4, 5, 6,  4, 6, 7,
+        // Left
+        8, 9, 10, 8, 10, 11,
+        // Right
+        12, 13, 14, 12, 14, 15,
+        // Top
+        16, 17, 18, 16, 18, 19,
+        // Bottom
+        20, 21, 22, 20, 22, 23
     };
+
 
     m_VertexBuffer = wolf::BufferManager::CreateVertexBuffer(m_Vertices.data(), m_Vertices.size() * sizeof(DebugCubeVertex));
     m_IndexBuffer = wolf::BufferManager::CreateIndexBuffer(m_Indices.data(), static_cast<unsigned int>(m_Indices.size()));

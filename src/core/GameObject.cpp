@@ -1,9 +1,9 @@
 #include "core/GameObject.h"
 
 namespace wolf{
-	GameObject::GameObject()
+	GameObject::GameObject() : m_Name(""), m_transform()
 	{
-
+		m_transform.SetOwner(this);
     }
 
 	GameObject::~GameObject()
@@ -45,6 +45,9 @@ namespace wolf{
 		if (parent)
 		{
 			m_transform.SetParent(&parent->GetTransform());
+		}else{
+			// Remove the parent
+			m_transform.SetParent(nullptr);
 		}
 	}
 }
