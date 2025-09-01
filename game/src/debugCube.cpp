@@ -7,43 +7,44 @@
 
 DebugCube::DebugCube()
 {
+    // Chat GPT generated cube data
     // Define 24 vertices (6 faces × 4 verts)
     m_Vertices = {
-        // Front (Z+)
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 0 bottom left
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 1 bottom right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 2 top right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 3 top left
+        // Front (Z+ : Blue)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)},   // 0 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)},   // 1 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)},   // 2 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)},   // 3 top left
 
-        // Back (Z-)
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 4 bottom left
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 5 bottom right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 6 top right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 7 top left
+        // Back (Z- : Dark Blue)
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 0.0f, 0.5f, 1.0f)},   // 4 bottom left
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.0f, 0.0f, 0.5f, 1.0f)},   // 5 bottom right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(0.0f, 0.0f, 0.5f, 1.0f)},   // 6 top right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(0.0f, 0.0f, 0.5f, 1.0f)},   // 7 top left
 
-        // Left (X-)
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 8 bottom left
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 9 bottom right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 10 top right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 11 top left
+        // Left (X- : Dark Red)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)},   // 8 bottom left
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)},   // 9 bottom right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)},   // 10 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)},   // 11 top left
 
-        // Right (X+)
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 12 bottom left
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 13 bottom right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 14 top right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f)},   // 15 top left
+        // Right (X+ : Bright Red)
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 12 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 13 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 14 top right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)},   // 15 top left
 
-        // Top (Y+)
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)},   // 16 bottom left
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)},   // 17 bottom right
-        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)},   // 18 top right
-        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)},   // 19 top left
+        // Top (Y+ : Bright Green)
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 16 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 17 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 1.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 18 top right
+        DebugCubeVertex{glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},   // 19 top left
 
-        // Bottom (Y-)
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)},   // 20 bottom left
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)},   // 21 bottom right
-        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)},   // 22 top right
-        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)}    // 23 top left
+        // Bottom (Y- : Dark Green)
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f)},   // 20 bottom left
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f)},   // 21 bottom right
+        DebugCubeVertex{glm::vec3(1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f)},   // 22 top right
+        DebugCubeVertex{glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.5f, 0.0f, 1.0f)}    // 23 top left
     };
 
     // Indices (two triangles per face)

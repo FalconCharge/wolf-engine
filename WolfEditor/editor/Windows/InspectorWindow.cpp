@@ -52,7 +52,6 @@ void InspectorWindow::DrawContent()
         glm::decompose(world, scale, rotQ, pos, skew, perspective);
         glm::vec3 rot = glm::degrees(glm::eulerAngles(rotQ));
 
-        // Step 2: Show in ImGui and check for edits
         bool changed = false;
 
         changed |= ImGui::DragFloat3("Position (World)", &pos.x, 0.1f);
