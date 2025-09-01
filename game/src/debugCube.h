@@ -8,12 +8,13 @@
 struct DebugCubeVertex
 {
     glm::vec3 Position;
+    glm::vec4 color;
 };
 
 class DebugCube : public wolf::GameObject
 {
 public:
-    // Constructor
+    // Constructor Where the cube gets created
     DebugCube();
 
     // Deconstructor
