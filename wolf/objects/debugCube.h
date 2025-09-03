@@ -1,7 +1,7 @@
 #pragma once
 #include "core/GameObject.h"
-
 #include "render/render.h"
+#include "core/camera.h"
 
 #include "glm/glm.hpp"
 
@@ -19,6 +19,10 @@ public:
 
     // Deconstructor
     ~DebugCube();
+
+    std::string GetType() const override {return "DebugCube";};
+
+    void Init();
 
     // Called each frame to update the cubes properties
     void Update(float dt) override;

@@ -3,6 +3,8 @@
 #include "core/Transform.h"
 #include "core/Component.h"
 
+#include <yaml-cpp/yaml.h>
+
 #include <vector>
 #include <string>
 #include <memory>
@@ -15,8 +17,10 @@ namespace wolf
 		GameObject();
 		~GameObject();
 
+        virtual void Init(){};
 		virtual void Update(float deltaTime);
 		virtual void Render();
+        virtual std::string GetType() const {return "GameObject";}
 
 		void AddComponent(Component* component);
 		void RemoveComponent(Component* component);
@@ -34,6 +38,11 @@ namespace wolf
         void SetTag(const std::string& tag) { m_tag = tag; }
         void SetTransform(const Transform& transform) { m_transform = transform; }
         void SetID(int id) { m_id = id; }
+
+
+        // Serialization
+        YAML::Node Serialize() const;
+        void Deserialize(const YAML::Node& node);
 
 	private:
 

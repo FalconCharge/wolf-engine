@@ -1,12 +1,24 @@
-#include "debugCube.h"
+#include "objects/debugCube.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
+
+#include "core/SceneManager.h"
+
 
 #include <iostream>
 
 DebugCube::DebugCube()
 {
+    Init();
+}
+
+DebugCube::~DebugCube(){
+    wolf::ProgramManager::DestroyProgram(m_Program);
+}
+
+
+void DebugCube::Init(){
     // Chat GPT generated cube data
     // Define 24 vertices (6 faces × 4 verts)
     m_Vertices = {
@@ -81,12 +93,8 @@ DebugCube::DebugCube()
     m_Decl->AppendAttribute(wolf::AT_Position, 3, wolf::CT_Float);
     m_Decl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
     m_Decl->End();
-    
 
-}
-
-DebugCube::~DebugCube(){
-    wolf::ProgramManager::DestroyProgram(m_Program);
+    //std::cout << "DebugCube Initialized with " << m_Vertices.size() << " vertices and " << m_Indices.size() / 3 << " triangles.\n";
 }
 
 void DebugCube::Update(float dt)
@@ -103,23 +111,15 @@ void DebugCube::Render()
     glm::mat4 world = GetTransform().GetWorldMatrix();
     m_Material->SetUniform("world", world);
 
-    glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 10.0f);  // Move 10 units back
-    glm::vec3 cameraTarget= glm::vec3(0.0f, 0.0f, 0.0f);  // Look at origin
-    glm::vec3 up          = glm::vec3(0.0f, 1.0f, 0.0f);  // World up
-
-    glm::mat4 view = glm::lookAt(
-        cameraPos,    // Camera position
-        cameraTarget, // Point to look at
-        up            // World up vector
-    );
-
-    float fov = glm::radians(45.0f);       // Field of view (in radians!)
-    float aspect = (float)1920 / (float)1080;  // From framebuffer size
-    float nearPlane = 0.1f;
-    float farPlane  = 100.0f;
-
-    glm::mat4 proj = glm::perspective(fov, aspect, nearPlane, farPlane);
-
+    std::shared_ptr<wolf::Camera> camera = wolf::SceneManager::Instance().GetActiveScene()->GetMainCamera();
+    glm::mat4 view;
+    glm::mat4 proj;
+    if (camera) {
+        view = camera->GetViewMatrix();
+        proj = camera->GetProjMatrix();
+    }else{
+        std::cout << "No active camera found in the scene!\n";
+    }
 
     m_Material->SetUniform("projection", proj);
     m_Material->SetUniform("view", view);

@@ -16,6 +16,5 @@ protected:
     void WindowSetup() override;
 
 private:
-    wolf::GameObjectManager* m_gameObjectManager;
     int m_selectedIndex;
 };

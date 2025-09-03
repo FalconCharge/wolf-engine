@@ -5,16 +5,6 @@
 
 
 #include "core/GameObjectManager.h"
-
-#include "SampleRunner.h"
-#include "sampleClipSpace.h"
-#include "sampleClipSpaceColors.h"
-#include "sampleOrtho.h"
-#include "samplePerspective.h"
-#include "sampleWorldTransform.h"
-#include "sampleCube.h"
-
-#include "TestScene.h"
 #include "core/SceneManager.h"  
 
 class GameLogic
@@ -22,12 +12,11 @@ class GameLogic
 public:
     GameLogic()
     {
-        wolf::SceneManager::Instance().LoadScene<TestScene>("Test Scene");
+        wolf::SceneManager::Instance().LoadScene<GameScene>("Test Scene");
     }
 
     void Update(float dt, wolf::App* app)
     {
-
         wolf::SceneManager::Instance().Update(dt);
     }
 

@@ -1,6 +1,7 @@
 	#pragma once
 
 	#include "core/GameObject.h"
+	#include "objects/debugCube.h"
 	#include <iostream>
 
 	namespace wolf
@@ -37,6 +38,9 @@
 			const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
 
 			void GameObjectManager::DebugPrint() const;
+
+			YAML::Node Serialize() const;
+			void Deserialize(const YAML::Node& node);
 
 		private:
 

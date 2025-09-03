@@ -88,4 +88,36 @@ namespace wolf
 		std::cout << "===============================\n";
 	}
 
+
+	YAML::Node GameObjectManager::Serialize() const {
+		YAML::Node node;
+		for (const auto& gameObject : m_gameObjects) {
+			node["GameObjects"].push_back(gameObject->Serialize());
+		}
+		return node;
+	}
+
+	void GameObjectManager::Deserialize(const YAML::Node& node) {
+		if (node["GameObjects"] && node["GameObjects"].IsSequence()) {
+			for (const auto& objNode : node["GameObjects"]) {
+				std::unique_ptr<wolf::GameObject> gameObject;
+
+				// Check the type and create the appropriate GameObject subclass if needed
+				std::string type = "GameObject";	// Default type
+				if (objNode["Type"]){
+					type = objNode["Type"].as<std::string>();
+				}
+
+				// Create the correct subclass based on type
+				if (type == "DebugCube") {
+					gameObject = std::make_unique<DebugCube>();
+				} else {
+					gameObject = std::make_unique<GameObject>();
+				}
+
+				gameObject->Deserialize(objNode);
+				m_gameObjects.push_back(std::move(gameObject));
+			}
+		}
+	}
 }

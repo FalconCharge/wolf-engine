@@ -10,7 +10,7 @@
 #include <glm/gtx/quaternion.hpp>        // toMat4 (quat → mat4)
 
 InspectorWindow::InspectorWindow(int selected)
-    : ImguiWindow("Inspector"), m_selectedIndex(selected), m_gameObjectManager(wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager())
+    : ImguiWindow("Inspector"), m_selectedIndex(selected)
 {}
 
 void InspectorWindow::WindowSetup()
@@ -20,11 +20,11 @@ void InspectorWindow::WindowSetup()
 
 void InspectorWindow::DrawContent()
 {
-
-    if (m_selectedIndex >= 0 && m_selectedIndex < (int)m_gameObjectManager->GetGameObjects().size())
+    auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+    if (m_selectedIndex >= 0 && m_selectedIndex < (int)gameObjectManager->GetGameObjects().size())
     {
         ImGui::Text("Selected GameObject:");
-        wolf::GameObject* go = m_gameObjectManager->GetGameObjects()[m_selectedIndex].get();
+        wolf::GameObject* go = gameObjectManager->GetGameObjects()[m_selectedIndex].get();
 
         ImGui::Text("%s", go->GetName().c_str());
 
@@ -84,34 +84,6 @@ void InspectorWindow::DrawContent()
             go->GetTransform().SetRotation(lRotQ);
             go->GetTransform().SetScale(lScale);
         }
-
-
-
-        // // Get the world position to adjust not the local position since it confused me
-        // glm::mat4 world = m_gameObjectManager->GetGameObjects()[m_selectedIndex]->GetTransform().GetWorldMatrix();
-        // glm::vec3 pos, scale, skew;
-        // glm::vec4 perspective;
-        // glm::quat rotQ;
-
-        // glm::decompose(world, scale, rotQ, pos, skew, perspective);
-
-        // glm::vec3 rot = glm::degrees(glm::eulerAngles(rotQ));
-
-        // if (ImGui::DragFloat3("Position", &pos.x, 0.1f)) {
-        //     m_gameObjectManager->GetGameObjects()[m_selectedIndex]->GetTransform().SetPosition(pos);
-        // }
-        // if (ImGui::DragFloat3("Rotation", &rot.x, 0.5f)) { // Edit in degrees
-        //     // Convert degrees back to radians
-        //     glm::vec3 newEulerRadians = glm::radians(rot); // Convert degrees to radians
-
-        //     // Convert Euler radians back to quaternion
-        //     glm::quat newQuat = glm::quat(newEulerRadians);
-        //     m_gameObjectManager->GetGameObjects()[m_selectedIndex]->GetTransform().SetRotation(newQuat);
-        // }
-
-        // if(ImGui::DragFloat3("Scale", &scale.x, 0.1f)) {
-        //     m_gameObjectManager->GetGameObjects()[m_selectedIndex]->GetTransform().SetScale(scale);
-        // }
     }
     else
     {

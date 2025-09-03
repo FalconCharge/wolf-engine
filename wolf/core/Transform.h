@@ -5,6 +5,8 @@
 #include <memory>
 #include <algorithm> // for std::remove
 
+#include <yaml-cpp/yaml.h>
+
 namespace wolf {
 
 class GameObject; // Forward declaration
@@ -47,6 +49,10 @@ public:
 
     // Debug helper
     void DebugString() const;
+
+    // Serialization
+    YAML::Node Serialize() const;
+    void Deserialize(const YAML::Node& node);
 
 private:
     glm::vec3 m_Position {0.0f, 0.0f, 0.0f};

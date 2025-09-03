@@ -7,17 +7,19 @@
 
 #include "InspectorWindow.h"
 
-#include "src/debugCube.h"
+#include "objects/debugCube.h"
 
 HierarchyWindow::HierarchyWindow(int selected) : ImguiWindow("Hierarchy"), m_selectedIndex(selected)
 {
-    m_gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();  
+
 }
 void HierarchyWindow::WindowSetup(){
     // If we want to setup the window in a certain way change some shit here
 }
 void HierarchyWindow::DrawContent()
 {
+    auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+
     // Right-click anywhere in the Hierarchy window
     if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_MouseButtonRight))
     {
@@ -29,9 +31,9 @@ void HierarchyWindow::DrawContent()
         ImGui::EndPopup();
     }
 
-    for (size_t i = 0; i < m_gameObjectManager->GetGameObjects().size(); ++i)
+    for (size_t i = 0; i < gameObjectManager->GetGameObjects().size(); ++i)
     {
-        wolf::GameObject* go = m_gameObjectManager->GetGameObjects()[i].get();
+        wolf::GameObject* go = gameObjectManager->GetGameObjects()[i].get();
         if (!go->GetTransform().GetParent()) // Only draw roots
         {
             DrawGameObjectNode(go, (int)i);            
@@ -67,11 +69,13 @@ void HierarchyWindow::DrawGameObjectNode(wolf::GameObject* go, int index)
             // Find the GameObject that owns this Transform
             wolf::GameObject* childGO = child->GetOwner();
 
+            auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+
 
             int childIndex = -1;
-            for (size_t i = 0; i < m_gameObjectManager->GetGameObjects().size(); ++i)
+            for (size_t i = 0; i < gameObjectManager->GetGameObjects().size(); ++i)
             {
-                if (m_gameObjectManager->GetGameObjects()[i].get() == childGO)
+                if (gameObjectManager->GetGameObjects()[i].get() == childGO)
                 {
                     childIndex = (int)i;
                     break;

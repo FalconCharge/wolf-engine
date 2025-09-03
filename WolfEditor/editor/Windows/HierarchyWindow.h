@@ -21,7 +21,6 @@ class HierarchyWindow : public ImguiWindow
         int m_selectedIndex;
         ImguiWindow* m_inspectorWindow = nullptr;
 
-        wolf::GameObjectManager* m_gameObjectManager;
 
         // Methods
         void DrawGameObjectNode(wolf::GameObject* go, int index);
