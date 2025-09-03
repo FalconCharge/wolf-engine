@@ -29,8 +29,8 @@ public:
 	}
 
     // --- Matrices ---
-    glm::mat4 GetLocalMatrix() const;
-    glm::mat4 GetWorldMatrix() const;
+    glm::mat4 GetLocalMatrix();
+    glm::mat4 GetWorldMatrix();
 
     // --- Local space getters ---
     const glm::vec3& GetPosition() const;
@@ -62,6 +62,9 @@ private:
     Transform* m_Parent = nullptr;
     std::vector<Transform*> m_Children;
     GameObject* m_Owner = nullptr;
+
+    bool m_Dirty;
+    glm::mat4 m_transform;
 };
 
 } // namespace wolf

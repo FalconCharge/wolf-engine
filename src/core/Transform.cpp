@@ -9,7 +9,9 @@
 
 namespace wolf{
     // Constructor
-    Transform::Transform() : m_Position{0.0f, 0.0f, 0.0f}, m_Rotation{0, 0, 0, 1}, m_Scale{1.0f, 1.0f, 1.0f}, m_Parent(nullptr) {}
+    Transform::Transform() : m_Position{0.0f, 0.0f, 0.0f}, m_Rotation{0, 0, 0, 1}, m_Scale{1.0f, 1.0f, 1.0f}, m_Parent(nullptr) {
+        m_Dirty = true;
+    }
 
     Transform::~Transform() {
         // Clean up children
@@ -19,6 +21,7 @@ namespace wolf{
 
 
     void Transform::SetParent(Transform* parent) {
+        m_Dirty = true;
         // Remove from old parent
         if (m_Parent) {
             auto& siblings = m_Parent->m_Children;
@@ -40,15 +43,19 @@ namespace wolf{
         return m_Children;
     }  
 
-    glm::mat4 Transform::GetLocalMatrix() const {
-        glm::mat4 translation = glm::translate(glm::mat4(1.0f), m_Position);
-        glm::mat4 rotationMat = glm::toMat4(m_Rotation);
-        glm::mat4 scaleMat    = glm::scale(glm::mat4(1.0f), m_Scale);
+    glm::mat4 Transform::GetLocalMatrix() {
+        if(m_Dirty){
+            glm::mat4 translation = glm::translate(glm::mat4(1.0f), m_Position);
+            glm::mat4 rotationMat = glm::toMat4(m_Rotation);
+            glm::mat4 scaleMat    = glm::scale(glm::mat4(1.0f), m_Scale);
 
-        return translation * rotationMat * scaleMat;
+            m_transform = translation * rotationMat * scaleMat;
+            m_Dirty = false;
+        }
+        return m_transform;
     }
 
-    glm::mat4 Transform::GetWorldMatrix() const {
+    glm::mat4 Transform::GetWorldMatrix() {
         if (m_Parent) {
             return m_Parent->GetWorldMatrix() * GetLocalMatrix();
         }
@@ -58,12 +65,15 @@ namespace wolf{
 
     // Setters
     void Transform::SetPosition(const glm::vec3& position) {
+        m_Dirty = true;
         m_Position = position;
     }
     void Transform::SetRotation(const glm::quat& rotation) {
+        m_Dirty = true;
         m_Rotation = rotation;
     }
     void Transform::SetScale(const glm::vec3& scale) {
+        m_Dirty = true;
         m_Scale = scale;
     }
 

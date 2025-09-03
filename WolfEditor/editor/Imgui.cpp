@@ -6,7 +6,7 @@
 #include "Windows/HierarchyWindow.h"
 #include "Windows/InspectorWindow.h"
 #include "Windows/GameViewWindow.h"
-#include "Windows/ConsoleWindow.h"
+#include "Windows/StatsWindow.h"
 
 #include "render/RenderTarget.h"
 
@@ -47,6 +47,8 @@ void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> edi
     AddWindow(new HierarchyWindow(-1));
 
     AddWindow(new InspectorWindow(-1));
+
+    AddWindow(new StatsWindow());
 
 
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
@@ -135,24 +137,35 @@ void Imgui::DrawMainMenuBar(){
             ImGui::EndPopup();
         }
 
-        // // Playing game exe in editor
-        // if (ImGui::BeginMenu("Game"))
-        // {
-        //     if (ImGui::MenuItem("Play", "F5")) {}
-        //     if (ImGui::MenuItem("Pause", "F6")) {}
-        //     if (ImGui::MenuItem("Stop", "Shift+F5")) {}
-        //     ImGui::EndMenu();
-        // }
+        // Playing game exe in editor
+        if (ImGui::BeginMenu("Game (TBD)"))
+        {
+            if (ImGui::MenuItem("Play", "F5")) {}
+            if (ImGui::MenuItem("Pause", "F6")) {}
+            if (ImGui::MenuItem("Stop", "Shift+F5")) {}
+            ImGui::EndMenu();
+        }
 
-        // // Toggle windows on and off
-        // if(ImGui::BeginMenu("Windows")){
-        //     // Toggles windows on and off
-        //     if(ImGui::MenuItem("Hierachy")) {}
-        //     if(ImGui::MenuItem("Inspector")) {}
-        //     if(ImGui::MenuItem("Console")) {}
-        //     if(ImGui::MenuItem("Game View")) {}
-        //     ImGui::EndMenu();
-        // }
+        // Toggle windows on and off
+        if(ImGui::BeginMenu("Windows")){
+            // Toggles windows on and off
+            if(ImGui::MenuItem("Hierachy")) {}
+            if(ImGui::MenuItem("Inspector")) {}
+            if(ImGui::MenuItem("Stats")) {
+                // This should be better implemented for each window
+                auto statsWindow = FindWindow("Stats");
+                
+                if(statsWindow && statsWindow->IsVisible()) {
+                    statsWindow->SetVisible(false);
+                } else {
+                    if (statsWindow) {
+                        statsWindow->SetVisible(true);
+                    }
+                }
+            }
+            if(ImGui::MenuItem("Game View")) {}
+            ImGui::EndMenu();
+        }
         
         // // Tools to help with development
         // if(ImGui::BeginMenu("Tools"))

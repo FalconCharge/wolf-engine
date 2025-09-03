@@ -111,7 +111,11 @@ void App::_init()
     glfwSetWindowUserPointer(m_pWindow, this);
     glfwSetScrollCallback(m_pWindow, _mouseScrollCallback);
     glfwMakeContextCurrent(m_pWindow);
-    glfwSwapInterval(1);
+
+    // Enable vsync
+    //glfwSwapInterval(1);
+    // Disable vsync
+    glfwSwapInterval(0);
 
     GLenum err = glewInit();
     if (GLEW_OK != err)
@@ -134,12 +138,29 @@ void App::_internalUpdate(float dt)
 
 void App::Run()
 {
+    double frameCount = 0;
+    double fpsTime = 0;
+    float fps = 0;
+
     double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(m_pWindow) && !isKeyDown(GLFW_KEY_ESCAPE))
     {
         double currTime = glfwGetTime();
         float elapsedTime = (float)(currTime - lastTime);
         lastTime = currTime;
+
+        fpsTime += elapsedTime;
+        frameCount++;
+
+        if(fpsTime >= 1.0)
+        {
+            fps = (float)frameCount;
+            frameCount = 0;
+            fpsTime = 0;
+            EngineStats::Get().FPS = fps;
+        }
+
+         // Get framebuffer size (may be different than window size on HiDPI displays)
 
         glfwGetFramebufferSize(m_pWindow, &m_width, &m_height);
         if(m_width != 0 && m_height != 0)

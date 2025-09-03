@@ -3,12 +3,13 @@
 #include "core/GameObjectManager.h"
 #include <string>
 #include <memory>
+#include "core/EngineStats.h"
 
 
-class ConsoleWindow : public ImguiWindow
+class StatsWindow : public ImguiWindow
 {
     public:
-        ConsoleWindow();
+        StatsWindow();
 
     protected:
         void DrawContent() override;
