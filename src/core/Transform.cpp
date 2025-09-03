@@ -73,6 +73,10 @@ namespace wolf{
         m_Rotation = rotation;
     }
     void Transform::SetScale(const glm::vec3& scale) {
+        if(scale.x == 0.0f || scale.y == 0.0f || scale.z == 0.0f){
+            std::cerr << "Warning: Setting scale to zero is not allowed. Operation ignored." << std::endl;
+            return;
+        }
         m_Dirty = true;
         m_Scale = scale;
     }
