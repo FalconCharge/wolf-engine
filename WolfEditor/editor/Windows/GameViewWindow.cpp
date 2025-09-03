@@ -3,9 +3,11 @@
 #include <memory>
 #include <cstring>
 #include <iostream>
+#include "core/InputManager.h"
+#include "core/SceneManager.h"
 
-GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView)
-    : ImguiWindow("Game View"), m_gameView(m_gameView)
+GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView, std::shared_ptr<EditorCamera> editorCamera)
+    : ImguiWindow("Game View"), m_gameView(m_gameView), m_EditorCamera(editorCamera)
 {
 }
 void GameViewWindow::WindowSetup(){
@@ -31,6 +33,16 @@ void GameViewWindow::WindowSetup(){
 
 void GameViewWindow::DrawContent()
 {
+    // Enable or disable input based on whether the window is focused
+    if(ImGui::IsWindowFocused()){
+        wolf::InputManager::Instance().SetInputEnabled(true);
+        wolf::SceneManager::Instance().GetActiveScene()->SetMainCamera(m_EditorCamera);
+        wolf::InputManager::Instance().SetCursorLocked(true);
+    }
+    else{
+        wolf::InputManager::Instance().SetInputEnabled(false);
+        wolf::InputManager::Instance().SetCursorLocked(false);
+    }
 
     // Get the available content size of the current ImGui window
     ImVec2 availSize = ImGui::GetContentRegionAvail();

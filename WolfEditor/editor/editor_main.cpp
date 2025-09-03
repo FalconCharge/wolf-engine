@@ -7,6 +7,11 @@
 #include "core/GameObjectManager.h"
 #include "render/RenderTarget.h"
 #include <memory>
+#include "Grid3D.h"
+
+#include "editorCamera.h"
+
+#include "core/InputManager.h"
 
 #include "src/GameLogic.h"
 
@@ -25,7 +30,19 @@ class WolfEditor : public wolf::App{
             // The 1920 and 1080 is the quality of the image
             m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
-            m_Imgui->Init(wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager(), m_GameView);
+            m_EditorCamera = std::make_shared<EditorCamera>(
+                45.0f, m_GameView->GetViewportWidth()/m_GameView->GetViewportHeight(), 0.1f, 1000.0f
+            );
+
+
+            m_Imgui->Init(m_GameView, m_EditorCamera);
+
+            m_Grid = new Grid3D(10, 2.0f);
+
+            // Init the Input Manager
+            wolf::InputManager::Instance().Initialize(this->getWindow());
+
+
                         
         }
 
@@ -33,8 +50,12 @@ class WolfEditor : public wolf::App{
         {
             m_Imgui->NewFrame();
             m_game.Update(dt, this);
+            m_EditorCamera->update(dt);
+
+            //std::cout << "Editor Camera Position: " << glm::to_string(m_EditorCamera->GetViewPosition()) << std::endl;
         }
 
+        // Note that if we want to render specifc thing in the editor we do it here EX: Grid or Gizmos
         void Render() override
         {
             // Editor-specific rendering logic goes here
@@ -46,7 +67,13 @@ class WolfEditor : public wolf::App{
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear with that color
 
             // Game Scene rendering
-            m_game.Render(m_width, m_height);
+            m_game.Render(m_width, m_height);   // We don't use width and height
+
+            
+            // Render the editor grid *after* the scene
+            glm::mat4 view = m_EditorCamera->GetViewMatrix();
+            glm::mat4 proj = m_EditorCamera->GetProjMatrix();
+            //m_Grid->render(view, proj);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -63,6 +90,10 @@ class WolfEditor : public wolf::App{
 
         // The game Src code
         GameLogic m_game;
+
+        Grid3D* m_Grid;
+
+        std::shared_ptr<EditorCamera> m_EditorCamera;
 
 };
 

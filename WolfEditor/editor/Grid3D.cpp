@@ -28,11 +28,11 @@ Grid3D::Grid3D(int linesPerHalfSpace, float gridSpacing)
     : m_color(0.4f,0.4f,0.4f,1.0)
 {
     m_pMatGrid = wolf::MaterialManager::CreateMaterial("__gridMat");
-    m_pMatGrid->SetProgram("samplefw/data/grid.vsh", "samplefw/data/grid.fsh");
+    m_pMatGrid->SetProgram("WolfEditor/editor/data/shaders/grid.vsh", "WolfEditor/editor/data/shaders/grid.fsh");
     m_pMatGrid->SetDepthTest(true);
 
     m_pMatAxes = wolf::MaterialManager::CreateMaterial("__gridAxes");
-    m_pMatAxes->SetProgram("samplefw/data/grid.vsh", "samplefw/data/grid.fsh");
+    m_pMatAxes->SetProgram("WolfEditor/editor/data/shaders/grid.vsh", "WolfEditor/editor/data/shaders/grid.fsh");
     m_pMatAxes->SetDepthTest(false);
 
     // axis color comes from vertex attributes which we multiply by white

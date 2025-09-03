@@ -1,23 +1,28 @@
 #pragma once
 #include "core/GameObject.h"
-
 #include "render/render.h"
+#include "core/camera.h"
 
 #include "glm/glm.hpp"
 
 struct DebugCubeVertex
 {
     glm::vec3 Position;
+    glm::vec4 color;
 };
 
 class DebugCube : public wolf::GameObject
 {
 public:
-    // Constructor
+    // Constructor Where the cube gets created
     DebugCube();
 
     // Deconstructor
     ~DebugCube();
+
+    std::string GetType() const override {return "DebugCube";};
+
+    void Init();
 
     // Called each frame to update the cubes properties
     void Update(float dt) override;

@@ -15,15 +15,14 @@
 
 #include "render/TextureManager.h"
 #include "render/RenderTarget.h"
-
-
+#include "editorCamera.h"
 
 class Imgui{
 
     public:
         explicit Imgui(GLFWwindow* window): m_window(window){}
 
-        void Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget* gameview);
+        void Init(wolf::RenderTarget* gameview, std::shared_ptr<EditorCamera> editorCamera);
         void Shutdown();
         void NewFrame();
         void Render();

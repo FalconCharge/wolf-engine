@@ -5,13 +5,18 @@ This guide will help you set up vcpkg for dependency management in your project 
 
 Clone the official vcpkg repository anywhere on your machine:
 
+But for simplicity it's best to clone it in your userProfile folder C:User/Name
+By doing this you won't need to change the location manually
+
 git clone https://github.com/microsoft/vcpkg.git
 
 2. Bootstrap vcpkg
 
 Navigate into the cloned directory and run the bootstrap script to build the vcpkg executable:
 
-    On Windows (PowerShell):
+cd vcpkg
+
+Then
 
 .\bootstrap-vcpkg.bat
 
@@ -59,7 +64,7 @@ Create a CMakePresets.json file in your project root to tell VSCode and CMake to
       "displayName": "Configure with vcpkg manifest mode",
       "generator": "Ninja",
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "<path-to-your-vcpkg-root>/scripts/buildsystems/vcpkg.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "$env{USERPROFILE}/vcpkg/scripts/buildsystems/vcpkg.cmake"
       }
     }
   ]

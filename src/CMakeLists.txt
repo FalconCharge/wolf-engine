@@ -17,6 +17,7 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG REQUIRED)
 
 target_link_libraries(WolfEngine PUBLIC
     glfw
@@ -24,6 +25,7 @@ target_link_libraries(WolfEngine PUBLIC
     OpenGL::GL
     assimp::assimp
     glm::glm
+    yaml-cpp::yaml-cpp
 )
 
 # Optional: enable any compile definitions, e.g.

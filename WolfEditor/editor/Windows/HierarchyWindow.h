@@ -8,7 +8,7 @@
 class HierarchyWindow : public ImguiWindow
 {
     public:
-        HierarchyWindow(const std::vector<std::unique_ptr<wolf::GameObject>>& gameObjects, int selected);
+        HierarchyWindow(int selected);
 
         void SetInspectorWindow(ImguiWindow* inspectorWindow) { m_inspectorWindow = inspectorWindow; }
 
@@ -18,9 +18,9 @@ class HierarchyWindow : public ImguiWindow
 
     private:
         // Members
-        const std::vector<std::unique_ptr<wolf::GameObject>>& m_gameObjects;
         int m_selectedIndex;
         ImguiWindow* m_inspectorWindow = nullptr;
+
 
         // Methods
         void DrawGameObjectNode(wolf::GameObject* go, int index);

@@ -10,7 +10,9 @@
 
 #include "render/RenderTarget.h"
 
-void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget* gameView)
+#include "core/SceneManager.h"
+
+void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> editorCamera)
 {
     // Create ImGui context
     IMGUI_CHECKVERSION();
@@ -40,11 +42,11 @@ void Imgui::Init(wolf::GameObjectManager* gameObjectManager, wolf::RenderTarget*
 
     // Add editor windows
 
-    AddWindow(new GameViewWindow(gameView));
+    AddWindow(new GameViewWindow(gameView, editorCamera));
 
-    AddWindow(new HierarchyWindow(gameObjectManager->GetGameObjects(), -1));
+    AddWindow(new HierarchyWindow(-1));
 
-    AddWindow(new InspectorWindow(gameObjectManager->GetGameObjects(), -1));
+    AddWindow(new InspectorWindow(-1));
 
 
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
@@ -58,61 +60,115 @@ void Imgui::DrawMainMenuBar(){
     
     if (ImGui::BeginMainMenuBar())
     {
+
+        static bool savePopupOpen = false;
+        static char filename[128] = "scene.yaml"; // default name
+
+        static bool openSavePopup = false;
+        static bool openOpenPopup = false;
+        
+
+
         // Basic File Menu
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("New Scene", "Ctrl+N")) { /* new scene */ }
-            if (ImGui::MenuItem("Open Scene...", "Ctrl+O")) { /* open */ }
-            if (ImGui::MenuItem("Save Scene", "Ctrl+S")) { /* save */ }
+            if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
+                
+            }
+            if (ImGui::MenuItem("Open Scene...", "Ctrl+O")) {
+                openOpenPopup = true;
+            }
+            if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+                openSavePopup = true;
+            }
             ImGui::Separator();
-            if (ImGui::MenuItem("Exit")) { /* quit */ }
+            if (ImGui::MenuItem("Exit")) { 
+                // close the app
+            }
             ImGui::EndMenu();
         }
+
+        if(openSavePopup){
+            ImGui::OpenPopup("Save Scene");
+            openSavePopup = false;
+        }
+        if(openOpenPopup){
+            ImGui::OpenPopup("Open Scene");
+            openOpenPopup = false;
+        }
+
+        // Modal for Save Scene
+        if (ImGui::BeginPopupModal("Save Scene"))
+        {
+            ImGui::InputText("Filename", filename, IM_ARRAYSIZE(filename));
+
+            if (ImGui::Button("Save"))
+            {
+                wolf::SceneManager::Instance().SaveActiveScene(filename);
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel"))
+            {
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
+        }
+
+        // Modal for Open Scene
+        if (ImGui::BeginPopupModal("Open Scene", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::InputText("Filename", filename, IM_ARRAYSIZE(filename));
+
+            if (ImGui::Button("Open"))
+            {
+                wolf::SceneManager::Instance().LoadSceneFromFile(filename);
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel"))
+            {
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
+        }
+
+        // // Playing game exe in editor
+        // if (ImGui::BeginMenu("Game"))
+        // {
+        //     if (ImGui::MenuItem("Play", "F5")) {}
+        //     if (ImGui::MenuItem("Pause", "F6")) {}
+        //     if (ImGui::MenuItem("Stop", "Shift+F5")) {}
+        //     ImGui::EndMenu();
+        // }
+
+        // // Toggle windows on and off
+        // if(ImGui::BeginMenu("Windows")){
+        //     // Toggles windows on and off
+        //     if(ImGui::MenuItem("Hierachy")) {}
+        //     if(ImGui::MenuItem("Inspector")) {}
+        //     if(ImGui::MenuItem("Console")) {}
+        //     if(ImGui::MenuItem("Game View")) {}
+        //     ImGui::EndMenu();
+        // }
         
-        // Prob will delete this
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
-            if (ImGui::MenuItem("Redo", "Ctrl+Y")) {}
-            ImGui::Separator();
-            if (ImGui::MenuItem("Preferences")) {}
-            ImGui::EndMenu();
-        }
+        // // Tools to help with development
+        // if(ImGui::BeginMenu("Tools"))
+        // {
+        //     if (ImGui::MenuItem("Asset Importer")) {}
+        //     if (ImGui::MenuItem("Profiler")) {}
+        //     if (ImGui::MenuItem("Shader Editor")) {}
+        //     ImGui::EndMenu();
+        // }
 
-        // Playing game exe in editor
-        if (ImGui::BeginMenu("Game"))
-        {
-            if (ImGui::MenuItem("Play", "F5")) {}
-            if (ImGui::MenuItem("Pause", "F6")) {}
-            if (ImGui::MenuItem("Stop", "Shift+F5")) {}
-            ImGui::EndMenu();
-        }
-
-        // Toggle windows on and off
-        if(ImGui::BeginMenu("Windows")){
-            // Toggles windows on and off
-            if(ImGui::MenuItem("Hierachy")) {}
-            if(ImGui::MenuItem("Inspector")) {}
-            if(ImGui::MenuItem("Console")) {}
-            if(ImGui::MenuItem("Game View")) {}
-            ImGui::EndMenu();
-        }
-        
-        // Tools to help with development
-        if(ImGui::BeginMenu("Tools"))
-        {
-            if (ImGui::MenuItem("Asset Importer")) {}
-            if (ImGui::MenuItem("Profiler")) {}
-            if (ImGui::MenuItem("Shader Editor")) {}
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Help"))
-        {
-            if (ImGui::MenuItem("Documentation")) {}
-            if (ImGui::MenuItem("About")) {}
-            ImGui::EndMenu();
-        }
+        // if (ImGui::BeginMenu("Help"))
+        // {
+        //     if (ImGui::MenuItem("Documentation")) {}
+        //     if (ImGui::MenuItem("About")) {}
+        //     ImGui::EndMenu();
+        // }
 
         ImGui::EndMainMenuBar();
     }
@@ -199,6 +255,7 @@ void Imgui::DrawDockSpace()
     ImGui::Begin("DockSpaceWindow", &dockspace_open, window_flags);
 
     DrawMainMenuBar();
+
 
     // Create dockspace
     ImGuiID dockspace_id = ImGui::GetID("MainDockSpace");

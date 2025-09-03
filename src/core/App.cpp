@@ -6,6 +6,8 @@
 #include <windows.h>
 #endif
 
+#include "core/InputManager.h"
+
 namespace wolf
 {
 
@@ -152,7 +154,10 @@ void App::Run()
         m_mouseScroll = glm::vec2(0.0f,0.0f);
         glfwSwapBuffers(m_pWindow);
         glfwPollEvents();
+
+        InputManager::Instance().Update();
     }
+
 }
 
 bool App::isKeyDown(int key) const

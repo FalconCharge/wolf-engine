@@ -2,13 +2,13 @@
 #include "../ImguiWindow.h"
 #include <vector>
 #include <string>
-#include "core/GameObjectManager.h"
+#include "core/SceneManager.h"
 #include <memory>
 
 class InspectorWindow : public ImguiWindow
 {
 public:
-    InspectorWindow(const std::vector<std::unique_ptr<wolf::GameObject>>& gameObjects, int selected);
+    InspectorWindow(int selected);
     void SetSelectedGameObject(int index) { m_selectedIndex = index; }
 
 protected:
@@ -16,6 +16,5 @@ protected:
     void WindowSetup() override;
 
 private:
-    const std::vector<std::unique_ptr<wolf::GameObject>>& m_gameObjects;
     int m_selectedIndex;
 };

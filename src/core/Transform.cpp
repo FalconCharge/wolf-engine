@@ -92,10 +92,11 @@ namespace wolf{
 
     glm::quat Transform::GetWorldRotation() const {
         if (m_Parent) {
-            return m_Parent->GetWorldRotation() * m_Rotation;
+            return m_Parent->GetWorldRotation() + m_Rotation;
         }
         return m_Rotation;
     }
+
 
     glm::vec3 Transform::GetWorldScale() const {
         if (m_Parent) {
@@ -116,5 +117,49 @@ namespace wolf{
         std::cout << "World Rotation: " << GetWorldRotation().x << ", " << GetWorldRotation().y << ", " << GetWorldRotation().z << ", " << GetWorldRotation().w << "\n";
         std::cout << "World Scale: " << GetWorldScale().x << ", " << GetWorldScale().y << ", " << GetWorldScale().z << "\n";
         std::cout << std::endl;
+    }
+
+    YAML::Node Transform::Serialize() const {
+        YAML::Node node;
+
+        // Position
+        node["Position"].push_back(m_Position.x);
+        node["Position"].push_back(m_Position.y);
+        node["Position"].push_back(m_Position.z);
+
+        // Rotation
+        node["Rotation"].push_back(m_Rotation.x);
+        node["Rotation"].push_back(m_Rotation.y);
+        node["Rotation"].push_back(m_Rotation.z);
+        node["Rotation"].push_back(m_Rotation.w);
+
+        // Scale
+        node["Scale"].push_back(m_Scale.x);
+        node["Scale"].push_back(m_Scale.y);
+        node["Scale"].push_back(m_Scale.z);
+
+        return node;
+    }
+
+
+    void Transform::Deserialize(const YAML::Node& node) {
+        if (node["Position"] && node["Position"].IsSequence() && node["Position"].size() == 3) {
+            m_Position.x = node["Position"][0].as<float>();
+            m_Position.y = node["Position"][1].as<float>();
+            m_Position.z = node["Position"][2].as<float>();
+        }
+
+        if (node["Rotation"] && node["Rotation"].IsSequence() && node["Rotation"].size() == 4) {
+            m_Rotation.x = node["Rotation"][0].as<float>();
+            m_Rotation.y = node["Rotation"][1].as<float>();
+            m_Rotation.z = node["Rotation"][2].as<float>();
+            m_Rotation.w = node["Rotation"][3].as<float>();
+        }
+
+        if (node["Scale"] && node["Scale"].IsSequence() && node["Scale"].size() == 3) {
+            m_Scale.x = node["Scale"][0].as<float>();
+            m_Scale.y = node["Scale"][1].as<float>();
+            m_Scale.z = node["Scale"][2].as<float>();
+        }
     }
 }
