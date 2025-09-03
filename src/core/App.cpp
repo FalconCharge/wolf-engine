@@ -148,7 +148,7 @@ void App::Run()
     float fps = 0;
 
     double lastTime = glfwGetTime();
-    while (!glfwWindowShouldClose(m_pWindow) && !isKeyDown(GLFW_KEY_ESCAPE))
+    while (!glfwWindowShouldClose(m_pWindow))
     {
         double currTime = glfwGetTime();
         float elapsedTime = (float)(currTime - lastTime);

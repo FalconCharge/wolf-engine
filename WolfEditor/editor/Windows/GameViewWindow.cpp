@@ -33,15 +33,30 @@ void GameViewWindow::WindowSetup(){
 
 void GameViewWindow::DrawContent()
 {
-    // Enable or disable input based on whether the window is focused
+
+
     if(ImGui::IsWindowFocused()){
-        wolf::InputManager::Instance().SetInputEnabled(true);
+
         wolf::SceneManager::Instance().GetActiveScene()->SetMainCamera(m_EditorCamera);
-        wolf::InputManager::Instance().SetCursorLocked(true);
-    }
-    else{
-        wolf::InputManager::Instance().SetInputEnabled(false);
-        wolf::InputManager::Instance().SetCursorLocked(false);
+
+        // Lock cursor on left mouse button
+        if (wolf::InputManager::Instance().IsLMBDownRaw())
+        {
+            wolf::InputManager::Instance().SetCursorLocked(true);
+        }
+
+        // Unlock cursor on Escape
+        if (wolf::InputManager::Instance().IsKeyDownRaw(GLFW_KEY_ESCAPE))
+        {
+            wolf::InputManager::Instance().SetCursorLocked(false);
+        }
+
+        // Enable input only when cursor is locked
+        if(wolf::InputManager::Instance().IsCursorLocked()){
+            wolf::InputManager::Instance().SetInputEnabled(true);
+        }else{
+            wolf::InputManager::Instance().SetInputEnabled(false);
+        }
     }
 
     // Get the available content size of the current ImGui window

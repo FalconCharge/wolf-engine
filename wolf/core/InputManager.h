@@ -23,10 +23,22 @@ namespace wolf
         bool IsKeyDown(int key) const { return m_inputEnabled && m_keys[key]; }
         bool IsKeyJustDown(int key) const { return m_inputEnabled && m_keys[key] && !m_lastKeys[key]; }
 
+        // Keyboard Raw versions (ignore m_inputEnabled)
+        bool IsKeyDownRaw(int key) const { return m_keys[key]; }
+        bool IsKeyJustDownRaw(int key) const { return m_keys[key] && !m_lastKeys[key]; }
+
         // Mouse Buttons
         bool IsLMBDown() const { return IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT); }
         bool IsRMBDown() const { return IsMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT); }
         bool IsMMBDown() const { return IsMouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE); }
+
+        // Raw Versions
+        bool IsLMBDownRaw() const { return IsMouseButtonDownRaw(GLFW_MOUSE_BUTTON_LEFT); }
+        bool IsRMBDownRaw() const { return IsMouseButtonDownRaw(GLFW_MOUSE_BUTTON_RIGHT); }
+        bool IsMMBDownRaw() const { return IsMouseButtonDownRaw(GLFW_MOUSE_BUTTON_MIDDLE); }
+
+        // Raw Mouse Buttons (ignore m_inputEnabled)
+        bool IsMouseButtonDownRaw(int button) const { return m_mouseButtons[button]; }
 
         bool IsMouseButtonDown(int button) const
         {
@@ -34,10 +46,16 @@ namespace wolf
             return m_mouseButtons[button];
         }
 
-        // Mouse Movement
-        glm::vec2 GetMousePosition() const { return m_mousePos; }
-        glm::vec2 GetMouseDelta() const { return m_mouseDelta; }
-        glm::vec2 GetMouseScroll() const { return m_scrollDelta; }
+        // Raw (always valid)
+        glm::vec2 GetMousePositionRaw() const { return m_mousePos; }
+        glm::vec2 GetMouseDeltaRaw()    const { return m_mouseDelta; }
+        glm::vec2 GetMouseScrollRaw()   const { return m_scrollDelta; }
+
+        // Filtered (only valid when input enabled)
+        glm::vec2 GetMousePosition() const { return m_inputEnabled ? m_mousePos : glm::vec2(0.0f); }
+        glm::vec2 GetMouseDelta()    const { return m_inputEnabled ? m_mouseDelta : glm::vec2(0.0f); }
+        glm::vec2 GetMouseScroll()   const { return m_inputEnabled ? m_scrollDelta : glm::vec2(0.0f); }
+
 
         // Editor/game integration (Enable/disable input)
         void SetInputEnabled(bool enabled) { m_inputEnabled = enabled; }
