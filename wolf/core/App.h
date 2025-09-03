@@ -3,6 +3,8 @@
 #include "Types.h"
 #include <string>
 
+#include "EngineStats.h"
+
 namespace wolf
 {
     class App
