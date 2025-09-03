@@ -124,6 +124,11 @@ void App::_init()
         printf("Successfully initialized GLEW\n");
 
     RenderTarget::InitScreen(resX, resY);
+
+
+    // Don't draw Back faces
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
 
 void App::_internalUpdate(float dt)

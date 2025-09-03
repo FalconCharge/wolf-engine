@@ -60,8 +60,28 @@ void HierarchyWindow::DrawGameObjectNode(wolf::GameObject* go, int index)
                 inspector->SetSelectedGameObject(index);
             }
         }
-    }
 
+    }
+    // Right clikc context menu for this node
+    if(ImGui::BeginPopupContextItem())
+    {
+        if (ImGui::MenuItem("Delete GameObject"))
+        {
+            auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+            gameObjectManager->DestroyGameObject(go);
+            if (m_selectedIndex == index)
+            {
+                m_selectedIndex = -1; // Deselect if the selected object is deleted
+                if (m_inspectorWindow) {
+                    if (auto inspector = dynamic_cast<InspectorWindow*>(m_inspectorWindow))
+                    {
+                        inspector->SetSelectedGameObject(-1);
+                    }
+                }
+            }
+        }
+        ImGui::EndPopup();
+    }
     if (opened)
     {
         for (wolf::Transform* child : go->GetTransform().GetChildren())
