@@ -56,6 +56,8 @@ namespace wolf{
         float GetAspect() const { return m_Aspect; }
         void SetAspect(float aspect) { m_Aspect = aspect; }
 
+        void SetSpeed(float speed){m_Speed = speed;}
+
         void PauseFrustum();
 
         
@@ -84,6 +86,7 @@ namespace wolf{
         float m_near = 0.1f;   // Near clipping plane
         float m_far = 1000.0f; // Far clipping plane
         float m_Aspect;
+        float m_Speed = 5.0f; // Movement speed
 
         bool m_inverted = true;
 

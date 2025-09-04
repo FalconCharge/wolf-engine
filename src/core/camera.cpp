@@ -37,46 +37,11 @@ void Camera::update(float dt) {
     glm::vec3 forwardXZ = glm::normalize(glm::vec3(m_front.x, 0.0f, m_front.z));
     glm::vec3 rightXZ = glm::normalize(glm::cross(forwardXZ, glm::vec3(0.0f, 1.0f, 0.0f)));
 
-    float cameraSpeed = 2.0f * dt; // Adjust speed based on frame time (dt)
+    float cameraSpeed = m_Speed * dt; // Adjust speed based on frame time (dt)
     DetectInput(cameraSpeed, forwardXZ, rightXZ);
 }
 
-// void Camera::DetectInput(float &cameraSpeed, glm::vec3 &forwardXZ, glm::vec3 &rightXZ)
-// {
-//     // TODO: Change this to the new input system
-//     if (m_pApp->isKeyDown(GLFW_KEY_LEFT_SHIFT))
-//     {
-//         cameraSpeed *= 4;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_W))
-//     {
-//         m_position += forwardXZ * cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_S))
-//     {
-//         m_position -= forwardXZ * cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_A))
-//     {
-//         m_position -= rightXZ * cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_D))
-//     {
-//         m_position += rightXZ * cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_Q))
-//     {
-//         m_position.y -= cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_E))
-//     {
-//         m_position.y += cameraSpeed;
-//     }
-//     if (m_pApp->isKeyDown(GLFW_KEY_I))
-//     { // Press 'I' to toggle inversion
-//         this->InvertCamera();
-//     }
-// }
+
 void Camera::DetectInput(float &cameraSpeed, glm::vec3 &forwardXZ, glm::vec3 &rightXZ)
 {
     auto& input = wolf::InputManager::Instance();
