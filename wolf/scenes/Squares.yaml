@@ -1,0 +1,111 @@
+Name: Test Scene
+GameObjects:
+  GameObjects:
+    - Type: class DebugCube
+      Name: GameObject_0
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 5
+          - 5
+          - 5
+        Rotation:
+          - 0
+          - 0
+          - 1
+          - -4.37113883e-08
+        Scale:
+          - 1
+          - 1
+          - 1
+    - Type: class DebugCube
+      Name: GameObject_1
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 10
+          - 10
+          - 10
+        Rotation:
+          - 0
+          - 0
+          - 1
+          - 4.37113883e-08
+        Scale:
+          - 1
+          - 1
+          - 1
+    - Type: class DebugCube
+      Name: GameObject_2
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 4.0999999
+          - 0
+          - 0
+        Rotation:
+          - 0
+          - 0
+          - 1
+          - 4.37113883e-08
+        Scale:
+          - 1
+          - 1
+          - 1
+    - Type: class DebugCube
+      Name: GameObject_3
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - -4.19999981
+          - 5
+          - 0
+        Rotation:
+          - -0.430511028
+          - -1.88182625e-08
+          - 0.902585328
+          - -3.94532726e-08
+        Scale:
+          - 0.999996483
+          - 0.999995947
+          - 0.99999553
+    - Type: class DebugCube
+      Name: GameObject_4
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 0
+          - 0
+          - 0
+        Rotation:
+          - 0.0436193906
+          - 1.90666416e-09
+          - 0.999048233
+          - -4.3669786e-08
+        Scale:
+          - 1
+          - 1
+          - 1
+    - Type: class DebugCube
+      Name: GameObject_5
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 0
+          - -5
+          - 0
+        Rotation:
+          - 0
+          - 0
+          - 1
+          - -4.37113883e-08
+        Scale:
+          - 1
+          - 1
+          - 1

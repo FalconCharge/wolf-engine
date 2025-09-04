@@ -51,6 +51,7 @@ namespace wolf
 			}
 
 		}
+		
 	}
 
 	void GameObjectManager::Render()
@@ -109,7 +110,7 @@ namespace wolf
 				}
 
 				// Create the correct subclass based on type
-				if (type == "DebugCube") {
+				if (type == "class DebugCube") {
 					gameObject = std::make_unique<DebugCube>();
 				} else {
 					gameObject = std::make_unique<GameObject>();

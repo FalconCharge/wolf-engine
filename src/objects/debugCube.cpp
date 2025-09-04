@@ -82,7 +82,7 @@ void DebugCube::Init(){
 
 
     m_Material = wolf::MaterialManager::CreateMaterial("Basic");
-    m_Material->SetProgram("game/data/debugCube.vsh", "game/data/debugCube.fsh");
+    m_Material->SetProgram("wolf/data/debugCube.vsh", "wolf/data/debugCube.fsh");
 
     // Just makes the cube abit darker
     m_Material->SetUniform("u_color", glm::vec3(0.7f, 0.7f, 0.7f));
@@ -95,7 +95,7 @@ void DebugCube::Init(){
     m_Decl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
     m_Decl->End();
 
-    //std::cout << "DebugCube Initialized with " << m_Vertices.size() << " vertices and " << m_Indices.size() / 3 << " triangles.\n";
+    std::cout << "DebugCube Initialized with " << m_Vertices.size() << " vertices and " << m_Indices.size() / 3 << " triangles.\n";
 }
 
 void DebugCube::Update(float dt)

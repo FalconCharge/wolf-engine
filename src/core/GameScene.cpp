@@ -11,7 +11,7 @@ namespace wolf
 
         // m_GameObjectManager.CreateGameObject<DebugCube>()->SetParent(m_GameObjectManager.FindGameObjectByName("TestCube01"));
 
-        m_testModel = new Model("external/Chest.fbx");
+        //m_testModel = new Model("external/Chest.fbx");
     }
     void GameScene::Render(int width, int height)
     {
