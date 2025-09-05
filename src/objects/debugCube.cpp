@@ -7,6 +7,7 @@
 
 // Temp include for testing componets
 #include "components/TestComponent.h"
+#include "components/PhysicsBodyComponent.h"
 
 #include <iostream>
 
@@ -101,6 +102,7 @@ void DebugCube::Init(){
     //Temp
     // Adds the Test component to make sure we are updating the components
     this->AddComponent<wolf::TestComponent>();
+    this->AddComponent<wolf::PhysicsBodyComponent>();
 }
 
 void DebugCube::Render()

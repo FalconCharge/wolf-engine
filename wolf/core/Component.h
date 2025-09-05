@@ -1,5 +1,6 @@
 #pragma once
 
+// Used to draw in Inspector
 #include <imgui.h>
 
 namespace wolf
