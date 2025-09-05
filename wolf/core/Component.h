@@ -11,6 +11,7 @@ namespace wolf
 		Component(){}
 		~Component(){}
 
+		virtual void Init() {}
 		virtual void Update(float deltaTime) = 0;
 		virtual void Render() = 0;
 

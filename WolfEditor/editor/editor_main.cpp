@@ -37,6 +37,9 @@ class WolfEditor : public wolf::App{
 
             m_Imgui->Init(m_GameView, m_EditorCamera);
 
+            // We set the Main Camera for the scene to be the Editor Camera
+            wolf::SceneManager::Instance().GetActiveScene()->SetMainCamera(m_EditorCamera);
+
             m_Grid = new Grid3D(10, 2.0f);
 
             // Init the Input Manager

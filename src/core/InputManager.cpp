@@ -25,7 +25,7 @@ namespace wolf
 
     void InputManager::Update()
     {
-        if (!m_window || !m_inputEnabled)
+        if (!m_window)
             return;
 
         //DebugPrintKeysDown();
@@ -66,7 +66,10 @@ namespace wolf
 
     void InputManager::DebugPrintKeysDown() const
     {
-        if (!m_inputEnabled) return;
+        if (!m_inputEnabled) {
+            std::cout << "Input Disabled" << std::endl;
+            return;
+        }
 
         // ----- Keyboard -----
         std::cout << "Keys currently down: ";

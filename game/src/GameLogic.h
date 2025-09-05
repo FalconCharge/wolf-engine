@@ -12,7 +12,7 @@ class GameLogic
 public:
     GameLogic()
     {
-        wolf::SceneManager::Instance().LoadScene<GameScene>("Test Scene");
+        wolf::SceneManager::Instance().LoadScene<wolf::GameScene>("Test Scene");
     }
 
     void Update(float dt, wolf::App* app)

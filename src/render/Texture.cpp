@@ -9,6 +9,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+#include <iostream>
+
 namespace wolf
 {
 
@@ -62,8 +64,10 @@ Texture::Texture(const std::string& path)
 {
 	if( path.find(".dds") != std::string::npos )
 		LoadFromDDS(path);
-	else if( path.find(".tga") != std::string::npos || path.find(".png") != std::string::npos)
+	else if( path.find(".tga") != std::string::npos || path.find(".png") != std::string::npos || path.find(".jpg") != std::string::npos ){
 		LoadImage(path);
+	}
+		
 	else
 	{
 		printf("ERROR: No idea how to load this file - %s!", path.c_str());
@@ -149,6 +153,8 @@ void Texture::LoadFromDDS(const std::string& path)
 //----------------------------------------------------------
 void Texture::LoadImage(const std::string& path)
 {
+	stbi_set_flip_vertically_on_load(true);
+
 	glGenTextures(1,&m_glTex);
 	glBindTexture(GL_TEXTURE_2D, m_glTex);
 

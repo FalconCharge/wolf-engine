@@ -22,8 +22,21 @@ namespace wolf
 		virtual void Render();
         virtual std::string GetType() const {return "GameObject";}
 
-		void AddComponent(Component* component);
-		void RemoveComponent(Component* component);
+        template<typename T, typename... Args>
+        T* AddComponent(Args&&... args) {
+            T* comp = new T(std::forward<Args>(args)...);
+            components.push_back(std::unique_ptr<Component>(comp));
+            return comp;
+        }
+
+        template<typename T>
+        T* GetComponent() {
+            for (auto& c : components) {
+                if (auto casted = dynamic_cast<T*>(c.get()))
+                    return casted;
+            }
+            return nullptr;
+        }
 
         // Getters
         const std::string& GetName() const { return m_Name; }
@@ -49,7 +62,7 @@ namespace wolf
         std::string m_Name = "null";
         std::string m_tag = "null";
 		Transform m_transform;
-        //std::vector<Component*> m_components;
+        std::vector<std::unique_ptr<Component>> components;
 
         int m_id = 0;
 
