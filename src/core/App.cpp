@@ -6,7 +6,10 @@
 #include <windows.h>
 #endif
 
+// Icon
+
 #include "core/InputManager.h"
+#include "stb_image.h"
 
 namespace wolf
 {
@@ -45,6 +48,7 @@ App::~App()
 
 void App::_init()
 {
+
 #if _WIN32
 
     char dir[MAX_PATH];
@@ -124,6 +128,23 @@ void App::_init()
         printf("Successfully initialized GLEW\n");
 
     RenderTarget::InitScreen(resX, resY);
+
+
+
+    // TODO: Setup Game Icon VS Engine Icon
+    // Setting up Icon
+    GLFWimage images[2];
+    images[0].pixels = stbi_load("wolf/data/EngineIcon_64x64.png", &images[0].width, &images[0].height, 0, 4);
+    images[1].pixels = stbi_load("wolf/data/EngineIcon_32x32.png", &images[1].width, &images[1].height, 0, 4);
+
+    if (images[0].pixels && images[1].pixels) {
+        glfwSetWindowIcon(m_pWindow, 2, images);  // 2 icons, GLFW picks best fit
+    }
+
+    // Free memory after GLFW copies the pixels
+    if (images[0].pixels) stbi_image_free(images[0].pixels);
+    if (images[1].pixels) stbi_image_free(images[1].pixels);
+
 
 
     // Don't draw Back faces
