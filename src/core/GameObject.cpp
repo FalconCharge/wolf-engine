@@ -24,22 +24,6 @@ namespace wolf{
 
 	}
 
-
-    void GameObject::AddComponent(Component* component)
-    {
-        //m_components.emplace_back(component);
-    }
-
-
-
-	void GameObject::RemoveComponent(Component* component)
-	{
-        // m_components.erase(std::remove_if(m_components.begin(), m_components.end(),
-        //     [component](const std::unique_ptr<Component>& obj) {
-        //         return obj.get() == component;
-        //     }), m_components.end());
-	}
-
 	void GameObject::SetParent(GameObject* parent)
 	{
 		if (parent)

@@ -8,7 +8,7 @@
 #include "core/Common.h"
 #include "render/BufferManager.h"
 #include "render/MaterialManager.h"
-
+#include <iostream>
 
 namespace wolf
 {
@@ -345,6 +345,7 @@ Model::InterleavedMesh* Model::_interleaveMeshData(const aiMesh* pSrcMesh)
 
         for(unsigned int uvSet = 0; uvSet < pSrcMesh->GetNumUVChannels(); ++uvSet)
         {
+
             if(firstVert)
             {
                 if( uvSet == 0)
@@ -552,10 +553,19 @@ float _getFloat(const aiMaterial* pMat, const char* key, int type, int idx, floa
 
 wolf::Texture* _getTexture(const aiMaterial* pMat, aiTextureType texType)
 {
+
     aiString path; 
     aiReturn ret = pMat->GetTexture(texType, 0, &path);
-    if (ret == AI_SUCCESS)
-        return wolf::TextureManager::CreateTexture(std::string("data/") + path.C_Str());
+    if (ret == AI_SUCCESS){
+        std::string textFile = path.C_Str();
+        size_t lastSlash = textFile.find_last_of("/\\");
+        if (lastSlash != std::string::npos){
+            textFile = textFile.substr(lastSlash + 1);
+        
+            //return wolf::TextureManager::CreateTexture(std::string("external/") + textFile);
+            return wolf::TextureManager::CreateTexture(std::string("external/texture.jpg"));
+        }
+    }
 
     return nullptr;
 }
@@ -565,7 +575,7 @@ wolf::Material* Model::_createMaterialFromAssimpMaterial(const aiMaterial* pAssi
     aiString name;
     pAssimpMat->Get(AI_MATKEY_NAME,name);
     wolf::Material *pMat = wolf::MaterialManager::CreateMaterial(m_path + "/" + name.C_Str());
-    pMat->SetProgram("data/uber.vsh", "data/uber.fsh");
+    pMat->SetProgram("wolf/data/uber.vsh", "wolf/data/uber.fsh");
     pMat->SetDepthTest(true);
     pMat->SetDepthWrite(true);
 
