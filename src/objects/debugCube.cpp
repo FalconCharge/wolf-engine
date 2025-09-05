@@ -5,6 +5,8 @@
 
 #include "core/SceneManager.h"
 
+// Temp include for testing componets
+#include "components/TestComponent.h"
 
 #include <iostream>
 
@@ -96,11 +98,9 @@ void DebugCube::Init(){
     m_Decl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
     m_Decl->End();
 
-}
-
-void DebugCube::Update(float dt)
-{
-
+    //Temp
+    // Adds the Test component to make sure we are updating the components
+    this->AddComponent<wolf::TestComponent>();
 }
 
 void DebugCube::Render()

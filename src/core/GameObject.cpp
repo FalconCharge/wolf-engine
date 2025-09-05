@@ -12,10 +12,9 @@ namespace wolf{
 
 	void GameObject::Update(float deltaTime)
 	{
-		// for (const auto& component : m_components)
-		// {
-		// 	component->Update(deltaTime);
-		// }
+		for(auto& comp : m_Components){
+			comp->Update(deltaTime);
+		}
 
 	}
 

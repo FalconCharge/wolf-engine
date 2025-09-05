@@ -24,9 +24,6 @@ public:
 
     void Init();
 
-    // Called each frame to update the cubes properties
-    void Update(float dt) override;
-
     // Called each frame to Draw the cube
     void Render() override;
 
