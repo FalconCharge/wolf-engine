@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// Class: HieraracyWindow
+// Brief: Used with ImGui; Used to create a Window where you can right click to spawn in a object
+//          Currently you can only spawn in the DebugCube class
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"

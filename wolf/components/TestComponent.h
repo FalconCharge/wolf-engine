@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// File: TestComponent.h
+// Class: TestComponent
+// Brief: This is a simple component class which was used to test if the components were working
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "core/Component.h"
 

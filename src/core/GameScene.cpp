@@ -35,12 +35,22 @@ namespace wolf
         // 1. Step physics simulation
         wolf::Engine::Instance().GetPhysicsSystem().Update(dt);
 
+        // It's currently Syncing from the physics component 
+        // I didn't look too hard but something like this might be better
+        // I'm guessing movement from components prob won't work 
+        
+        // Sync the GO's trasnform to the physics world
         //m_GameObjectManager.SyncFromPhysics();
 
         // 3. Run game object logic (AI, scripts, animations, etc)
         m_GameObjectManager.Update(dt);
 
+        // Push the update changes to the physics Sim
         //m_GameObjectManager.SyncToPhysics();
+
+
+        // Delete the gameObjects at the end of the frame
+        m_GameObjectManager.ProcessDeletions();
     }
 
 

@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// Class: GameViewWindow
+// Brief: It's takes in a rendertarget and Displays it with ImGui::Image
+//          It should always be the Game View
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"

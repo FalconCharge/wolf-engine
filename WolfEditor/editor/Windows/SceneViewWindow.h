@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// Class: SceneViewWindow
+// Brief: With the help of Imgui we render the Scene view through a render Target
+//          Should always be the scene view
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"

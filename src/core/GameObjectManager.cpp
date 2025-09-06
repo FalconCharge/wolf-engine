@@ -16,17 +16,24 @@ namespace wolf
 
 	void GameObjectManager::DestroyGameObject(GameObject* gameObject)
 	{
-		// Use explicit iterator type instead of auto
-		std::vector<std::unique_ptr<GameObject>>::iterator it = 
-			std::remove_if(m_gameObjects.begin(), m_gameObjects.end(),
-			[gameObject](const std::unique_ptr<GameObject>& obj) {
-				return obj.get() == gameObject;
-			});
-		
-		if (it != m_gameObjects.end())
+		gameObject->IsAlive(false);
+		m_objectsToDelete.push_back(gameObject);
+	}
+	void GameObjectManager::ProcessDeletions()
+	{
+		for (GameObject* go : m_objectsToDelete)
 		{
-			m_gameObjects.erase(it, m_gameObjects.end());
+			auto it = std::remove_if(
+				m_gameObjects.begin(),
+				m_gameObjects.end(),
+				[go](const std::unique_ptr<GameObject>& obj) { return obj.get() == go; }
+			);
+
+			if (it != m_gameObjects.end())
+				m_gameObjects.erase(it, m_gameObjects.end());
 		}
+
+		m_objectsToDelete.clear();
 	}
 
 	GameObject* GameObjectManager::FindGameObjectByName(const std::string& name)

@@ -1,3 +1,15 @@
+// ------------------------------------------------------------
+// File: Scene.h
+// Class: Scene
+// Brief: Scene is a abstract class that holds Systems for each scene
+//          Examples are GameObjectManager and the camera
+// Author: Ben Harper
+// Date: 2025-09-06
+// 
+// Note: I'm not sure about this. But Might be better to have this be a non abstract class
+//          And just put the Game Scene in this instead.
+//          But that would take a bit a refactoring and well it works right now
+// ------------------------------------------------------------
 #pragma once
 
 #include "core/GameObjectManager.h"

@@ -58,7 +58,6 @@ void Imgui::Init(wolf::RenderTarget* gameView, wolf::RenderTarget* sceneView)
     colors[ImGuiCol_FrameBgHovered] = ImVec4(0.25f, 0.08f, 0.08f, 1.0f); // hover
     colors[ImGuiCol_FrameBgActive]  = ImVec4(0.35f, 0.12f, 0.12f, 1.0f); // active
 
-
     // Tabs
     colors[ImGuiCol_Tab]                = ImVec4(0.2f, 0.0f, 0.0f, 1.0f);  // Dark red idle
     colors[ImGuiCol_TabHovered]         = ImVec4(0.35f, 0.05f, 0.05f, 1.0f); // Brighter red hover

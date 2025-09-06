@@ -1,3 +1,12 @@
+// ------------------------------------------------------------
+// File: GameObject.h
+// Class: GameObject
+// Brief: GameObject is used to store information about different objects in the scene
+//          We also store components which can affect what the GameObject is doing
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
+
 #pragma once
 
 #include "core/Transform.h"
@@ -41,6 +50,15 @@ namespace wolf
             return nullptr;
         }   
 
+        template<typename T>
+        bool HasComponent() const {
+            for (const auto& c : m_Components) {
+                if (dynamic_cast<T*>(c.get()))
+                    return true;
+            }
+            return false;
+        }
+
         // Getters
         const std::string& GetName() const { return m_Name; }
         const std::string& GetTag() const { return m_tag; }
@@ -56,6 +74,9 @@ namespace wolf
         void SetTransform(const Transform& transform) { m_transform = transform; }
         void SetID(int id) { m_id = id; }
 
+        bool IsAlive(){return m_IsAlive;}
+        void IsAlive(bool isAlive){m_IsAlive = isAlive;}
+
 
         // Serialization
         YAML::Node Serialize() const;
@@ -66,6 +87,7 @@ namespace wolf
         std::string m_Name = "null";
         std::string m_tag = "null";
 		Transform m_transform;
+        bool m_IsAlive = true;
         std::vector<std::unique_ptr<Component>> m_Components;
 
         int m_id = 0;

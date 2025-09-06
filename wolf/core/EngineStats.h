@@ -1,3 +1,11 @@
+// ------------------------------------------------------------ 
+// File: EngineStats.h
+// Class: EngineStats
+// Brief: EngineStats is a singleton that hold engine stats
+//         We use Engine stats with Imgui to display the information
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------ 
 #pragma once
 
 struct EngineStats {
@@ -8,10 +16,10 @@ struct EngineStats {
 
     // Singleton accessor
     static EngineStats& Get() {
-        static EngineStats instance; // created on first use, guaranteed single instance
+        static EngineStats instance; 
         return instance;
     }
 
 private:
-    EngineStats() = default; // private constructor
+    EngineStats() = default;
 };

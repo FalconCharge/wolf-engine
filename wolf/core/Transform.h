@@ -1,3 +1,11 @@
+// ------------------------------------------------------------
+// File: Transform.h
+// Class: Transform
+// Brief: The Transform class is used to tell where a GameObject is located in the world
+//          We also use a parent-Child structure for the movement.
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>

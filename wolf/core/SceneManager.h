@@ -1,6 +1,11 @@
-/*
-//  A Singleton for managing scenes
-*/
+// ------------------------------------------------------------
+// File: SceneManager.h
+// Class: SceneManager
+// Brief: The Scene Manager holds whatever current scene is being played
+//          It also has the ability to load scenes
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include <memory>
 #include "GameScene.h"

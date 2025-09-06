@@ -1,3 +1,11 @@
+// ------------------------------------------------------------
+// File: InputManager.h
+// Class: InputManager
+// Brief: InputManager is a singleton: It's goal is to detect Input
+//          From things like the keyboard and mouse
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 
 #include "glm/glm.hpp"
