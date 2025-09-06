@@ -54,11 +54,11 @@ namespace wolf
 		
 	}
 
-	void GameObjectManager::Render()
+	void GameObjectManager::Render(glm::mat4 view, glm::mat4 proj)
 	{
 		for (std::vector<std::unique_ptr<GameObject>>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
 		{
-			(*it)->Render();
+			(*it)->Render(view, proj);
 		}
 	}
 

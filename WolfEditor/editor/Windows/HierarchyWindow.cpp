@@ -25,8 +25,7 @@ void HierarchyWindow::DrawContent()
     {
         if (ImGui::MenuItem("Create Empty GameObject"))
         {
-            wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager()->CreateGameObject<DebugCube>();
-            
+            wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager()->CreateGameObject<DebugCube>();            
         }
         ImGui::EndPopup();
     }

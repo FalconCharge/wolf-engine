@@ -32,6 +32,11 @@ namespace wolf{
             return m_CurrentScene.get();
         }
 
+        void SetActiveScene(Scene* scene) {
+            m_CurrentScene.reset(scene);
+        }
+
+
         void SaveActiveScene(const std::string& filepath){
             std::cout << "Saving Scene to file: " << filepath << "\n";
             std::string path = "wolf/scenes/" + filepath;

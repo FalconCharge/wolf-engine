@@ -15,7 +15,7 @@ namespace wolf
 
         void Update(float dt) override;
 
-        void Render(int width, int height);
+        void Render(glm::mat4 view, glm::mat4 proj);
 
         void ShutDown() override
         {

@@ -25,7 +25,7 @@ public:
     void Init();
 
     // Called each frame to Draw the cube
-    void Render() override;
+    void Render(glm::mat4 view, glm::mat4 proj) override;
 
 private:
 

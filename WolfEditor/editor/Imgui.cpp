@@ -13,10 +13,9 @@
 
 
 #include "core/GameScene.h"
-#include "core/SceneView.h"
 #include "core/Engine.h"
 
-void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> editorCamera)
+void Imgui::Init(wolf::RenderTarget* gameView, wolf::RenderTarget* sceneView)
 {
     // Create ImGui context
     IMGUI_CHECKVERSION();
@@ -46,7 +45,7 @@ void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> edi
 
     // Add editor windows
 
-    AddWindow(new GameViewWindow(gameView, editorCamera));
+    AddWindow(new GameViewWindow(gameView));
 
     AddWindow(new HierarchyWindow(-1));
 
@@ -54,7 +53,7 @@ void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> edi
     
     AddWindow(new StatsWindow());
 
-    AddWindow(new SceneViewWindow(gameView, editorCamera));
+    AddWindow(new SceneViewWindow(sceneView));
 
 
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
@@ -148,7 +147,6 @@ void Imgui::DrawMainMenuBar(){
         {
             if (ImGui::MenuItem("Play", "F5")) {
                 wolf::Engine::Instance().SetPlaying(true);
-                wolf::Engine::Instance().GetSceneManager().LoadScene<wolf::GameScene>("Game View");
             }
             if (ImGui::MenuItem("Pause", "F6")) {
                 // Basically just pauses the updates
@@ -157,7 +155,6 @@ void Imgui::DrawMainMenuBar(){
             if (ImGui::MenuItem("Stop", "Shift+F5")) {
                 // Swap back to the Scene View
                 wolf::Engine::Instance().SetPlaying(false);
-                wolf::Engine::Instance().GetSceneManager().LoadScene<wolf::SceneView>("Scene View");
             }
             ImGui::EndMenu();
         }

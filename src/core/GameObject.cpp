@@ -18,9 +18,9 @@ namespace wolf{
 
 	}
 
-	void GameObject::Render()
+	void GameObject::Render(glm::mat4 view, glm::mat4 proj)
 	{
-
+		return;
 	}
 
 	void GameObject::SetParent(GameObject* parent)

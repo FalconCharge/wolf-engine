@@ -1,41 +1,47 @@
 #include "core/GameScene.h"
 #include "core/SceneManager.h"
 
+#include "core/Engine.h"
+#include "core/camera.h"
+
 namespace wolf
 {
     void GameScene::Init()
     {
         std::cout << "Game Scene Initialized!\n";
-        // Create a test cube
-        // m_GameObjectManager.CreateGameObject<DebugCube>()->SetName("TestCube01");
 
-        // m_GameObjectManager.CreateGameObject<DebugCube>()->SetParent(m_GameObjectManager.FindGameObjectByName("TestCube01"));
+        // Creating the main camera
+        m_MainCamera = std::make_unique<Camera>(nullptr);
 
-        //m_testModel = new Model("external/Chest.fbx");
+        // Set initial camera parameters
+        m_MainCamera->SetPosition(glm::vec3(0.0f, 5.0f, 10.0f)); // position in world space
+        m_MainCamera->SetFOV(glm::radians(60.0f));               // 60 degree FOV
+        m_MainCamera->SetNear(0.1f);
+        m_MainCamera->SetFar(1000.0f);
+        m_MainCamera->SetAspect(16.0f / 9.0f);                  // aspect ratio
+        m_MainCamera->SetSpeed(10.0f);                           // movement speed
+
+        m_MainCamera->Init();
+
+
     }
-    void GameScene::Render(int width, int height)
+    void GameScene::Render(glm::mat4 view, glm::mat4 proj)
     {
-        m_GameObjectManager.Render();
-        // Out dated now
-        // if (m_testModel)
-        // {
-        //     glm::mat4 identity(1.0f);
-        //     glm::mat4 projection = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetProjMatrix();
-        //     glm::mat4 view = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetViewMatrix();
-        //     if(SceneManager::Instance().GetActiveScene()->GetMainCamera() == nullptr){
-        //         std::cout << "No main camera set for the scene! Cannot render model!\n";
-        //         return;
-        //     }
-
-        //     m_testModel->Render(identity, view, projection);
-        // }
+        m_GameObjectManager.Render(view, proj);
     }
 
     void GameScene::Update(float dt)
     {
-        
+        // 1. Step physics simulation
+        wolf::Engine::Instance().GetPhysicsSystem().Update(dt);
+
+        //m_GameObjectManager.SyncFromPhysics();
+
+        // 3. Run game object logic (AI, scripts, animations, etc)
         m_GameObjectManager.Update(dt);
-        m_PhysicsSystem.Update(dt);
+
+        //m_GameObjectManager.SyncToPhysics();
     }
+
 
 }

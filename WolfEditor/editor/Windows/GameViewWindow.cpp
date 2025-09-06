@@ -6,8 +6,8 @@
 #include "core/InputManager.h"
 #include "core/SceneManager.h"
 
-GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView, std::shared_ptr<EditorCamera> editorCamera)
-    : ImguiWindow("Game View"), m_gameView(m_gameView), m_EditorCamera(editorCamera)
+GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView)
+    : ImguiWindow("Game View"), m_gameView(m_gameView)
 {
 }
 void GameViewWindow::WindowSetup(){
@@ -33,9 +33,6 @@ void GameViewWindow::WindowSetup(){
 
 void GameViewWindow::DrawContent()
 {
-
-
-
 
     // Get the available content size of the current ImGui window
     ImVec2 availSize = ImGui::GetContentRegionAvail();

@@ -10,7 +10,7 @@
 class SceneViewWindow : public ImguiWindow
 {
     public:
-        SceneViewWindow(wolf::RenderTarget* sceneView, std::shared_ptr<EditorCamera> editorCamera);
+        SceneViewWindow(wolf::RenderTarget* sceneView);
 
     protected:
         void DrawContent() override;
@@ -19,6 +19,6 @@ class SceneViewWindow : public ImguiWindow
     private:
         // Members
         wolf::RenderTarget* m_gameView;
-        std::shared_ptr<EditorCamera> m_EditorCamera;
+        
         // Methods
 };

@@ -39,6 +39,7 @@ App::App(const std::string& name)
     {
         m_lastKeysDown[i] = false;
     }
+    wolf::InputManager::Instance().Initialize(m_pWindow);
 }
 
 App::~App()

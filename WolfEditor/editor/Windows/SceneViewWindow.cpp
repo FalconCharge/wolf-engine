@@ -6,8 +6,8 @@
 #include "core/InputManager.h"
 #include "core/Engine.h"
 
-SceneViewWindow::SceneViewWindow(wolf::RenderTarget* m_gameView, std::shared_ptr<EditorCamera> editorCamera)
-    : ImguiWindow("Scene View"), m_gameView(m_gameView), m_EditorCamera(editorCamera)
+SceneViewWindow::SceneViewWindow(wolf::RenderTarget* m_gameView)
+    : ImguiWindow("Scene View"), m_gameView(m_gameView)
 {
 }
 void SceneViewWindow::WindowSetup(){
@@ -20,9 +20,6 @@ void SceneViewWindow::DrawContent()
 
 
     if(ImGui::IsWindowFocused()){
-
-        wolf::Engine::Instance().GetSceneManager().GetActiveScene()->SetMainCamera(m_EditorCamera);
-
 
         // Lock cursor on left mouse button
         if (wolf::InputManager::Instance().IsLMBDownRaw())

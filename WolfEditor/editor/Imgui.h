@@ -16,13 +16,14 @@
 #include "render/TextureManager.h"
 #include "render/RenderTarget.h"
 #include "editorCamera.h"
+#include "editorScene.h"
 
 class Imgui{
 
     public:
         explicit Imgui(GLFWwindow* window): m_window(window){}
 
-        void Init(wolf::RenderTarget* gameview, std::shared_ptr<EditorCamera> editorCamera);
+        void Init(wolf::RenderTarget* gameview, wolf::RenderTarget* sceneView);
         void Shutdown();
         void NewFrame();
         void Render();

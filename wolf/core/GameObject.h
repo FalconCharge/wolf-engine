@@ -19,7 +19,7 @@ namespace wolf
 
         virtual void Init(){};
 		virtual void Update(float deltaTime);
-		virtual void Render();
+		virtual void Render(glm::mat4 view, glm::mat4 proj);
         virtual std::string GetType() const {return "GameObject";}
 
         template<typename T, typename... Args>

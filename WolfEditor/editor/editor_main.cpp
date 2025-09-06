@@ -7,7 +7,7 @@
 #include "core/GameObjectManager.h"
 #include "render/RenderTarget.h"
 #include <memory>
-#include "Grid3D.h"
+#include "editorScene.h"
 
 #include "editorCamera.h"
 
@@ -29,35 +29,31 @@ class WolfEditor : public wolf::App{
         {
             // SetUp ImGui
             m_Imgui = std::make_unique<Imgui>(this->getWindow());
+
             // The 1920 and 1080 is the quality of the image
             m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
+            m_SceneView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
-            m_EditorCamera = std::make_shared<EditorCamera>(
-                45.0f, m_GameView->GetViewportWidth()/m_GameView->GetViewportHeight(), 0.1f, 1000.0f
-            );
+            // Create the editor scene
+            m_EditorScene = std::make_unique<wolf::EditorScene>();
+            m_EditorScene->Init();
 
+            m_Imgui->Init(m_GameView, m_SceneView);
 
-            m_Imgui->Init(m_GameView, m_EditorCamera);
-
-            // We set the Main Camera for the scene to be the Editor Camera
-            wolf::Engine::Instance().GetSceneManager().GetActiveScene()->SetMainCamera(m_EditorCamera);
-
-            m_Grid = new Grid3D(10, 2.0f);
-
-            // Init the Input Manager
-            wolf::InputManager::Instance().Initialize(this->getWindow());
-
-
+            wolf::Engine::Instance().GetSceneManager().SetActiveScene(m_EditorScene->GetGameScene());
                         
         }
 
         void Update(float dt) override
         {
             m_Imgui->NewFrame();
-            m_game.Update(dt, this);
-            m_EditorCamera->update(dt);
 
-            //std::cout << "Editor Camera Position: " << glm::to_string(m_EditorCamera->GetViewPosition()) << std::endl;
+            if(wolf::Engine::Instance().IsPlaying()){
+                m_EditorScene->GetGameScene()->Update(dt);
+            }
+
+            m_EditorScene->GetEditorCamera()->update(dt);
+
         }
 
         // Note that if we want to render specifc thing in the editor we do it here EX: Grid or Gizmos
@@ -66,23 +62,32 @@ class WolfEditor : public wolf::App{
             // Editor-specific rendering logic goes here
             glfwPollEvents();
 
-            m_GameView->Bind();
 
+            // Game view rendering
+            m_GameView->Bind();
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // set to dark gray
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear with that color
 
-            // Game Scene rendering
-            m_game.Render(m_width, m_height);   // We don't use width and height
-
-            
-            // Render the editor grid *after* the scene
-            glm::mat4 view = m_EditorCamera->GetViewMatrix();
-            glm::mat4 proj = m_EditorCamera->GetProjMatrix();
-            //m_Grid->render(view, proj);
+            // Render using the game camera
+            m_EditorScene->GetGameScene()->Render(
+                m_EditorScene->GetGameScene()->GetMainCamera()->GetViewMatrix(),
+                m_EditorScene->GetGameScene()->GetMainCamera()->GetProjMatrix()
+            );
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+            // Render using the Scene view Camera
+            m_SceneView->Bind();
+            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            m_EditorScene->RenderSceneView(); // editor camera renders scene
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+            // --- UI ---
             m_Imgui->Render();
+
         }
 
 
@@ -92,13 +97,13 @@ class WolfEditor : public wolf::App{
         std::unique_ptr<Imgui> m_Imgui;
 
         wolf::RenderTarget* m_GameView;
+        wolf::RenderTarget* m_SceneView;
 
         // The game Src code
         GameLogic m_game;
 
-        Grid3D* m_Grid;
+        std::unique_ptr<wolf::EditorScene> m_EditorScene;
 
-        std::shared_ptr<EditorCamera> m_EditorCamera;
 
 };
 

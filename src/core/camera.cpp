@@ -52,6 +52,7 @@ void Camera::DetectInput(float &cameraSpeed, glm::vec3 &forwardXZ, glm::vec3 &ri
     if (input.IsKeyDown(GLFW_KEY_W))
     {
         m_position += forwardXZ * cameraSpeed;
+        std::cout << "Going forward" << std::endl;
     }
     if (input.IsKeyDown(GLFW_KEY_S))
     {

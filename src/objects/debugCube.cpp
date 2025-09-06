@@ -106,7 +106,7 @@ void DebugCube::Init(){
 
 }
 
-void DebugCube::Render()
+void DebugCube::Render(glm::mat4 view, glm::mat4 proj)
 {
     // Render cube
     // This would be a nice upgrade
@@ -114,16 +114,6 @@ void DebugCube::Render()
     
     glm::mat4 world = GetTransform().GetWorldMatrix();
     m_Material->SetUniform("world", world);
-
-    std::shared_ptr<wolf::Camera> camera = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetMainCamera();
-    glm::mat4 view;
-    glm::mat4 proj;
-    if (camera) {
-        view = camera->GetViewMatrix();
-        proj = camera->GetProjMatrix();
-    }else{
-        //std::cout << "No active camera found in the scene!\n";
-    }
 
     m_Material->SetUniform("projection", proj);
     m_Material->SetUniform("view", view);

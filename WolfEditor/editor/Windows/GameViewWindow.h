@@ -4,13 +4,13 @@
 #include "render/RenderTarget.h"
 #include <string>
 #include <memory>
-#include "../editorCamera.h"
+#include "core/camera.h"
 
 
 class GameViewWindow : public ImguiWindow
 {
     public:
-        GameViewWindow(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> editorCamera);
+        GameViewWindow(wolf::RenderTarget* gameView);
 
     protected:
         void DrawContent() override;
@@ -19,6 +19,5 @@ class GameViewWindow : public ImguiWindow
     private:
         // Members
         wolf::RenderTarget* m_gameView;
-        std::shared_ptr<EditorCamera> m_EditorCamera;
         // Methods
 };
