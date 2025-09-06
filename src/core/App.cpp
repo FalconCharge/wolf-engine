@@ -134,8 +134,8 @@ void App::_init()
     // TODO: Setup Game Icon VS Engine Icon
     // Setting up Icon
     GLFWimage images[2];
-    images[0].pixels = stbi_load("wolf/data/EngineIcon_64x64.png", &images[0].width, &images[0].height, 0, 4);
-    images[1].pixels = stbi_load("wolf/data/EngineIcon_32x32.png", &images[1].width, &images[1].height, 0, 4);
+    images[0].pixels = stbi_load("wolf/data/falconlogo64.png", &images[0].width, &images[0].height, 0, 4);
+    images[1].pixels = stbi_load("wolf/data/falconlogo128.png", &images[1].width, &images[1].height, 0, 4);
 
     if (images[0].pixels && images[1].pixels) {
         glfwSetWindowIcon(m_pWindow, 2, images);  // 2 icons, GLFW picks best fit

@@ -102,7 +102,8 @@ void DebugCube::Init(){
     //Temp
     // Adds the Test component to make sure we are updating the components
     this->AddComponent<wolf::TestComponent>();
-    this->AddComponent<wolf::PhysicsBodyComponent>();
+    this->AddComponent<wolf::PhysicsBodyComponent>(false)->Init();
+
 }
 
 void DebugCube::Render()

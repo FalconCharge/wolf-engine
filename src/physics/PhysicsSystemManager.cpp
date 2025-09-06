@@ -1,12 +1,13 @@
-#include "physics/PhysicsSystem.h"
+#include "physics/PhysicsSystemManager.h"
+
 
 using namespace JPH;
 using namespace JPH::literals;
 
-namespace wolf{
 
-    PhysicsSystem::PhysicsSystem() : m_TempAllocator(10 * 1024 * 1024),
-        m_JobSystem(cMaxPhysicsJobs, cMaxPhysicsBarriers, thread::hardware_concurrency() -1)
+
+    PhysicsSystemManager::PhysicsSystemManager()
+        
     {
         // Register allocation hook. In this example we'll just let Jolt use malloc / free but you can override these if you want (see Memory.h).
         // This needs to be done before any other Jolt function is called.
@@ -24,6 +25,10 @@ namespace wolf{
         // If you have your own custom shape types you probably need to register their handlers with the CollisionDispatch before calling this function.
         // If you implement your own default material (PhysicsMaterial::sDefault) make sure to initialize it before this function or else this function will create one for you.
         JPH::RegisterTypes();
+
+        m_TempAllocator = new TempAllocatorImpl(10 * 1024 * 1024);
+        m_JobSystem = new JobSystemThreadPool(cMaxPhysicsJobs, cMaxPhysicsBarriers, std::thread::hardware_concurrency() - 1);
+
 
         // This is the max amount of rigid bodies that you can add to the physics system. If you try to add more you'll get an error.
         // Note: This value is low because this is a simple test. For a real project use something in the order of 65536.
@@ -59,18 +64,31 @@ namespace wolf{
   
     }
 
-    PhysicsSystem::~PhysicsSystem() {
+    PhysicsSystemManager::~PhysicsSystemManager() {
         JPH::UnregisterTypes();
         delete JPH::Factory::sInstance;
         JPH::Factory::sInstance = nullptr;
+
+        delete m_TempAllocator;
+        delete m_JobSystem;
     }
 
-    void PhysicsSystem::Update(float null) {
+    void PhysicsSystemManager::Update(float null) {
         const float deltaTime = 1.0f/60.0f;
 
         const int cCollisionSteps = 1;
-        m_System.Update(deltaTime, cCollisionSteps, &m_TempAllocator, &m_JobSystem);
+        m_System.Update(deltaTime, cCollisionSteps, m_TempAllocator, m_JobSystem);
+
+        for (auto it = m_PhysicsComps.begin(); it != m_PhysicsComps.end(); ) {
+        if (auto comp = it->lock()) {
+            comp->SyncTransformFromPhysics();
+            ++it;
+        } else {
+            // Component destroyed, remove weak_ptr
+            it = m_PhysicsComps.erase(it);
+        }
+    }
+
     }
 
 
-}

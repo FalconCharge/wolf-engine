@@ -32,7 +32,13 @@ namespace wolf
 
     void GameScene::Update(float dt)
     {
+
         m_GameObjectManager.Update(dt);
+
+        if(m_physicsEnabled){
+            m_PhysicsSystem.Update(dt);
+
+        }
     }
 
 }

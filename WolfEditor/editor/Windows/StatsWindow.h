@@ -1,6 +1,7 @@
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"
+#include "core/SceneManager.h"
 #include <string>
 #include <memory>
 #include "core/EngineStats.h"
