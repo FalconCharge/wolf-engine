@@ -53,10 +53,11 @@ void Imgui::Init(wolf::RenderTarget* gameView, wolf::RenderTarget* sceneView)
     colors[ImGuiCol_ButtonHovered] = ImVec4(0.2f, 0.05f, 0.05f, 1.0f);  // Buttons (hovered)
     colors[ImGuiCol_ButtonActive] =  ImVec4(0.15f, 0.05f, 0.05f, 1.0f);
 
-    // Frame BG
-    colors[ImGuiCol_FrameBg]       = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);    // Input fields, sliders
-    colors[ImGuiCol_FrameBgHovered]= ImVec4(0.2f, 0.05f, 0.05f, 1.0f);  // Slight red tint when hovered
-    colors[ImGuiCol_FrameBgActive] = ImVec4(0.3f, 0.1f, 0.1f, 1.0f);    // Stronger red tint when active
+    // Frame BG (Input fields, sliders, etc.)
+    colors[ImGuiCol_FrameBg]        = ImVec4(0.15f, 0.05f, 0.05f, 1.0f); // idle
+    colors[ImGuiCol_FrameBgHovered] = ImVec4(0.25f, 0.08f, 0.08f, 1.0f); // hover
+    colors[ImGuiCol_FrameBgActive]  = ImVec4(0.35f, 0.12f, 0.12f, 1.0f); // active
+
 
     // Tabs
     colors[ImGuiCol_Tab]                = ImVec4(0.2f, 0.0f, 0.0f, 1.0f);  // Dark red idle
