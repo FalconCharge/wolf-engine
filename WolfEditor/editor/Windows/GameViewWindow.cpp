@@ -50,4 +50,23 @@ void GameViewWindow::DrawContent()
 
     ImGui::Image((ImTextureID)m_gameView->GetColorBuffer()->GetGLTexture(), ImVec2(width, height), ImVec2(0, 1), ImVec2(1, 0));
 
+    // Hover and click detection
+    bool hovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem);
+    bool clicked = wolf::InputManager::Instance().IsLMBDownRaw();
+
+    // Lock cursor when clicked inside viewport
+    if (hovered && clicked) {
+        wolf::InputManager::Instance().SetCursorLocked(true);
+    }
+
+    // Unlock cursor on ESC
+    if (wolf::InputManager::Instance().IsKeyJustDownRaw(GLFW_KEY_ESCAPE)) {
+        wolf::InputManager::Instance().SetCursorLocked(false);
+    }
+
+    // Enable input only when cursor is locked
+    wolf::InputManager::Instance().SetInputEnabled(
+        wolf::InputManager::Instance().IsCursorLocked()
+    );
+
 }
