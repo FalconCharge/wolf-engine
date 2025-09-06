@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// Class: EditorCamera
+// Brief: Derived from Camera; Editor Camera Has more specific features to use in a scene view and not a game view
+//          Should have things like zoom with scroll, etc all them features that any normal game engine has
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "core/Camera.h"
 #include "core/InputManager.h"

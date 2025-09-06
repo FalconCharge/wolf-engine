@@ -1,3 +1,10 @@
+// ------------------------------------------------------------ 
+// File: Camera.h
+// Class: Camera
+// Brief: The Camera class is used to create a camera for scenes
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------ 
 #pragma once
 #include "wolf.h"
 #include "glm/glm.hpp"

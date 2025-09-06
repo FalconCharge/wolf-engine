@@ -1,7 +1,11 @@
-/*
-//  This is the Main Engine Singleton where we get all of our information
-//  Mainly things like managers
-*/
+// ------------------------------------------------------------
+// File: Engine.h
+// Class: Engine
+// Brief: Engine is a singleton: Engine holds the managers for the engine
+//          and other important information
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 
 
 // Engine.h

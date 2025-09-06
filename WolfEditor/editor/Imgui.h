@@ -1,4 +1,13 @@
+
+// ------------------------------------------------------------
+// Class: Imgui.h
+// Brief: Where the Imgui layer takes place. lots of setup happening here
+//          Kinda too muck to explain but it gets it all ready for development
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
+
 
 #include <imgui.h>
 #include "imgui_impl_glfw.h"

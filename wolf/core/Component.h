@@ -1,3 +1,11 @@
+// ------------------------------------------------------------
+// File: Component.h
+// Class: Component
+// Brief: The component Class is used to add features to the GameObject class
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
+
 #pragma once
 
 // Used to draw in Inspector

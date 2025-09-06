@@ -1,3 +1,11 @@
+// ------------------------------------------------------------
+// Class: Grid3D
+// Brief: A basic grid class that was found in wolf samples. 
+//          I personally don't like it at all. And think I should delete it.
+//          But, I'm thinking of adding it to the GO pos when a GO is focused.
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 
 #include "wolf.h"

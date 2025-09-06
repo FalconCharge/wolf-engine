@@ -1,3 +1,12 @@
+// ------------------------------------------------------------
+// File: GameScene.h
+// Class: GameScene 
+// Brief: GameScene is derived from Scene and is used as a simple way to update and render the game
+//      
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
+
 #pragma once
 #include "core/Scene.h"
 #include <iostream>

@@ -1,3 +1,9 @@
+// ------------------------------------------------------------
+// Class: Physics
+// Brief: Don't ask me how it works: it's copy and pasted from an example
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 
 #include "Layers.h"

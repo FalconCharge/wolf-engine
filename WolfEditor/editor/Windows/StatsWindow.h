@@ -1,3 +1,9 @@
+// ------------------------------------------------------------ 
+// Class: StatsWindow
+// Brief: Used the EngineStats single to gather the values and dispaly them in a window
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------ 
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"

@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// File: PhysicsBodyComponent.h
+// Class: PhysicsBodyComponet
+// Brief: A quickly developed physics component that doesn't seem to be working (: 
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 
 #include <Jolt/Jolt.h>

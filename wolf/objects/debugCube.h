@@ -1,3 +1,10 @@
+// ------------------------------------------------------------
+// File: DebugCube.h
+// Class: DebugCube
+// Brief: This is a simple class where we create a cube to test out the engine and editor
+// Author: Ben Harper
+// Date: 2025-09-06
+// ------------------------------------------------------------
 #pragma once
 #include "core/GameObject.h"
 #include "render/render.h"
