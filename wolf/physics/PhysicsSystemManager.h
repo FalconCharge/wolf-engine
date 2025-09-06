@@ -31,10 +31,6 @@ class PhysicsSystemManager{
         JPH::PhysicsSystem& GetSystem(){return m_System;}
         JPH::BodyInterface& GetBodyInterface(){return m_System.GetBodyInterface();}
 
-        // void AddPhysicsComponent(std::weak_ptr<wolf::PhysicsBodyComponent> comp){
-        //     m_PhysicsComps.push_back(comp);
-        // }
-
     private:
 
         JPH::PhysicsSystem m_System;
@@ -47,7 +43,5 @@ class PhysicsSystemManager{
         ObjectVsBroadPhaseLayerFilterImpl m_ObjectVsBroadPhaseFilter;
         MyContactListener m_ContactListener;
         MyBodyActivationListener m_ActivationListener;
-
-        //std::vector<std::weak_ptr<wolf::PhysicsBodyComponent>> m_PhysicsComps;
 
 };

@@ -20,6 +20,7 @@ namespace wolf
         void ShutDown() override
         {
             std::cout << "TestScene Shutting down: Doesn't do anything rn\n";
+            m_GameObjectManager.Shutdown();
         }
     private:
         Model* m_testModel = nullptr;

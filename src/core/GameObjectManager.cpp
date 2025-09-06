@@ -10,6 +10,7 @@ namespace wolf
 	GameObjectManager::~GameObjectManager()
 	{
 		// No explicit cleanup needed for unique_ptr, they will be automatically cleaned up
+		std::cout << "Deleting Game Object Manager " << std::endl;
 	}
 
 	void GameObjectManager::DestroyGameObject(GameObject* gameObject)
@@ -52,6 +53,10 @@ namespace wolf
 
 		}
 		
+	}
+	 void GameObjectManager::Shutdown(){
+		// Clear the vector, releasing all unique_ptrs
+		m_gameObjects.clear();
 	}
 
 	void GameObjectManager::Render(glm::mat4 view, glm::mat4 proj)

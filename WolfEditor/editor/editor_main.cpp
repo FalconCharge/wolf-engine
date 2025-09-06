@@ -16,7 +16,7 @@
 #include "src/GameLogic.h"
 
 #include "core/Engine.h"
-
+#include "editorScene.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -34,13 +34,16 @@ class WolfEditor : public wolf::App{
             m_GameView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
             m_SceneView = new wolf::RenderTarget(1920, 1080, wolf::Texture::FMT_8888);
 
-            // Create the editor scene
-            m_EditorScene = std::make_unique<wolf::EditorScene>();
-            m_EditorScene->Init();
-
             m_Imgui->Init(m_GameView, m_SceneView);
 
-            wolf::Engine::Instance().GetSceneManager().SetActiveScene(m_EditorScene->GetGameScene());
+            auto gameScene = std::make_unique<wolf::GameScene>("Game Scene built through editor");
+            gameScene->Init();
+            wolf::GameScene* rawScenePtr = gameScene.get();
+            wolf::Engine::Instance().GetSceneManager().SetActiveScene(std::move(gameScene));    // Send it to Manager for ownership
+
+            m_EditorScene = std::make_unique<wolf::EditorScene>();
+            m_EditorScene->SetGameScene(rawScenePtr);
+            m_EditorScene->Init();
                         
         }
 
@@ -88,6 +91,12 @@ class WolfEditor : public wolf::App{
             // --- UI ---
             m_Imgui->Render();
 
+        }
+
+        ~WolfEditor(){
+            std::cout << "Cleaning up WolfEditor" << std::endl;
+            delete m_GameView;
+            delete m_SceneView;
         }
 
 

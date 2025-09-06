@@ -7,7 +7,7 @@
 namespace wolf
 {
     EditorScene::EditorScene(){
-        m_GameScene = std::make_unique<GameScene>("Game Scene");
+
     }
 
     EditorScene::~EditorScene(){
@@ -43,6 +43,10 @@ namespace wolf
                 m_GameScene->GetMainCamera()->GetViewMatrix(),
                 m_GameScene->GetMainCamera()->GetProjMatrix()
             );
+    }
+
+    void EditorScene::ShutDown(){
+        m_GameScene = nullptr;
     }
 
 }

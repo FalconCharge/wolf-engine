@@ -12,6 +12,8 @@
 			GameObjectManager();
 			~GameObjectManager();
 
+			void Shutdown();
+
 			void Update(float deltaTime);
 			void Render(glm::mat4 view, glm::mat4 proj);
 			

@@ -8,6 +8,8 @@ namespace wolf{
     }
 
     PhysicsBodyComponent::~PhysicsBodyComponent(){
+
+        
         // Remove the body if it exist
         auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
         if(!m_BodyID.IsInvalid()){

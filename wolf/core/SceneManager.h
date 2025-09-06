@@ -11,6 +11,11 @@ namespace wolf{
     class SceneManager {
 
     public:
+
+        ~SceneManager(){
+            return;
+        }
+
         template<typename T, typename... Args>
         void LoadScene(Args&&... args) {
             if (m_CurrentScene) {
@@ -32,10 +37,9 @@ namespace wolf{
             return m_CurrentScene.get();
         }
 
-        void SetActiveScene(Scene* scene) {
-            m_CurrentScene.reset(scene);
+        void SetActiveScene(std::unique_ptr<Scene> scene) {
+            m_CurrentScene = std::move(scene);
         }
-
 
         void SaveActiveScene(const std::string& filepath){
             std::cout << "Saving Scene to file: " << filepath << "\n";
@@ -58,6 +62,13 @@ namespace wolf{
             YAML::Node sceneNode = YAML::Load(fin);
             m_CurrentScene->Deserialize(sceneNode);
             m_CurrentScene->Init();
+        }
+
+        // Clears the Scene
+        void Clear(){
+            if(m_CurrentScene){
+                m_CurrentScene->ShutDown();
+            }
         }
 
     private:

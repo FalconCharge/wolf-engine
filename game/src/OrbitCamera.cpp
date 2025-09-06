@@ -3,7 +3,7 @@
 OrbitCamera::OrbitCamera(wolf::App* pApp)
     : m_pApp(pApp)
 {
-    m_lastMousePos = m_pApp->getMousePos();
+    //m_lastMousePos = m_pApp->getMousePos();
 }
 
 OrbitCamera::~OrbitCamera()
@@ -13,38 +13,38 @@ OrbitCamera::~OrbitCamera()
 
 void OrbitCamera::update(float dt)
 {
-    glm::vec2 mousePos = m_pApp->getMousePos();
+//     glm::vec2 mousePos = m_pApp->getMousePos();
 
-    if(m_pApp->isLMBDown())
-    {
-        glm::vec2 mouseMovement = mousePos - m_lastMousePos;
-        _rotate(mouseMovement);
-    }
-    else if(m_pApp->isMMBDown())
-    {
-        glm::vec2 mouseMovement = mousePos - m_lastMousePos;
-        _pan(mouseMovement);
-    }
+//     if(m_pApp->isLMBDown())
+//     {
+//         glm::vec2 mouseMovement = mousePos - m_lastMousePos;
+//         _rotate(mouseMovement);
+//     }
+//     else if(m_pApp->isMMBDown())
+//     {
+//         glm::vec2 mouseMovement = mousePos - m_lastMousePos;
+//         _pan(mouseMovement);
+//     }
 
-    glm::vec2 mouseScroll = m_pApp->getMouseScroll();
+//     glm::vec2 mouseScroll = m_pApp->getMouseScroll();
 
-    if(mouseScroll.y > 0) {
-        m_distance -= (m_distance / 5.0f);
-    } else if(mouseScroll.y < 0) {
-        m_distance += (m_distance / 5.0f);
-    }
+//     if(mouseScroll.y > 0) {
+//         m_distance -= (m_distance / 5.0f);
+//     } else if(mouseScroll.y < 0) {
+//         m_distance += (m_distance / 5.0f);
+//     }
 
-    m_distance = wolf::max(10.0f, m_distance);
+//     m_distance = wolf::max(10.0f, m_distance);
 
-    m_far = wolf::max(150.0f, m_distance * 2.0f);
-    m_near = m_distance / 10.0f;
+//     m_far = wolf::max(150.0f, m_distance * 2.0f);
+//     m_near = m_distance / 10.0f;
 
-    if(m_pApp->isKeyDown('f'))
-    {
-        focusOn(m_focusMin,m_focusMax);
-    }
+//     if(m_pApp->isKeyDown('f'))
+//     {
+//         focusOn(m_focusMin,m_focusMax);
+//     }
 
-    m_lastMousePos = mousePos;
+//     m_lastMousePos = mousePos;
 }
 
 glm::mat4 OrbitCamera::getViewMatrix()

@@ -64,7 +64,9 @@ using namespace JPH::literals;
     }
 
     PhysicsSystemManager::~PhysicsSystemManager() {
+        std::cout << "Starting to shutdown Physics System"  << std::endl;
         Shutdown();
+        std::cout << "Shut down Physis System" << std::endl;
     }
 
     void PhysicsSystemManager::Update(float null) {

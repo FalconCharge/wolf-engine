@@ -17,7 +17,12 @@ DebugCube::DebugCube()
 }
 
 DebugCube::~DebugCube(){
+    std::cout << "Deleting GameObject " << std::endl;
     wolf::ProgramManager::DestroyProgram(m_Program);
+    wolf::BufferManager::DestroyBuffer(m_VertexBuffer);
+    wolf::BufferManager::DestroyBuffer(m_IndexBuffer);
+    delete m_Decl;
+    wolf::MaterialManager::DestroyMaterial(m_Material);
 }
 
 
