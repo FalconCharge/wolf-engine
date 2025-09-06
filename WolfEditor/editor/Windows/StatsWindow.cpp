@@ -24,11 +24,4 @@ void StatsWindow::DrawContent()
     ImGui::Text("Draw Calls: %d", drawCalls);
     ImGui::Text("Entities: %d", entities);
 
-    // Get current state
-    bool physicsEnabled = wolf::SceneManager::Instance().GetActiveScene()->EnablePhysicsManager();
-
-    // Checkbox to toggle
-    if (ImGui::Checkbox("Physics System", &physicsEnabled)) {
-        wolf::SceneManager::Instance().GetActiveScene()->EnablePhysicsManager(physicsEnabled);
-    }
 }

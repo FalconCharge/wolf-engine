@@ -5,24 +5,24 @@
 
 
 #include "core/GameObjectManager.h"
-#include "core/SceneManager.h"  
+#include "core/Engine.h"  
 
 class GameLogic
 {
 public:
     GameLogic()
     {
-        wolf::SceneManager::Instance().LoadScene<wolf::GameScene>("Test Scene");
+        wolf::Engine::Instance().GetSceneManager().LoadScene<wolf::GameScene>("Test Scene");
     }
 
     void Update(float dt, wolf::App* app)
     {
-        wolf::SceneManager::Instance().Update(dt);
+        wolf::Engine::Instance().GetSceneManager().Update(dt);
     }
 
     void Render(int width, int height)
     {
-        wolf::SceneManager::Instance().Render(width, height);
+        wolf::Engine::Instance().GetSceneManager().Render(width, height);
     }
 
 private:

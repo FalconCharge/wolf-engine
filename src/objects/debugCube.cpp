@@ -3,11 +3,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include "core/SceneManager.h"
-
 // Temp include for testing componets
 #include "components/TestComponent.h"
 #include "components/PhysicsBodyComponent.h"
+
+#include "core/Engine.h"
 
 #include <iostream>
 
@@ -115,7 +115,7 @@ void DebugCube::Render()
     glm::mat4 world = GetTransform().GetWorldMatrix();
     m_Material->SetUniform("world", world);
 
-    std::shared_ptr<wolf::Camera> camera = wolf::SceneManager::Instance().GetActiveScene()->GetMainCamera();
+    std::shared_ptr<wolf::Camera> camera = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetMainCamera();
     glm::mat4 view;
     glm::mat4 proj;
     if (camera) {

@@ -5,7 +5,7 @@ namespace wolf
 {
     void GameScene::Init()
     {
-        std::cout << "TestScene Initialized!\n";
+        std::cout << "Game Scene Initialized!\n";
         // Create a test cube
         // m_GameObjectManager.CreateGameObject<DebugCube>()->SetName("TestCube01");
 
@@ -16,29 +16,26 @@ namespace wolf
     void GameScene::Render(int width, int height)
     {
         m_GameObjectManager.Render();
-        if (m_testModel)
-        {
-            glm::mat4 identity(1.0f);
-            glm::mat4 projection = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetProjMatrix();
-            glm::mat4 view = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetViewMatrix();
-            if(SceneManager::Instance().GetActiveScene()->GetMainCamera() == nullptr){
-                std::cout << "No main camera set for the scene! Cannot render model!\n";
-                return;
-            }
+        // Out dated now
+        // if (m_testModel)
+        // {
+        //     glm::mat4 identity(1.0f);
+        //     glm::mat4 projection = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetProjMatrix();
+        //     glm::mat4 view = SceneManager::Instance().GetActiveScene()->GetMainCamera()->GetViewMatrix();
+        //     if(SceneManager::Instance().GetActiveScene()->GetMainCamera() == nullptr){
+        //         std::cout << "No main camera set for the scene! Cannot render model!\n";
+        //         return;
+        //     }
 
-            m_testModel->Render(identity, view, projection);
-        }
+        //     m_testModel->Render(identity, view, projection);
+        // }
     }
 
     void GameScene::Update(float dt)
     {
-
+        
         m_GameObjectManager.Update(dt);
-
-        if(m_physicsEnabled){
-            m_PhysicsSystem.Update(dt);
-
-        }
+        m_PhysicsSystem.Update(dt);
     }
 
 }

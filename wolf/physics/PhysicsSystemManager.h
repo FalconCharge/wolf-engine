@@ -24,14 +24,16 @@ class PhysicsSystemManager{
         PhysicsSystemManager();
         ~PhysicsSystemManager();
 
+        void Shutdown();
+
         void Update(float deltaTime);
 
         JPH::PhysicsSystem& GetSystem(){return m_System;}
         JPH::BodyInterface& GetBodyInterface(){return m_System.GetBodyInterface();}
 
-        void AddPhysicsComponent(std::weak_ptr<wolf::PhysicsBodyComponent> comp){
-            m_PhysicsComps.push_back(comp);
-        }
+        // void AddPhysicsComponent(std::weak_ptr<wolf::PhysicsBodyComponent> comp){
+        //     m_PhysicsComps.push_back(comp);
+        // }
 
     private:
 
@@ -46,6 +48,6 @@ class PhysicsSystemManager{
         MyContactListener m_ContactListener;
         MyBodyActivationListener m_ActivationListener;
 
-        std::vector<std::weak_ptr<wolf::PhysicsBodyComponent>> m_PhysicsComps;
+        //std::vector<std::weak_ptr<wolf::PhysicsBodyComponent>> m_PhysicsComps;
 
 };

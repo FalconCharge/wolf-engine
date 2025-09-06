@@ -10,6 +10,7 @@
 #include <glm/gtx/quaternion.hpp>        // toMat4 (quat → mat4)
 
 #include "components/TestComponent.h"
+#include "core/Engine.h"
 
 InspectorWindow::InspectorWindow(int selected)
     : ImguiWindow("Inspector"), m_selectedIndex(selected)
@@ -22,7 +23,7 @@ void InspectorWindow::WindowSetup()
 
 void InspectorWindow::DrawContent()
 {
-    auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+    auto gameObjectManager = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager();
     if (m_selectedIndex >= 0 && m_selectedIndex < (int)gameObjectManager->GetGameObjects().size())
     {
         ImGui::Text("Selected GameObject:");

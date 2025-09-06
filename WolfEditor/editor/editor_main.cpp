@@ -15,6 +15,8 @@
 
 #include "src/GameLogic.h"
 
+#include "core/Engine.h"
+
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -38,7 +40,7 @@ class WolfEditor : public wolf::App{
             m_Imgui->Init(m_GameView, m_EditorCamera);
 
             // We set the Main Camera for the scene to be the Editor Camera
-            wolf::SceneManager::Instance().GetActiveScene()->SetMainCamera(m_EditorCamera);
+            wolf::Engine::Instance().GetSceneManager().GetActiveScene()->SetMainCamera(m_EditorCamera);
 
             m_Grid = new Grid3D(10, 2.0f);
 
@@ -102,7 +104,16 @@ class WolfEditor : public wolf::App{
 
 int main(int, char**)
 {
+
+    // Init engine SubSystems such as the Physics and SceneManager
+    wolf::Engine::Instance().Init();
+    // The Application
     WolfEditor editor;
+
+    // Set the app for ref
+    wolf::Engine::Instance().SetApp(&editor);
+
+    // Start the Application loop
     editor.Run();
     return 0;
 }

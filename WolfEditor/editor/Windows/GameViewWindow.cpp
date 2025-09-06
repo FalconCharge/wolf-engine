@@ -35,34 +35,12 @@ void GameViewWindow::DrawContent()
 {
 
 
-    if(ImGui::IsWindowFocused()){
 
-        wolf::SceneManager::Instance().GetActiveScene()->SetMainCamera(m_EditorCamera);
-
-        // Lock cursor on left mouse button
-        if (wolf::InputManager::Instance().IsLMBDownRaw())
-        {
-            wolf::InputManager::Instance().SetCursorLocked(true);
-        }
-
-        // Unlock cursor on Escape
-        if (wolf::InputManager::Instance().IsKeyDownRaw(GLFW_KEY_ESCAPE))
-        {
-            wolf::InputManager::Instance().SetCursorLocked(false);
-        }
-
-        // Enable input only when cursor is locked
-        if(wolf::InputManager::Instance().IsCursorLocked()){
-            wolf::InputManager::Instance().SetInputEnabled(true);
-        }else{
-            wolf::InputManager::Instance().SetInputEnabled(false);
-        }
-    }
 
     // Get the available content size of the current ImGui window
     ImVec2 availSize = ImGui::GetContentRegionAvail();
 
-    // Optional: maintain aspect ratio
+    // maintain aspect ratio
     float aspect = (float)m_gameView->GetViewportWidth() / (float)m_gameView->GetViewportHeight();
     float width = availSize.x;
     float height = width / aspect;

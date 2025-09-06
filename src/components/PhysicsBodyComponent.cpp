@@ -1,6 +1,6 @@
 #include "components/PhysicsBodyComponent.h"
 
-#include "core/SceneManager.h"
+#include "core/Engine.h"
 namespace wolf{
 
     PhysicsBodyComponent::PhysicsBodyComponent(bool isDymanic) : m_IsDynamic(isDymanic){
@@ -9,7 +9,7 @@ namespace wolf{
 
     PhysicsBodyComponent::~PhysicsBodyComponent(){
         // Remove the body if it exist
-        auto& bodyInterface = SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
         if(!m_BodyID.IsInvalid()){
             bodyInterface.RemoveBody(m_BodyID);
             bodyInterface.DestroyBody(m_BodyID);
@@ -19,12 +19,12 @@ namespace wolf{
     void PhysicsBodyComponent::Init(){
 
 
-        auto comp = GetGameObjectOwner()->GetComponent<PhysicsBodyComponent>();
-        if (comp) {
-            // Convert shared_ptr to weak_ptr
-            std::weak_ptr<PhysicsBodyComponent> weakComp = comp;
-            SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->AddPhysicsComponent(weakComp);
-        }
+        // auto comp = GetGameObjectOwner()->GetComponent<PhysicsBodyComponent>();
+        // if (comp) {
+        //     // Convert shared_ptr to weak_ptr
+        //     std::weak_ptr<PhysicsBodyComponent> weakComp = comp;
+        //     SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->AddPhysicsComponent(weakComp);
+        // }
 
         
 
@@ -46,7 +46,7 @@ namespace wolf{
         // Allows swithcing between static and dynamic mainly on for the editor
         settings.mAllowDynamicOrKinematic = true;
 
-        auto& bodyInterface = SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
         m_BodyID = bodyInterface.CreateAndAddBody(settings, EActivation::Activate);
     }   
 
@@ -54,14 +54,16 @@ namespace wolf{
         // Should update the physics of the go it's attached to here and sync the transforms
         if(m_BodyID.IsInvalid()) return;
 
-        auto& bodyInterface = SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
 
         RVec3 pos = bodyInterface.GetPosition(m_BodyID);
         Quat rot = bodyInterface.GetRotation(m_BodyID);
 
         // Sync Physics to GO
-        auto go = GetGameObjectOwner();
-        go->GetTransform().SetPosition({ pos.GetX(), pos.GetY(), pos.GetZ() });
+        // auto go = GetGameObjectOwner();
+        //go->GetTransform().SetPosition({ pos.GetX(), pos.GetY(), pos.GetZ() });
+
+        SyncTransformFromPhysics();
 
     }
 
@@ -70,7 +72,7 @@ namespace wolf{
     }
 
     void PhysicsBodyComponent::_ResetBody(){
-        auto& bodyInterface = SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
 
         // If a body already exists, remove it first
         if (m_BodyID.IsInvalid() == false) {
@@ -87,10 +89,8 @@ namespace wolf{
     {
         if (m_BodyID.IsInvalid()) return;
 
-        auto& bodyInterface = SceneManager::Instance()
-                                .GetActiveScene()
-                                ->GetPhysicsManager()
-                                ->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
+
 
         RVec3 pos = bodyInterface.GetPosition(m_BodyID);
         Quat rot = bodyInterface.GetRotation(m_BodyID);
@@ -107,7 +107,7 @@ namespace wolf{
         if (ImGui::CollapsingHeader("Physics Body")) {
 
 
-            auto& bodyInterface = SceneManager::Instance().GetActiveScene()->GetPhysicsManager()->GetBodyInterface();
+        auto& bodyInterface = Engine::Instance().GetPhysicsSystem().GetBodyInterface();
 
             // Static / Dynamic toggle
             bool dyn = m_IsDynamic;
@@ -140,6 +140,8 @@ namespace wolf{
             if (ImGui::Button("Reset the physics Body")) {
                 _ResetBody();
             }
+
+
         }
 
     }

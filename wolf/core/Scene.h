@@ -25,9 +25,6 @@ namespace wolf
             return &m_GameObjectManager;
         }
 
-        PhysicsSystemManager* GetPhysicsManager(){
-            return &m_PhysicsSystem;
-        }
 
         const std::string& GetName() const { return m_Name; }
 
@@ -40,20 +37,11 @@ namespace wolf
         YAML::Node Serialize() const;
         void Deserialize(const YAML::Node& node);
 
-        void EnablePhysicsManager(bool enabled){
-            m_physicsEnabled = enabled;
-        }
-        bool EnablePhysicsManager(){
-            return m_physicsEnabled;
-        }
-
     protected:
         // Managers
         wolf::GameObjectManager m_GameObjectManager;
         std::shared_ptr<Camera> m_MainCamera;
         PhysicsSystemManager m_PhysicsSystem;
-
-        bool m_physicsEnabled = false;
 
 
     private:

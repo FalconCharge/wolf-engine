@@ -5,17 +5,12 @@
 #include <memory>
 #include "GameScene.h"
 
+
 #include <fstream>
 namespace wolf{
     class SceneManager {
 
     public:
-
-        static SceneManager& Instance() {
-            static SceneManager instance;
-            return instance;
-        }
-
         template<typename T, typename... Args>
         void LoadScene(Args&&... args) {
             if (m_CurrentScene) {
@@ -60,13 +55,9 @@ namespace wolf{
             m_CurrentScene->Init();
         }
 
-        // prevent copying
-        SceneManager(const SceneManager&) = delete;
-        SceneManager& operator=(const SceneManager&) = delete;
-
     private:
-        SceneManager() = default;
         std::unique_ptr<Scene> m_CurrentScene;
+
     };
 
 }

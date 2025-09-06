@@ -7,7 +7,6 @@ using namespace JPH::literals;
 
 
     PhysicsSystemManager::PhysicsSystemManager()
-        
     {
         // Register allocation hook. In this example we'll just let Jolt use malloc / free but you can override these if you want (see Memory.h).
         // This needs to be done before any other Jolt function is called.
@@ -65,12 +64,7 @@ using namespace JPH::literals;
     }
 
     PhysicsSystemManager::~PhysicsSystemManager() {
-        JPH::UnregisterTypes();
-        delete JPH::Factory::sInstance;
-        JPH::Factory::sInstance = nullptr;
-
-        delete m_TempAllocator;
-        delete m_JobSystem;
+        Shutdown();
     }
 
     void PhysicsSystemManager::Update(float null) {
@@ -79,16 +73,32 @@ using namespace JPH::literals;
         const int cCollisionSteps = 1;
         m_System.Update(deltaTime, cCollisionSteps, m_TempAllocator, m_JobSystem);
 
-        for (auto it = m_PhysicsComps.begin(); it != m_PhysicsComps.end(); ) {
-        if (auto comp = it->lock()) {
-            comp->SyncTransformFromPhysics();
-            ++it;
-        } else {
-            // Component destroyed, remove weak_ptr
-            it = m_PhysicsComps.erase(it);
-        }
+        // for (auto it = m_PhysicsComps.begin(); it != m_PhysicsComps.end(); ) {
+        // if (auto comp = it->lock()) {
+        //     comp->SyncTransformFromPhysics();
+        //     ++it;
+        // } else {
+        //     // Component destroyed, remove weak_ptr
+        //     it = m_PhysicsComps.erase(it);
+        // }
     }
 
+    void PhysicsSystemManager::Shutdown() {
+        // Prob do some more cleaning up here
+
+        // Jolt cleanup order matters:
+        JPH::UnregisterTypes();
+
+        delete m_TempAllocator;
+        m_TempAllocator = nullptr;
+
+        delete m_JobSystem;
+        m_JobSystem = nullptr;
+
+        delete JPH::Factory::sInstance;
+        JPH::Factory::sInstance = nullptr;
     }
+
+
 
 

@@ -7,10 +7,14 @@
 #include "Windows/InspectorWindow.h"
 #include "Windows/GameViewWindow.h"
 #include "Windows/StatsWindow.h"
+#include "Windows/SceneViewWindow.h"
 
 #include "render/RenderTarget.h"
 
-#include "core/SceneManager.h"
+
+#include "core/GameScene.h"
+#include "core/SceneView.h"
+#include "core/Engine.h"
 
 void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> editorCamera)
 {
@@ -47,8 +51,10 @@ void Imgui::Init(wolf::RenderTarget* gameView, std::shared_ptr<EditorCamera> edi
     AddWindow(new HierarchyWindow(-1));
 
     AddWindow(new InspectorWindow(-1));
-
+    
     AddWindow(new StatsWindow());
+
+    AddWindow(new SceneViewWindow(gameView, editorCamera));
 
 
     if (auto hierarchyWindow = dynamic_cast<HierarchyWindow*>(FindWindow("Hierarchy"))) {
@@ -106,7 +112,7 @@ void Imgui::DrawMainMenuBar(){
 
             if (ImGui::Button("Save"))
             {
-                wolf::SceneManager::Instance().SaveActiveScene(filename);
+                wolf::Engine::Instance().GetSceneManager().SaveActiveScene(filename);
                 ImGui::CloseCurrentPopup();
             }
             ImGui::SameLine();
@@ -125,7 +131,7 @@ void Imgui::DrawMainMenuBar(){
 
             if (ImGui::Button("Open"))
             {
-                wolf::SceneManager::Instance().LoadSceneFromFile(filename);
+                wolf::Engine::Instance().GetSceneManager().LoadSceneFromFile(filename);
                 ImGui::CloseCurrentPopup();
             }
             ImGui::SameLine();
@@ -138,11 +144,21 @@ void Imgui::DrawMainMenuBar(){
         }
 
         // Playing game exe in editor
-        if (ImGui::BeginMenu("Game (TBD)"))
+        if (ImGui::BeginMenu("Game"))
         {
-            if (ImGui::MenuItem("Play", "F5")) {}
-            if (ImGui::MenuItem("Pause", "F6")) {}
-            if (ImGui::MenuItem("Stop", "Shift+F5")) {}
+            if (ImGui::MenuItem("Play", "F5")) {
+                wolf::Engine::Instance().SetPlaying(true);
+                wolf::Engine::Instance().GetSceneManager().LoadScene<wolf::GameScene>("Game View");
+            }
+            if (ImGui::MenuItem("Pause", "F6")) {
+                // Basically just pauses the updates
+                wolf::Engine::Instance().SetPlaying(false);
+            }
+            if (ImGui::MenuItem("Stop", "Shift+F5")) {
+                // Swap back to the Scene View
+                wolf::Engine::Instance().SetPlaying(false);
+                wolf::Engine::Instance().GetSceneManager().LoadScene<wolf::SceneView>("Scene View");
+            }
             ImGui::EndMenu();
         }
 
