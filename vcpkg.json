@@ -17,5 +17,5 @@
     },
     "joltphysics"
   ],
-  "builtin-baseline": "b1b19307e2d2ec1eefbdb7ea069de7d4bcd31f01"
+  "builtin-baseline": "b1b19307e2d2ec1eefbdb7ea069de7d4bcd31f01"  // replace with the git commit hash of the vcpkg submodule
 }
