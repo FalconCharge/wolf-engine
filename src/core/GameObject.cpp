@@ -64,6 +64,6 @@ namespace wolf{
 		if (node["Transform"])
 			m_transform.Deserialize(node["Transform"]); // Assuming Transform has a Deserialize method
 
-		Init();		
+		//Init(); Was Initing twice Prob on creation and here (Might need to take Init out of constuctor)
 	}
 }
