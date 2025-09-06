@@ -19,12 +19,12 @@ public:
 
     void Update(float dt) override
     {
-        m_logic.Update(dt, this);
+        m_logic.Update(dt);
     }
 
     void Render() override
     {
-        m_logic.Render(m_width, m_height);
+        m_logic.RenderGame();
     }
 
 

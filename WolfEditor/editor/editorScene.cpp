@@ -17,7 +17,7 @@ namespace wolf
     void EditorScene::Init()
     {
         std::cout << "Editor Scene Initialized!\n";
-        m_GameScene->Init();
+
         m_EditorCamera = std::make_shared<EditorCamera>(
             45.0f, 16.0f/9.0f, 0.1f, 1000.0f
         );
@@ -25,7 +25,10 @@ namespace wolf
 
     void EditorScene::Update(float dt){
         if(wolf::Engine::Instance().IsPlaying()){
-            m_GameScene->Update(dt);
+            if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+            {
+                scene->Update(dt);
+            }
         }
 
         m_EditorCamera->update(dt);
@@ -33,20 +36,22 @@ namespace wolf
 
     void EditorScene::RenderSceneView()
     {
-        m_GameScene->Render(m_EditorCamera->GetViewMatrix(), m_EditorCamera->GetProjMatrix());
+        if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+        {
+            scene->Render(m_EditorCamera->GetViewMatrix(), m_EditorCamera->GetProjMatrix());
+        }
     }
 
     void EditorScene::RenderGameView()
     {
-        // Renders game objects with the game’s main camera
-        m_GameScene->Render(
-                m_GameScene->GetMainCamera()->GetViewMatrix(),
-                m_GameScene->GetMainCamera()->GetProjMatrix()
-            );
+        if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+        {
+            scene->Render(m_EditorCamera->GetViewMatrix(), m_EditorCamera->GetProjMatrix());
+        }
     }
 
     void EditorScene::ShutDown(){
-        m_GameScene = nullptr;
+        
     }
 
 }

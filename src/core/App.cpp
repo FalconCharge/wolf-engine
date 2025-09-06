@@ -188,6 +188,8 @@ void App::Run()
         glfwPollEvents();
 
         InputManager::Instance().Update();
+        EngineStats::Get().drawCalls = 0;   // Reset the amount of draw calls
+
     }
 
     // Shut Everything down here

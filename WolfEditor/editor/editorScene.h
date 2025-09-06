@@ -19,15 +19,12 @@ namespace wolf
         void RenderSceneView();
         void RenderGameView();
 
-        GameScene* GetGameScene() { return m_GameScene; }
-        void SetGameScene(wolf::GameScene* scene) { m_GameScene = scene; }
         std::shared_ptr<Camera> GetEditorCamera() { return m_EditorCamera; }
 
         void ShutDown();
 
     private:
 
-        wolf::GameScene* m_GameScene;
         std::shared_ptr<EditorCamera> m_EditorCamera;
 
 

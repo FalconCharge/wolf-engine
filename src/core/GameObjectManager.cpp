@@ -5,7 +5,8 @@ namespace wolf
 {
 	GameObjectManager::GameObjectManager()
 	{
-
+		std::cout << "Init GameObject Manager" << std::endl;
+		m_gameObjects.clear();
 	}
 	GameObjectManager::~GameObjectManager()
 	{
@@ -43,6 +44,8 @@ namespace wolf
 
 	void GameObjectManager::Update(float deltaTime)
 	{
+		EngineStats::Get().entities = (int)m_gameObjects.size();
+		
 		for (std::vector<std::unique_ptr<GameObject>>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
 		{
 			(*it)->Update(deltaTime);

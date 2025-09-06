@@ -113,6 +113,9 @@ void DebugCube::Init(){
 
 void DebugCube::Render(glm::mat4 view, glm::mat4 proj)
 {
+    // For stats
+    EngineStats::Get().drawCalls++;
+    
     // Render cube
     // This would be a nice upgrade
     //wolf::Renderer::Submit(m_VertexBuffer, m_IndexBuffer, m_Program);

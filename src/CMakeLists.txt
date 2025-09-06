@@ -19,6 +19,8 @@ find_package(glm CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(Jolt CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+
 
 target_link_libraries(WolfEngine PUBLIC
     glfw
@@ -28,6 +30,8 @@ target_link_libraries(WolfEngine PUBLIC
     glm::glm
     yaml-cpp::yaml-cpp
     Jolt::Jolt
+    imgui::imgui      
+
 )
 
 # Optional: enable any compile definitions, e.g.
