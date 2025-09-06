@@ -5,11 +5,13 @@ namespace wolf
 {
 	GameObjectManager::GameObjectManager()
 	{
-
+		std::cout << "Init GameObject Manager" << std::endl;
+		m_gameObjects.clear();
 	}
 	GameObjectManager::~GameObjectManager()
 	{
 		// No explicit cleanup needed for unique_ptr, they will be automatically cleaned up
+		std::cout << "Deleting Game Object Manager " << std::endl;
 	}
 
 	void GameObjectManager::DestroyGameObject(GameObject* gameObject)
@@ -42,6 +44,8 @@ namespace wolf
 
 	void GameObjectManager::Update(float deltaTime)
 	{
+		EngineStats::Get().entities = (int)m_gameObjects.size();
+		
 		for (std::vector<std::unique_ptr<GameObject>>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
 		{
 			(*it)->Update(deltaTime);
@@ -53,12 +57,16 @@ namespace wolf
 		}
 		
 	}
+	 void GameObjectManager::Shutdown(){
+		// Clear the vector, releasing all unique_ptrs
+		m_gameObjects.clear();
+	}
 
-	void GameObjectManager::Render()
+	void GameObjectManager::Render(glm::mat4 view, glm::mat4 proj)
 	{
 		for (std::vector<std::unique_ptr<GameObject>>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
 		{
-			(*it)->Render();
+			(*it)->Render(view, proj);
 		}
 	}
 

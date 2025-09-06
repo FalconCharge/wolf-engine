@@ -2,6 +2,16 @@
 namespace wolf{
 
 
+Camera::Camera() {
+    // Initialize with defaults
+    m_position = glm::vec3(0.0f, 0.0f, 5.0f);
+    m_up = glm::vec3(0.0f, 1.0f, 0.0f);
+    m_fov = 45.0f;
+    m_Aspect = 16.0f/9.0f;
+    m_near = 0.1f;
+    m_far = 100.0f;
+}
+
 
 void Camera::Init(){
     CreateFrustumFromCamera();

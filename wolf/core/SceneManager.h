@@ -5,15 +5,15 @@
 #include <memory>
 #include "GameScene.h"
 
+
 #include <fstream>
 namespace wolf{
     class SceneManager {
 
     public:
 
-        static SceneManager& Instance() {
-            static SceneManager instance;
-            return instance;
+        ~SceneManager(){
+            return;
         }
 
         template<typename T, typename... Args>
@@ -35,6 +35,10 @@ namespace wolf{
 
         wolf::Scene* GetActiveScene() const {
             return m_CurrentScene.get();
+        }
+
+        void SetActiveScene(std::unique_ptr<Scene> scene) {
+            m_CurrentScene = std::move(scene);
         }
 
         void SaveActiveScene(const std::string& filepath){
@@ -60,13 +64,16 @@ namespace wolf{
             m_CurrentScene->Init();
         }
 
-        // prevent copying
-        SceneManager(const SceneManager&) = delete;
-        SceneManager& operator=(const SceneManager&) = delete;
+        // Clears the Scene
+        void Clear(){
+            if(m_CurrentScene){
+                m_CurrentScene->ShutDown();
+            }
+        }
 
     private:
-        SceneManager() = default;
         std::unique_ptr<Scene> m_CurrentScene;
+
     };
 
 }

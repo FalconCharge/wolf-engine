@@ -15,11 +15,6 @@ namespace wolf
                   << m_GameObjectManager.GetGameObjects().size() << " GameObjects.\n";
     }
 
-    void Scene::Render(int width, int height)
-    {
-        m_GameObjectManager.Render();
-    }
-
     YAML::Node Scene::Serialize() const {
         YAML::Node node;
         node["Name"] = m_Name;

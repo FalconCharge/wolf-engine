@@ -17,20 +17,16 @@ namespace wolf
         
         virtual void Init() = 0;
         virtual void Update(float dt) = 0;
-        virtual void Render(int width, int height) = 0;
+        // Don't need the view and proj here since we store the cameras here I think
+        virtual void Render(glm::mat4 view, glm::mat4 proj) = 0;
         virtual void ShutDown() = 0;
 
-        wolf::GameObjectManager* GetGameObjectManager(){
-            return &m_GameObjectManager;
-        }
+        wolf::GameObjectManager* GetGameObjectManager(){ return &m_GameObjectManager; }
 
         const std::string& GetName() const { return m_Name; }
 
-        void SetMainCamera(std::shared_ptr<Camera> camera){
-            m_MainCamera = std::move(camera);
-        }
-
-        std::shared_ptr<Camera> GetMainCamera() { return m_MainCamera; }
+        void SetMainCamera(std::unique_ptr<Camera> camera) { m_MainCamera = std::move(camera); }
+        Camera* GetMainCamera() { return m_MainCamera.get(); }
 
         YAML::Node Serialize() const;
         void Deserialize(const YAML::Node& node);
@@ -38,8 +34,7 @@ namespace wolf
     protected:
         // Managers
         wolf::GameObjectManager m_GameObjectManager;
-        std::shared_ptr<Camera> m_MainCamera;
-
+        std::unique_ptr<Camera> m_MainCamera;
 
     private:
 

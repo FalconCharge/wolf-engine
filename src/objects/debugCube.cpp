@@ -3,8 +3,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include "core/SceneManager.h"
+// Temp include for testing componets
+#include "components/TestComponent.h"
+#include "components/PhysicsBodyComponent.h"
 
+#include "core/Engine.h"
 
 #include <iostream>
 
@@ -14,7 +17,12 @@ DebugCube::DebugCube()
 }
 
 DebugCube::~DebugCube(){
+    std::cout << "Deleting GameObject " << std::endl;
     wolf::ProgramManager::DestroyProgram(m_Program);
+    wolf::BufferManager::DestroyBuffer(m_VertexBuffer);
+    wolf::BufferManager::DestroyBuffer(m_IndexBuffer);
+    delete m_Decl;
+    wolf::MaterialManager::DestroyMaterial(m_Material);
 }
 
 
@@ -96,31 +104,24 @@ void DebugCube::Init(){
     m_Decl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
     m_Decl->End();
 
+    //Temp
+    // Adds the Test component to make sure we are updating the components
+    this->AddComponent<wolf::TestComponent>();
+    this->AddComponent<wolf::PhysicsBodyComponent>(false)->Init();
+
 }
 
-void DebugCube::Update(float dt)
+void DebugCube::Render(glm::mat4 view, glm::mat4 proj)
 {
-
-}
-
-void DebugCube::Render()
-{
+    // For stats
+    EngineStats::Get().drawCalls++;
+    
     // Render cube
     // This would be a nice upgrade
     //wolf::Renderer::Submit(m_VertexBuffer, m_IndexBuffer, m_Program);
     
     glm::mat4 world = GetTransform().GetWorldMatrix();
     m_Material->SetUniform("world", world);
-
-    std::shared_ptr<wolf::Camera> camera = wolf::SceneManager::Instance().GetActiveScene()->GetMainCamera();
-    glm::mat4 view;
-    glm::mat4 proj;
-    if (camera) {
-        view = camera->GetViewMatrix();
-        proj = camera->GetProjMatrix();
-    }else{
-        //std::cout << "No active camera found in the scene!\n";
-    }
 
     m_Material->SetUniform("projection", proj);
     m_Material->SetUniform("view", view);

@@ -23,4 +23,5 @@ void StatsWindow::DrawContent()
     ImGui::Text("FPS: %.1f", fps);
     ImGui::Text("Draw Calls: %d", drawCalls);
     ImGui::Text("Entities: %d", entities);
+
 }

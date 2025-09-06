@@ -9,6 +9,9 @@
 #include <glm/gtc/quaternion.hpp>        // quat
 #include <glm/gtx/quaternion.hpp>        // toMat4 (quat → mat4)
 
+#include "components/TestComponent.h"
+#include "core/Engine.h"
+
 InspectorWindow::InspectorWindow(int selected)
     : ImguiWindow("Inspector"), m_selectedIndex(selected)
 {}
@@ -20,7 +23,7 @@ void InspectorWindow::WindowSetup()
 
 void InspectorWindow::DrawContent()
 {
-    auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+    auto gameObjectManager = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager();
     if (m_selectedIndex >= 0 && m_selectedIndex < (int)gameObjectManager->GetGameObjects().size())
     {
         ImGui::Text("Selected GameObject:");
@@ -41,7 +44,7 @@ void InspectorWindow::DrawContent()
         // So We get the world matrix, decompose it, show it in ImGui, then if changed we recompose a new world matrix
         // then convert that back to local space and set the local transform of the GameObject
         ImGui::Text("Transform");
-
+#pragma region Transform
         // Step 1: Decompose WORLD matrix for ImGui display
         glm::mat4 world = go->GetTransform().GetWorldMatrix();
 
@@ -83,6 +86,16 @@ void InspectorWindow::DrawContent()
             go->GetTransform().SetPosition(lPos);
             go->GetTransform().SetRotation(lRotQ);
             go->GetTransform().SetScale(lScale);
+        }
+#pragma endregion
+    
+
+        ImGui::Separator();
+        ImGui::Text("Components");
+
+        // iterate the components
+        for(auto& comp : go->GetComponents()){
+            comp->DrawInspector();
         }
     }
     else

@@ -15,11 +15,12 @@ namespace wolf
 
         void Update(float dt) override;
 
-        void Render(int width, int height);
+        void Render(glm::mat4 view, glm::mat4 proj);
 
         void ShutDown() override
         {
             std::cout << "TestScene Shutting down: Doesn't do anything rn\n";
+            m_GameObjectManager.Shutdown();
         }
     private:
         Model* m_testModel = nullptr;

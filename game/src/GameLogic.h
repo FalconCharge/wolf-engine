@@ -1,30 +1,61 @@
 #pragma once
-#include <stdio.h>
-#include <iostream>
 #include "wolf.h"
-
-
-#include "core/GameObjectManager.h"
-#include "core/SceneManager.h"  
+#include "core/GameScene.h"
+#include "core/Camera.h"
+#include "core/Engine.h"
 
 class GameLogic
 {
 public:
     GameLogic()
     {
-        wolf::SceneManager::Instance().LoadScene<wolf::GameScene>("Test Scene");
+
+        auto scene = std::make_unique<wolf::GameScene>("Game Scene");
+        scene->Init();
+
+        // Give ownership to the SceneManager
+        wolf::Engine::Instance().GetSceneManager().SetActiveScene(std::move(scene));
+
+        // Create main camera (for the game view)
+        m_gameCamera = std::make_unique<wolf::Camera>();
+
     }
 
-    void Update(float dt, wolf::App* app)
+    void Update(float dt)
     {
-        wolf::SceneManager::Instance().Update(dt);
+        if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+            scene->Update(dt);
     }
 
-    void Render(int width, int height)
+    void RenderGame()
     {
-        wolf::SceneManager::Instance().Render(width, height);
+        if (!m_gameCamera) return;
+
+        if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+        {
+            scene->Render(
+                m_gameCamera->GetViewMatrix(),
+                m_gameCamera->GetProjMatrix()
+            );
+        }
     }
+
+    void RenderEditor(const std::shared_ptr<wolf::Camera>& editorCamera)
+    {
+        if (!editorCamera) return;
+
+        if (auto scene = wolf::Engine::Instance().GetSceneManager().GetActiveScene())
+        {
+            scene->Render(
+                editorCamera->GetViewMatrix(),
+                editorCamera->GetProjMatrix()
+            );
+        }
+    }
+
+    wolf::Camera* GetGameCamera() { return m_gameCamera.get(); }
 
 private:
 
+    std::unique_ptr<wolf::Camera> m_gameCamera;
 };

@@ -76,6 +76,9 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "fstream": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "condition_variable": "cpp",
+        "random": "cpp",
+        "shared_mutex": "cpp"
     }
 }

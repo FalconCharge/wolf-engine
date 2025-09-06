@@ -1,0 +1,39 @@
+Name: Test Scene
+GameObjects:
+  GameObjects:
+    - Type: class DebugCube
+      Name: Floor
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 0
+          - -10
+          - 0
+        Rotation:
+          - 4.15775651e-15
+          - 4.15776625e-15
+          - 0.707106769
+          - 0.707106769
+        Scale:
+          - 0.999993145
+          - 24.9999905
+          - 25.0000362
+    - Type: class DebugCube
+      Name: Box
+      Tag: "null"
+      ID: 0
+      Transform:
+        Position:
+          - 0
+          - 0
+          - 0
+        Rotation:
+          - 0
+          - 0
+          - 1
+          - 0
+        Scale:
+          - 1
+          - 1
+          - 1

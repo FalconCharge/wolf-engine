@@ -41,6 +41,7 @@ namespace wolf{
 
 
         Camera(wolf::App* pApp) : m_pApp(pApp){};
+        Camera();
         virtual ~Camera(){}
 
         void update(float dt);

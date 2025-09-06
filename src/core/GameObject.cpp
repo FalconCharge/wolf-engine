@@ -12,16 +12,15 @@ namespace wolf{
 
 	void GameObject::Update(float deltaTime)
 	{
-		// for (const auto& component : m_components)
-		// {
-		// 	component->Update(deltaTime);
-		// }
+		for(auto& comp : m_Components){
+			comp->Update(deltaTime);
+		}
 
 	}
 
-	void GameObject::Render()
+	void GameObject::Render(glm::mat4 view, glm::mat4 proj)
 	{
-
+		return;
 	}
 
 	void GameObject::SetParent(GameObject* parent)
@@ -65,6 +64,6 @@ namespace wolf{
 		if (node["Transform"])
 			m_transform.Deserialize(node["Transform"]); // Assuming Transform has a Deserialize method
 
-		Init();		
+		//Init(); Was Initing twice Prob on creation and here (Might need to take Init out of constuctor)
 	}
 }

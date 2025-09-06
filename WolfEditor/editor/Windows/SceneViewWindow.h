@@ -1,16 +1,16 @@
 #pragma once
 #include "../ImguiWindow.h"
 #include "core/GameObjectManager.h"
-#include "core/SceneManager.h"
+#include "render/RenderTarget.h"
 #include <string>
 #include <memory>
-#include "core/EngineStats.h"
+#include "../editorCamera.h"
 
 
-class StatsWindow : public ImguiWindow
+class SceneViewWindow : public ImguiWindow
 {
     public:
-        StatsWindow();
+        SceneViewWindow(wolf::RenderTarget* sceneView);
 
     protected:
         void DrawContent() override;
@@ -18,6 +18,7 @@ class StatsWindow : public ImguiWindow
 
     private:
         // Members
-
+        wolf::RenderTarget* m_gameView;
+        
         // Methods
 };

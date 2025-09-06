@@ -12,8 +12,10 @@
 			GameObjectManager();
 			~GameObjectManager();
 
+			void Shutdown();
+
 			void Update(float deltaTime);
-			void Render();
+			void Render(glm::mat4 view, glm::mat4 proj);
 			
 			template <typename T, typename... Args>
 			T* CreateGameObject(Args&&... args)

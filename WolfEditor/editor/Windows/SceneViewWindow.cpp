@@ -1,43 +1,26 @@
-#include "GameViewWindow.h"
+#include "SceneViewWindow.h"
 #include <imgui.h>
 #include <memory>
 #include <cstring>
 #include <iostream>
 #include "core/InputManager.h"
-#include "core/SceneManager.h"
+#include "core/Engine.h"
 
-GameViewWindow::GameViewWindow(wolf::RenderTarget* m_gameView)
-    : ImguiWindow("Game View"), m_gameView(m_gameView)
+SceneViewWindow::SceneViewWindow(wolf::RenderTarget* m_gameView)
+    : ImguiWindow("Scene View"), m_gameView(m_gameView)
 {
 }
-void GameViewWindow::WindowSetup(){
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImVec2 viewportPos = viewport->Pos;
-    ImVec2 viewportSize = viewport->Size;
-
-    float leftPanelWidth = 300.0f;   // Hierarchy
-    float rightPanelWidth = 350.0f;  // Inspector
-    float topBarHeight = 33.0f;
-    float bottomMargin = 10.0f;
-
-    ImVec2 gameViewPos = ImVec2(viewportPos.x + leftPanelWidth, viewportPos.y + topBarHeight);
-    ImVec2 gameViewSize = ImVec2(
-        viewportSize.x - leftPanelWidth - rightPanelWidth,  // width
-        viewportSize.y - topBarHeight - bottomMargin       // height
-    );
-
-    //ImGui::SetNextWindowPos(gameViewPos, ImGuiCond_Once);
-    //ImGui::SetNextWindowSize(gameViewSize, ImGuiCond_Once);
+void SceneViewWindow::WindowSetup(){
+    // Window setup used to put the window in a certain place
 }
 
 
-void GameViewWindow::DrawContent()
+void SceneViewWindow::DrawContent()
 {
-
     // Get the available content size of the current ImGui window
     ImVec2 availSize = ImGui::GetContentRegionAvail();
 
-    // maintain aspect ratio
+    // Optional: maintain aspect ratio
     float aspect = (float)m_gameView->GetViewportWidth() / (float)m_gameView->GetViewportHeight();
     float width = availSize.x;
     float height = width / aspect;

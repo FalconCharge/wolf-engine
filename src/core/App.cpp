@@ -10,6 +10,7 @@
 
 #include "core/InputManager.h"
 #include "stb_image.h"
+#include "core/Engine.h"
 
 namespace wolf
 {
@@ -25,20 +26,11 @@ void _errorCallback(int error, const char* description)
     _fatalError(description);
 }
 
-void _mouseScrollCallback(GLFWwindow* pWindow, double xoffset, double yoffset)
-{
-    App* pApp = (App*) glfwGetWindowUserPointer(pWindow);
-    pApp->_setMouseScroll(glm::vec2((float)xoffset,(float)yoffset));
-}
-
 App::App(const std::string& name)
   : m_name(name)
 {
     _init();
-    for(int i = 0; i < NUM_KEYS; ++i)
-    {
-        m_lastKeysDown[i] = false;
-    }
+    wolf::InputManager::Instance().Initialize(m_pWindow);
 }
 
 App::~App()
@@ -113,7 +105,6 @@ void App::_init()
         _fatalError("Couldn't create window\n");
 
     glfwSetWindowUserPointer(m_pWindow, this);
-    glfwSetScrollCallback(m_pWindow, _mouseScrollCallback);
     glfwMakeContextCurrent(m_pWindow);
 
     // Enable vsync
@@ -134,8 +125,8 @@ void App::_init()
     // TODO: Setup Game Icon VS Engine Icon
     // Setting up Icon
     GLFWimage images[2];
-    images[0].pixels = stbi_load("wolf/data/EngineIcon_64x64.png", &images[0].width, &images[0].height, 0, 4);
-    images[1].pixels = stbi_load("wolf/data/EngineIcon_32x32.png", &images[1].width, &images[1].height, 0, 4);
+    images[0].pixels = stbi_load("wolf/data/falconlogo64.png", &images[0].width, &images[0].height, 0, 4);
+    images[1].pixels = stbi_load("wolf/data/falconlogo128.png", &images[1].width, &images[1].height, 0, 4);
 
     if (images[0].pixels && images[1].pixels) {
         glfwSetWindowIcon(m_pWindow, 2, images);  // 2 icons, GLFW picks best fit
@@ -155,11 +146,6 @@ void App::_init()
 void App::_internalUpdate(float dt)
 {
     Update(dt);
-
-    for(int i = 0; i < NUM_KEYS; ++i)
-    {
-        m_lastKeysDown[i] = isKeyDown(GLFW_KEY_SPACE + i);
-    }
 }
 
 void App::Run()
@@ -198,62 +184,17 @@ void App::Run()
             Render();
         }
 
-        m_mouseScroll = glm::vec2(0.0f,0.0f);
         glfwSwapBuffers(m_pWindow);
         glfwPollEvents();
 
         InputManager::Instance().Update();
+        EngineStats::Get().drawCalls = 0;   // Reset the amount of draw calls
+
     }
 
-}
+    // Shut Everything down here
+    Engine::Instance().Shutdown();
 
-bool App::isKeyDown(int key) const
-{
-    key = toupper(key);
-    return glfwGetKey(m_pWindow,key) == GLFW_PRESS;
-}
-
-bool App::isKeyJustDown(int key) const
-{
-    key = toupper(key);
-    return glfwGetKey(m_pWindow,key) == GLFW_PRESS && !m_lastKeysDown[key-GLFW_KEY_SPACE];
-}
-
-bool App::isLMBDown() const
-{
-    int state = glfwGetMouseButton(m_pWindow, GLFW_MOUSE_BUTTON_LEFT);
-    return state == GLFW_PRESS;
-}
-
-bool App::isRMBDown() const
-{
-    int state = glfwGetMouseButton(m_pWindow, GLFW_MOUSE_BUTTON_RIGHT);
-    return state == GLFW_PRESS;
-}
-
-bool App::isMMBDown() const
-{
-    int state = glfwGetMouseButton(m_pWindow, GLFW_MOUSE_BUTTON_MIDDLE);
-    return state == GLFW_PRESS;
-}
-
-glm::vec2 App::getMousePos() const
-{
-    double xpos, ypos;
-    glfwGetCursorPos(m_pWindow, &xpos, &ypos);
-    return glm::vec2((float)xpos,(float)ypos);
-}
-
-glm::vec2 App::getScreenSize() const
-{
-    int w,h;
-    glfwGetFramebufferSize(m_pWindow, &w, &h);
-    return glm::vec2((float)w,(float)h);
-}
-
-void App::_setMouseScroll(const glm::vec2& scroll)
-{
-    m_mouseScroll = scroll;
 }
 
 }

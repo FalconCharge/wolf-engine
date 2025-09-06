@@ -3,7 +3,7 @@
 #include <memory>
 #include <cstring>
 #include <iostream>
-#include "core/SceneManager.h"
+#include "core/Engine.h"
 
 #include "InspectorWindow.h"
 
@@ -18,15 +18,14 @@ void HierarchyWindow::WindowSetup(){
 }
 void HierarchyWindow::DrawContent()
 {
-    auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+    auto gameObjectManager = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager();
 
     // Right-click anywhere in the Hierarchy window
     if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_MouseButtonRight))
     {
         if (ImGui::MenuItem("Create Empty GameObject"))
         {
-            wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager()->CreateGameObject<DebugCube>();
-            
+            wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager()->CreateGameObject<DebugCube>();            
         }
         ImGui::EndPopup();
     }
@@ -67,7 +66,7 @@ void HierarchyWindow::DrawGameObjectNode(wolf::GameObject* go, int index)
     {
         if (ImGui::MenuItem("Delete GameObject"))
         {
-            auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+            auto gameObjectManager = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager();
             gameObjectManager->DestroyGameObject(go);
             if (m_selectedIndex == index)
             {
@@ -89,7 +88,7 @@ void HierarchyWindow::DrawGameObjectNode(wolf::GameObject* go, int index)
             // Find the GameObject that owns this Transform
             wolf::GameObject* childGO = child->GetOwner();
 
-            auto gameObjectManager = wolf::SceneManager::Instance().GetActiveScene()->GetGameObjectManager();
+            auto gameObjectManager = wolf::Engine::Instance().GetSceneManager().GetActiveScene()->GetGameObjectManager();
 
 
             int childIndex = -1;
